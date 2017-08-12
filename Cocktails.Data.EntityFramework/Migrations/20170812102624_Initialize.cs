@@ -13,7 +13,9 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, computedColumnSql: "SYSUTCDATETIME()"),
                     Description = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -26,6 +28,8 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, computedColumnSql: "SYSUTCDATETIME()"),
+                    ModifiedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -38,6 +42,8 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, computedColumnSql: "SYSUTCDATETIME()"),
+                    ModifiedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -50,8 +56,10 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, computedColumnSql: "SYSUTCDATETIME()"),
                     FlavorId = table.Column<Guid>(nullable: false),
                     IngredientCategoryId = table.Column<Guid>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
