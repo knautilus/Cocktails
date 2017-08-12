@@ -1,60 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
 using Cocktails.Data.Domain;
-using Cocktails.Data.EntityFramework.Contexts;
 
 namespace Cocktails.Data.EntityFramework.Repositories
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly CocktailsContext context;
+        private readonly DbContext context;
         private DbSet<T> entities;
 
-        public Repository(CocktailsContext context)
+        public Repository(DbContext context)
         {
             this.context = context;
             entities = context.Set<T>();
         }
-        public IEnumerable<T> GetAll()
+
+        public Task<IEnumerable<T>> GetAllAsync(CancellationToken token)
         {
-            return entities.AsEnumerable();
+            return Task.FromResult(entities.AsEnumerable());
         }
 
-        public T Get(Guid id)
+        public Task<T> GetAsync(Func<IQueryable<T>, IQueryable<T>> query, CancellationToken token)
         {
-            return entities.SingleOrDefault(s => s.Id == id);
+            return query(entities.AsQueryable()).FirstOrDefaultAsync(token);
         }
-        public void Insert(T entity)
+
+        public async Task<T> InsertAsync(T entity, CancellationToken token)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
             entities.Add(entity);
-            context.SaveChanges();
+            await context.SaveChangesAsync(token);
+            return entity;
         }
 
-        public void Update(T entity)
+        public Task UpdateAsync(T entity, CancellationToken token)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
-            context.SaveChanges();
+            return context.SaveChangesAsync(token);
         }
 
-        public void Delete(T entity)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            entities.Remove(entity);
-            context.SaveChanges();
-        }
+        //public void Delete(T entity)
+        //{
+        //    if (entity == null)
+        //    {
+        //        throw new ArgumentNullException("entity");
+        //    }
+        //    entities.Remove(entity);
+        //    context.SaveChanges();
+        //}
     }
 }

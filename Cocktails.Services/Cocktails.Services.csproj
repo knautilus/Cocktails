@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
+    <ProjectReference Include="..\Cocktails.Data.EntityFramework\Cocktails.Data.EntityFramework.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Cocktails.Data.Domain;
+using Cocktails.Data.EntityFramework.Contexts;
+using Cocktails.Data.EntityFramework.Repositories;
+using Cocktails.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,6 +30,10 @@ namespace Cocktails.Api
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddScoped(typeof(DbContext), typeof(CocktailsContext));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IService<Flavor>), typeof(FlavorService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
