@@ -31,7 +31,8 @@ namespace Cocktails.Api
             // Add framework services.
             services.AddMvc();
 
-            services.AddScoped(typeof(DbContext), typeof(CocktailsContext));
+            var cs = Configuration.GetConnectionString("DefaultConnection");
+            services.AddScoped<DbContext>(x => new CocktailsContext(cs));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<Flavor>), typeof(FlavorService));
         }

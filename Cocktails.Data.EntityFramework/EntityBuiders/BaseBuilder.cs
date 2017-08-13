@@ -11,7 +11,8 @@ namespace Cocktails.Data.EntityFramework.EntityBuiders
         {
             builder
                 .Property(b => b.CreatedDate)
-                .HasComputedColumnSql("SYSUTCDATETIME()");
+                .HasDefaultValueSql("SYSUTCDATETIME()")
+                .ValueGeneratedOnAddOrUpdate();
 
             builder
                 .Property(b => b.ModifiedDate)

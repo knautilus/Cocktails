@@ -10,10 +10,10 @@ namespace Cocktails.Data.EntityFramework.Repositories
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        Task<IEnumerable<T>> GetAllAsync(CancellationToken token);
-        Task<T> GetAsync(Func<IQueryable<T>, IQueryable<T>> query, CancellationToken token);
-        Task<T> InsertAsync(T entity, CancellationToken token);
-        Task UpdateAsync(T entity, CancellationToken token);
+        Task<T> GetSingleAsync(Func<IQueryable<T>, IQueryable<T>> query, CancellationToken cancellationToken);
+        Task<IEnumerable<T>> GetAsync(Func<IQueryable<T>, IQueryable<T>> query, CancellationToken cancellationToken);
+        Task<T> InsertAsync(T entity, CancellationToken cancellationToken);
+        Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
         //void Delete(T entity);
     }
 }

@@ -21,13 +21,13 @@ namespace Cocktails.Data.EntityFramework.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasComputedColumnSql("SYSUTCDATETIME()");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
                     b.Property<string>("Description");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTimeOffset>("ModifiedDate")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 
@@ -44,11 +44,11 @@ namespace Cocktails.Data.EntityFramework.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasComputedColumnSql("SYSUTCDATETIME()");
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTimeOffset>("ModifiedDate")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 
@@ -65,15 +65,15 @@ namespace Cocktails.Data.EntityFramework.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasComputedColumnSql("SYSUTCDATETIME()");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
                     b.Property<Guid>("FlavorId");
 
                     b.Property<Guid>("IngredientCategoryId");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTimeOffset>("ModifiedDate")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 
@@ -94,11 +94,11 @@ namespace Cocktails.Data.EntityFramework.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasComputedColumnSql("SYSUTCDATETIME()");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTimeOffset>("ModifiedDate")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 

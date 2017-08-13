@@ -13,13 +13,21 @@ namespace Cocktails.Data.EntityFramework.Contexts
         public DbSet<IngredientCategory> IngredientCategories { get; set; }
         public DbSet<Mix> Mixes { get; set; }
 
+        private readonly string _connectionString;
+
+        public CocktailsContext(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=cocktailsdb;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(_connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             new CocktailBuilder(modelBuilder.Entity<Cocktail>());
             new FlavorBuilder(modelBuilder.Entity<Flavor>());
             new IngredientBuilder(modelBuilder.Entity<Ingredient>());

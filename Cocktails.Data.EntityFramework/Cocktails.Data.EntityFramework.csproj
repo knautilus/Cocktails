@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
   </ItemGroup>
 

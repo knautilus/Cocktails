@@ -29,24 +29,26 @@ namespace Cocktails.Api.Controllers
 
         // GET api/flavors/5
         [HttpGet("{id:guid}", Name = "GetFlavor")]
-        public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken token)
+        public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var result = await _service.ReadAsync(id, token);
+            var result = await _service.GetByIdAsync(id, cancellationToken);
             return Ok(result);
         }
 
         // POST api/flavors
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] Flavor model, CancellationToken token)
+        public async Task<IActionResult> PostAsync([FromBody] Flavor model, CancellationToken cancellationToken)
         {
-            var result = await _service.CreateAsync(model, token);
+            var result = await _service.CreateAsync(model, cancellationToken);
             return CreatedAtRoute("GetFlavor", new { Id = result.Id }, result);
         }
 
         // PUT api/flavors/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] Flavor model, CancellationToken cancellationToken)
         {
+            var result = await _service.UpdateAsync(id, model, cancellationToken);
+            return Accepted(result);
         }
     }
 }

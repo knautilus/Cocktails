@@ -7,7 +7,8 @@ namespace Cocktails.Services
     public interface IService<TModel>
         where TModel : class
     {
-        Task<TModel> ReadAsync(Guid key, CancellationToken cancellationToken);
+        Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
         Task<TModel> CreateAsync(TModel model, CancellationToken cancellationToken);
+        Task<TModel> UpdateAsync(Guid id, TModel model, CancellationToken cancellationToken);
     }
 }

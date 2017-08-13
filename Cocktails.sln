@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.EntityFramew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Services", "Cocktails.Services\Cocktails.Services.csproj", "{17F225A0-C2EC-4C87-99B3-8C722759A62D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Common", "Cocktails.Common\Cocktails.Common.csproj", "{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{17F225A0-C2EC-4C87-99B3-8C722759A62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17F225A0-C2EC-4C87-99B3-8C722759A62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17F225A0-C2EC-4C87-99B3-8C722759A62D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
