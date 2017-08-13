@@ -10,34 +10,34 @@ using Cocktails.Services;
 namespace Cocktails.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class FlavorsController : Controller
+    public class IngredientsController : Controller
     {
-        private readonly IService<Flavor> _service;
+        private readonly IService<Ingredient> _service;
 
-        public FlavorsController(IService<Flavor> service)
+        public IngredientsController(IService<Ingredient> service)
         {
             _service = service;
         }
 
-        // GET api/flavors/5
-        [HttpGet("{id:guid}", Name = "GetFlavor")]
+        // GET api/ingredients/5
+        [HttpGet("{id:guid}", Name = "GetIngredient")]
         public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await _service.GetByIdAsync(id, cancellationToken);
             return Ok(result);
         }
 
-        // POST api/flavors
+        // POST api/ingredients
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] Flavor model, CancellationToken cancellationToken)
+        public async Task<IActionResult> PostAsync([FromBody] Ingredient model, CancellationToken cancellationToken)
         {
             var result = await _service.CreateAsync(model, cancellationToken);
-            return CreatedAtRoute("GetFlavor", new { Id = result.Id }, result);
+            return CreatedAtRoute("GetIngredient", new { Id = result.Id }, result);
         }
 
-        // PUT api/flavors/5
+        // PUT api/ingredients/5
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody] Flavor model, CancellationToken cancellationToken)
+        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody] Ingredient model, CancellationToken cancellationToken)
         {
             var result = await _service.UpdateAsync(id, model, cancellationToken);
             return Accepted(result);

@@ -10,34 +10,34 @@ using Cocktails.Services;
 namespace Cocktails.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class FlavorsController : Controller
+    public class IngredientCategoriesController : Controller
     {
-        private readonly IService<Flavor> _service;
+        private readonly IService<IngredientCategory> _service;
 
-        public FlavorsController(IService<Flavor> service)
+        public IngredientCategoriesController(IService<IngredientCategory> service)
         {
             _service = service;
         }
 
-        // GET api/flavors/5
-        [HttpGet("{id:guid}", Name = "GetFlavor")]
+        // GET api/ingredientcategories/5
+        [HttpGet("{id:guid}", Name = "GetIngredientCategory")]
         public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await _service.GetByIdAsync(id, cancellationToken);
             return Ok(result);
         }
 
-        // POST api/flavors
+        // POST api/ingredientcategories
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] Flavor model, CancellationToken cancellationToken)
+        public async Task<IActionResult> PostAsync([FromBody] IngredientCategory model, CancellationToken cancellationToken)
         {
             var result = await _service.CreateAsync(model, cancellationToken);
-            return CreatedAtRoute("GetFlavor", new { Id = result.Id }, result);
+            return CreatedAtRoute("GetIngredientCategory", new { Id = result.Id }, result);
         }
 
-        // PUT api/flavors/5
+        // PUT api/ingredientcategories/5
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody] Flavor model, CancellationToken cancellationToken)
+        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody] IngredientCategory model, CancellationToken cancellationToken)
         {
             var result = await _service.UpdateAsync(id, model, cancellationToken);
             return Accepted(result);

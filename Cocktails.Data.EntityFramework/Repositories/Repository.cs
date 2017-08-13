@@ -5,10 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using Cocktails.Data.Domain;
 using Cocktails.Common.Exceptions;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Cocktails.Data.EntityFramework.Repositories
 {

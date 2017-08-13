@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
+using Cocktails.Common.Models;
 using Cocktails.Data.Domain;
 using Cocktails.Data.EntityFramework.EntityBuiders;
 
@@ -13,16 +16,20 @@ namespace Cocktails.Data.EntityFramework.Contexts
         public DbSet<IngredientCategory> IngredientCategories { get; set; }
         public DbSet<Mix> Mixes { get; set; }
 
-        private readonly string _connectionString;
+        private readonly ConnectionStrings _connections;
+        private readonly ILoggerFactory _loggerFactory;
 
-        public CocktailsContext(string connectionString)
+        public CocktailsContext(IOptions<ConnectionStrings> connections, ILoggerFactory loggerFactory)
         {
-            _connectionString = connectionString;
+            _connections = connections.Value;
+            _loggerFactory = loggerFactory;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer(_connections.DefaultConnection);
+            optionsBuilder.UseLoggerFactory(_loggerFactory);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

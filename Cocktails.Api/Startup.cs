@@ -1,9 +1,12 @@
-﻿using Cocktails.Data.Domain;
+﻿using Cocktails.Common.Models;
+using Cocktails.Data.Domain;
 using Cocktails.Data.EntityFramework.Contexts;
 using Cocktails.Data.EntityFramework.Repositories;
 using Cocktails.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,10 +34,23 @@ namespace Cocktails.Api
             // Add framework services.
             services.AddMvc();
 
-            var cs = Configuration.GetConnectionString("DefaultConnection");
-            services.AddScoped<DbContext>(x => new CocktailsContext(cs));
+            services.AddOptions();
+
+            // Add settings from configuration
+            services.Configure<ApiInfo>(Configuration.GetSection("ApiInfo"));
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
+            services.AddScoped(typeof(DbContext), typeof(CocktailsContext));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IService<Cocktail>), typeof(CocktailService));
             services.AddScoped(typeof(IService<Flavor>), typeof(FlavorService));
+            services.AddScoped(typeof(IService<Ingredient>), typeof(IngredientService));
+            services.AddScoped(typeof(IService<IngredientCategory>), typeof(IngredientCategoryService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +58,11 @@ namespace Cocktails.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            var options = new RewriteOptions()
+               .AddRedirectToHttps();
+
+            app.UseRewriter(options);
 
             app.UseMvc();
         }
