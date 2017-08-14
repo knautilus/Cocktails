@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cocktails.Data.Domain
 {
-    public class Mix
+    public class Mix : BaseEntity
     {
-        public Guid CocktailId { get; set; }
         public Cocktail Cocktail { get; set; }
 
         public Guid IngredientId { get; set; }

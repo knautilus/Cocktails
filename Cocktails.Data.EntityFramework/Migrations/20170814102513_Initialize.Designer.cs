@@ -8,9 +8,10 @@ using Cocktails.Data.EntityFramework.Contexts;
 namespace Cocktails.Data.EntityFramework.Migrations
 {
     [DbContext(typeof(CocktailsContext))]
-    partial class CocktailsContextModelSnapshot : ModelSnapshot
+    [Migration("20170814102513_Initialize")]
+    partial class Initialize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
