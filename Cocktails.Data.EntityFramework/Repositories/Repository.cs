@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using Cocktails.Data.Domain;
-using Cocktails.Common.Exceptions;
 
 namespace Cocktails.Data.EntityFramework.Repositories
 {
@@ -16,12 +15,14 @@ namespace Cocktails.Data.EntityFramework.Repositories
         where T : BaseEntity
     {
         private readonly DbContext _context;
-        private DbSet<T> _entities;
+        private readonly DbSet<T> _entities;
+        private readonly IRepositoryOptions _options;
 
-        public Repository(DbContext context)
+        public Repository(DbContext context, IRepositoryOptions options)
         {
             _context = context;
             _entities = context.Set<T>();
+            _options = options;
         }
 
         public Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken)
@@ -48,7 +49,12 @@ namespace Cocktails.Data.EntityFramework.Repositories
             }
             var entry = _entities.Add(entity);
             UpdateEntry(entry);
-            await _context.SaveChangesAsync(cancellationToken);
+
+            if (_options.AutoCommit)
+            {
+                await CommitAsync(cancellationToken);
+            }
+
             return entity;
         }
 
@@ -61,18 +67,35 @@ namespace Cocktails.Data.EntityFramework.Repositories
             entity = UpdateModel(entity);
             var entry = _entities.Update(entity);
             UpdateEntry(entry);
-            try
+
+            if (_options.AutoCommit)
             {
-                await _context.SaveChangesAsync(cancellationToken);
+                await CommitAsync(cancellationToken);
             }
-            catch (DbUpdateException)
-            {
-                throw new ItemNotFoundException { Id = entity.Id };
-            }
+
             return entity;
         }
 
-        private T UpdateModel (T model)
+        public async Task DeleteAsync(T entity, CancellationToken cancellationToken)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+            _entities.Remove(entity);
+
+            if (_options.AutoCommit)
+            {
+                await CommitAsync(cancellationToken);
+            }
+        }
+
+        public Task CommitAsync(CancellationToken cancellationToken)
+        {
+            return _context.SaveChangesAsync(cancellationToken);
+        }
+
+        private T UpdateModel(T model)
         {
             model.ModifiedDate = DateTimeOffset.UtcNow;
             return model;
@@ -83,15 +106,5 @@ namespace Cocktails.Data.EntityFramework.Repositories
             entry.Property(x => x.CreatedDate).IsModified = false;
             return entry;
         }
-
-        //public void Delete(T entity)
-        //{
-        //    if (entity == null)
-        //    {
-        //        throw new ArgumentNullException("entity");
-        //    }
-        //    entities.Remove(entity);
-        //    context.SaveChanges();
-        //}
     }
 }

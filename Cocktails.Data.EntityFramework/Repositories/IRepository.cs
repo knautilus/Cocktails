@@ -14,6 +14,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
         Task<IEnumerable<T>> GetAsync(Func<IQueryable<T>, IQueryable<T>> query, CancellationToken cancellationToken);
         Task<T> InsertAsync(T entity, CancellationToken cancellationToken);
         Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
-        //void Delete(T entity);
+        Task DeleteAsync(T entity, CancellationToken cancellationToken);
+        Task CommitAsync(CancellationToken cancellationToken);
     }
 }

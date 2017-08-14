@@ -10,16 +10,16 @@ using Cocktails.Services;
 namespace Cocktails.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class CocktailsController : Controller
+    public class CategoriesController : Controller
     {
-        private readonly IService<Cocktail> _service;
+        private readonly IService<Category> _service;
 
-        public CocktailsController(IService<Cocktail> service)
+        public CategoriesController(IService<Category> service)
         {
             _service = service;
         }
 
-        // GET api/cocktails
+        // GET api/categories
         [HttpGet]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
@@ -27,8 +27,8 @@ namespace Cocktails.Api.Controllers
             return Ok(result);
         }
 
-        // GET api/cocktails/5
-        [HttpGet("{id:guid}", Name = "GetCocktail")]
+        // GET api/categories/5
+        [HttpGet("{id:guid}", Name = "GetCategory")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await _service.GetByIdAsync(id, cancellationToken);
@@ -39,17 +39,17 @@ namespace Cocktails.Api.Controllers
             return Ok(result);
         }
 
-        // POST api/cocktails
+        // POST api/categories
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] Cocktail model, CancellationToken cancellationToken)
+        public async Task<IActionResult> PostAsync([FromBody] Category model, CancellationToken cancellationToken)
         {
             var result = await _service.CreateAsync(model, cancellationToken);
-            return CreatedAtRoute("GetCocktail", new { Id = result.Id }, result);
+            return CreatedAtRoute("GetCategory", new { Id = result.Id }, result);
         }
 
-        // PUT api/cocktails/5
+        // PUT api/categories/5
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody] Cocktail model, CancellationToken cancellationToken)
+        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody] Category model, CancellationToken cancellationToken)
         {
             var result = await _service.UpdateAsync(id, model, cancellationToken);
             if (result == null)

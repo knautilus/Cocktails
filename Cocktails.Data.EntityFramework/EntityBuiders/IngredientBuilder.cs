@@ -8,9 +8,9 @@ namespace Cocktails.Data.EntityFramework.EntityBuiders
         public IngredientBuilder(EntityTypeBuilder<Ingredient> builder) : base(builder)
         {
             builder
-                .HasOne(i => i.IngredientCategory)
+                .HasOne(i => i.Category)
                 .WithMany(ic => ic.Ingredients)
-                .HasForeignKey(i => i.IngredientCategoryId);
+                .HasForeignKey(i => i.CategoryId);
 
             builder
                 .HasOne(i => i.Flavor)

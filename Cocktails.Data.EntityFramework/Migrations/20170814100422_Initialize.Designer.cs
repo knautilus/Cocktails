@@ -8,7 +8,7 @@ using Cocktails.Data.EntityFramework.Contexts;
 namespace Cocktails.Data.EntityFramework.Migrations
 {
     [DbContext(typeof(CocktailsContext))]
-    [Migration("20170813101350_Initialize")]
+    [Migration("20170814100422_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,13 +17,34 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Cocktails.Data.Domain.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<DateTimeOffset>("ModifiedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Cocktails.Data.Domain.Cocktail", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 
                     b.Property<string>("Description");
@@ -46,7 +67,7 @@ namespace Cocktails.Data.EntityFramework.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 
                     b.Property<DateTimeOffset>("ModifiedDate")
@@ -66,14 +87,14 @@ namespace Cocktails.Data.EntityFramework.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("CategoryId");
+
                     b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 
                     b.Property<Guid>("FlavorId");
 
-                    b.Property<Guid>("IngredientCategoryId");
-
                     b.Property<DateTimeOffset>("ModifiedDate")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("SYSUTCDATETIME()");
@@ -83,43 +104,26 @@ namespace Cocktails.Data.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FlavorId");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("IngredientCategoryId");
+                    b.HasIndex("FlavorId");
 
                     b.ToTable("Ingredients");
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Domain.IngredientCategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("SYSUTCDATETIME()");
-
-                    b.Property<DateTimeOffset>("ModifiedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("SYSUTCDATETIME()");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IngredientCategories");
-                });
-
             modelBuilder.Entity("Cocktails.Data.Domain.Mix", b =>
                 {
-                    b.Property<Guid>("CocktailId");
+                    b.Property<Guid>("Id");
 
                     b.Property<Guid>("IngredientId");
 
                     b.Property<decimal>("Amount");
 
-                    b.HasKey("CocktailId", "IngredientId");
+                    b.Property<DateTimeOffset>("CreatedDate");
+
+                    b.Property<DateTimeOffset>("ModifiedDate");
+
+                    b.HasKey("Id", "IngredientId");
 
                     b.HasIndex("IngredientId");
 
@@ -128,14 +132,14 @@ namespace Cocktails.Data.EntityFramework.Migrations
 
             modelBuilder.Entity("Cocktails.Data.Domain.Ingredient", b =>
                 {
+                    b.HasOne("Cocktails.Data.Domain.Category", "Category")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Cocktails.Data.Domain.Flavor", "Flavor")
                         .WithMany("Ingredients")
                         .HasForeignKey("FlavorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Cocktails.Data.Domain.IngredientCategory", "IngredientCategory")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("IngredientCategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -143,7 +147,7 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 {
                     b.HasOne("Cocktails.Data.Domain.Cocktail", "Cocktail")
                         .WithMany("Mixes")
-                        .HasForeignKey("CocktailId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Cocktails.Data.Domain.Ingredient", "Ingredient")

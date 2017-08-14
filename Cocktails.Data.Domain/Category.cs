@@ -2,7 +2,7 @@
 
 namespace Cocktails.Data.Domain
 {
-    public class IngredientCategory : BaseEntity
+    public class Category : BaseEntity
     {
         public string Name { get; set; }
 

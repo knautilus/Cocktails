@@ -9,6 +9,20 @@ namespace Cocktails.Data.EntityFramework.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cocktails",
                 columns: table => new
                 {
@@ -38,27 +52,13 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "IngredientCategories",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
-                    ModifiedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
-                    Name = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IngredientCategories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    CategoryId = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
                     FlavorId = table.Column<Guid>(nullable: false),
-                    IngredientCategoryId = table.Column<Guid>(nullable: false),
                     ModifiedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
                     Name = table.Column<string>(nullable: false)
                 },
@@ -66,15 +66,15 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 {
                     table.PrimaryKey("PK_Ingredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ingredients_Flavors_FlavorId",
-                        column: x => x.FlavorId,
-                        principalTable: "Flavors",
+                        name: "FK_Ingredients_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Ingredients_IngredientCategories_IngredientCategoryId",
-                        column: x => x.IngredientCategoryId,
-                        principalTable: "IngredientCategories",
+                        name: "FK_Ingredients_Flavors_FlavorId",
+                        column: x => x.FlavorId,
+                        principalTable: "Flavors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -83,16 +83,18 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 name: "Mixes",
                 columns: table => new
                 {
-                    CocktailId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     IngredientId = table.Column<Guid>(nullable: false),
-                    Amount = table.Column<decimal>(nullable: false)
+                    Amount = table.Column<decimal>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mixes", x => new { x.CocktailId, x.IngredientId });
+                    table.PrimaryKey("PK_Mixes", x => new { x.Id, x.IngredientId });
                     table.ForeignKey(
-                        name: "FK_Mixes_Cocktails_CocktailId",
-                        column: x => x.CocktailId,
+                        name: "FK_Mixes_Cocktails_Id",
+                        column: x => x.Id,
                         principalTable: "Cocktails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -105,14 +107,14 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Ingredients_CategoryId",
+                table: "Ingredients",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ingredients_FlavorId",
                 table: "Ingredients",
                 column: "FlavorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ingredients_IngredientCategoryId",
-                table: "Ingredients",
-                column: "IngredientCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Mixes_IngredientId",
@@ -132,10 +134,10 @@ namespace Cocktails.Data.EntityFramework.Migrations
                 name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Flavors");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "IngredientCategories");
+                name: "Flavors");
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Cocktails.Data.EntityFramework.EntityBuiders
         public MixBuilder(EntityTypeBuilder<Mix> builder)
         {
             builder
-                .HasKey(x => (new { x.CocktailId, x.IngredientId }));
+                .HasKey(x => (new { x.Id, x.IngredientId }));
 
             builder
                 .HasOne(m => m.Ingredient)
@@ -18,7 +18,7 @@ namespace Cocktails.Data.EntityFramework.EntityBuiders
             builder
                 .HasOne(m => m.Cocktail)
                 .WithMany(c => c.Mixes)
-                .HasForeignKey(m => m.CocktailId);
+                .HasForeignKey(m => m.Id);
         }
     }
 }

@@ -5,8 +5,6 @@ namespace Cocktails.Services
 {
     public class IngredientService : BaseService<Ingredient>
     {
-        public IngredientService(IRepository<Ingredient> repository) : base(repository)
-        {
-        }
+        public IngredientService(IRepository<Ingredient> repository) : base(repository) {}
     }
 }
