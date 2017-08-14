@@ -1,4 +1,4 @@
-﻿namespace Cocktails.Data.EntityFramework.Repositories
+﻿namespace Cocktails.Data.EntityFramework.Options
 {
     public interface IRepositoryOptions
     {

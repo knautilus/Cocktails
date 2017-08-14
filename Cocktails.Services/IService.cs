@@ -12,5 +12,6 @@ namespace Cocktails.Services
         Task<IEnumerable<TModel>> GetAsync(CancellationToken cancellationToken);
         Task<TModel> CreateAsync(TModel model, CancellationToken cancellationToken);
         Task<TModel> UpdateAsync(Guid id, TModel model, CancellationToken cancellationToken);
+        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
     }
 }

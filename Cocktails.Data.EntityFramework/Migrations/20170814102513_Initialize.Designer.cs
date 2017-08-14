@@ -8,7 +8,7 @@ using Cocktails.Data.EntityFramework.Contexts;
 namespace Cocktails.Data.EntityFramework.Migrations
 {
     [DbContext(typeof(CocktailsContext))]
-    [Migration("20170814100422_Initialize")]
+    [Migration("20170814102513_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -119,9 +119,13 @@ namespace Cocktails.Data.EntityFramework.Migrations
 
                     b.Property<decimal>("Amount");
 
-                    b.Property<DateTimeOffset>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
-                    b.Property<DateTimeOffset>("ModifiedDate");
+                    b.Property<DateTimeOffset>("ModifiedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
                     b.HasKey("Id", "IngredientId");
 

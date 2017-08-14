@@ -3,9 +3,9 @@ using Cocktails.Data.Domain;
 
 namespace Cocktails.Data.EntityFramework.EntityBuiders
 {
-    public class MixBuilder
+    public class MixBuilder : BaseBuilder<Mix>
     {
-        public MixBuilder(EntityTypeBuilder<Mix> builder)
+        public MixBuilder(EntityTypeBuilder<Mix> builder) : base(builder)
         {
             builder
                 .HasKey(x => (new { x.Id, x.IngredientId }));

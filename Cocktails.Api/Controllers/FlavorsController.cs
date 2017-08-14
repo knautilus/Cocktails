@@ -56,7 +56,7 @@ namespace Cocktails.Api.Controllers
             {
                 return NotFound(new { Id = id });
             }
-            return Accepted(result);
+            return Ok(result);
         }
     }
 }

@@ -86,8 +86,8 @@ namespace Cocktails.Data.EntityFramework.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     IngredientId = table.Column<Guid>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
-                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
-                    ModifiedDate = table.Column<DateTimeOffset>(nullable: false)
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "SYSUTCDATETIME()")
                 },
                 constraints: table =>
                 {

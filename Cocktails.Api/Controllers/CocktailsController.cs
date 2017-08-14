@@ -56,7 +56,16 @@ namespace Cocktails.Api.Controllers
             {
                 return NotFound(new { Id = id });
             }
-            return Accepted(result);
+            return Ok(result);
+        }
+
+        // DELETE api/cocktails/5
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            await _service.DeleteAsync(id, cancellationToken);
+
+            return NoContent();
         }
     }
 }

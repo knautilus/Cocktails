@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using Cocktails.Data.Domain;
+using Cocktails.Data.EntityFramework.Options;
 
 namespace Cocktails.Data.EntityFramework.Repositories
 {
@@ -64,7 +65,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
             {
                 throw new ArgumentNullException("entity");
             }
-            entity = UpdateModel(entity);
+            entity = SetModifiedDate(entity);
             var entry = _entities.Update(entity);
             UpdateEntry(entry);
 
@@ -95,7 +96,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
             return _context.SaveChangesAsync(cancellationToken);
         }
 
-        private T UpdateModel(T model)
+        private T SetModifiedDate(T model)
         {
             model.ModifiedDate = DateTimeOffset.UtcNow;
             return model;

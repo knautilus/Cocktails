@@ -118,9 +118,13 @@ namespace Cocktails.Data.EntityFramework.Migrations
 
                     b.Property<decimal>("Amount");
 
-                    b.Property<DateTimeOffset>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
-                    b.Property<DateTimeOffset>("ModifiedDate");
+                    b.Property<DateTimeOffset>("ModifiedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
                     b.HasKey("Id", "IngredientId");
 

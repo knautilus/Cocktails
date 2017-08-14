@@ -12,7 +12,7 @@ using Cocktails.Data.EntityFramework.Repositories;
 namespace Cocktails.Services
 {
     public abstract class BaseService<T> : IService<T>
-        where T : BaseEntity
+        where T : BaseEntity, new()
     {
         protected readonly IRepository<T> _repository;
 
@@ -49,6 +49,11 @@ namespace Cocktails.Services
             {
                 return null;
             }
+        }
+
+        public Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+        {
+            return _repository.DeleteAsync(new T { Id = id }, cancellationToken);
         }
     }
 }

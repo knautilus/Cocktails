@@ -15,7 +15,6 @@ namespace Cocktails.Api.Controllers
         }
 
         [Route("~/")]
-        //[CacheControlHeader(Minutes = 1)]
         public IActionResult Get() => Ok(_info);
     }
 }
