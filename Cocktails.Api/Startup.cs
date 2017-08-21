@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
@@ -15,6 +16,8 @@ using Cocktails.Data.EntityFramework.Contexts;
 using Cocktails.Data.EntityFramework.Options;
 using Cocktails.Data.EntityFramework.Repositories;
 using Cocktails.Services;
+using Cocktails.ViewModels;
+using Cocktails.Mapper;
 
 namespace Cocktails.Api
 {
@@ -51,6 +54,8 @@ namespace Cocktails.Api
                 options.Filters.Add(new RequireHttpsAttribute());
             });
 
+            services.AddAutoMapper();
+
             services.AddDbContext<CocktailsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped(typeof(DbContext), typeof(CocktailsContext));
@@ -64,10 +69,11 @@ namespace Cocktails.Api
                     new RepositoryOptions { AutoCommit = false });
             });
 
-            services.AddScoped(typeof(IService<Cocktail>), typeof(CocktailService));
-            services.AddScoped(typeof(IService<Flavor>), typeof(FlavorService));
-            services.AddScoped(typeof(IService<Ingredient>), typeof(IngredientService));
-            services.AddScoped(typeof(IService<Category>), typeof(CategoryService));
+            services.AddScoped(typeof(IService<Cocktail, CocktailModel>), typeof(CocktailService));
+            services.AddScoped(typeof(IService<Flavor, FlavorModel>), typeof(FlavorService));
+            services.AddScoped(typeof(IService<Ingredient, IngredientModel>), typeof(IngredientService));
+            services.AddScoped(typeof(IService<Category, CategoryModel>), typeof(CategoryService));
+            services.AddScoped(typeof(IModelMapper), typeof(ModelMapper));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

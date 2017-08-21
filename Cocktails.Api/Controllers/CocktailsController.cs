@@ -6,15 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 using Cocktails.Data.Domain;
 using Cocktails.Services;
+using Cocktails.ViewModels;
 
 namespace Cocktails.Api.Controllers
 {
     [Route("api/[controller]")]
     public class CocktailsController : Controller
     {
-        private readonly IService<Cocktail> _service;
+        private readonly IService<Cocktail, CocktailModel> _service;
 
-        public CocktailsController(IService<Cocktail> service)
+        public CocktailsController(IService<Cocktail, CocktailModel> service)
         {
             _service = service;
         }
@@ -34,27 +35,27 @@ namespace Cocktails.Api.Controllers
             var result = await _service.GetByIdAsync(id, cancellationToken);
             if (result == null)
             {
-                return NotFound(new { Id = id });
+                return NotFound(new IdModel(id));
             }
             return Ok(result);
         }
 
         // POST api/cocktails
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] Cocktail model, CancellationToken cancellationToken)
+        public async Task<IActionResult> PostAsync([FromBody] CocktailModel model, CancellationToken cancellationToken)
         {
             var result = await _service.CreateAsync(model, cancellationToken);
-            return CreatedAtRoute("GetCocktail", new { Id = result.Id }, result);
+            return CreatedAtRoute("GetCocktail", new IdModel(result.Id), result);
         }
 
         // PUT api/cocktails/5
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody] Cocktail model, CancellationToken cancellationToken)
+        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody] CocktailModel model, CancellationToken cancellationToken)
         {
             var result = await _service.UpdateAsync(id, model, cancellationToken);
             if (result == null)
             {
-                return NotFound(new { Id = id });
+                return NotFound(new IdModel(id));
             }
             return Ok(result);
         }
@@ -64,7 +65,6 @@ namespace Cocktails.Api.Controllers
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             await _service.DeleteAsync(id, cancellationToken);
-
             return NoContent();
         }
     }
