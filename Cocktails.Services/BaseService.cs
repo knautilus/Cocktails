@@ -8,42 +8,53 @@ using Microsoft.EntityFrameworkCore;
 
 using Cocktails.Data.Domain;
 using Cocktails.Data.EntityFramework.Repositories;
+using Cocktails.Mapper;
+using Cocktails.ViewModels;
 
 namespace Cocktails.Services
 {
-    public abstract class BaseService<T> : IService<T>
-        where T : BaseEntity, new()
+    public abstract class BaseService<TEntity, TModel> : IService<TEntity, TModel>
+        where TModel : BaseModel
+        where TEntity : BaseEntity, new()
     {
-        protected readonly IRepository<T> _repository;
+        protected readonly IRepository<TEntity> _repository;
+        protected readonly IModelMapper _mapper;
 
-        public BaseService(IRepository<T> repository)
+        public BaseService(IRepository<TEntity> repository, IModelMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public async virtual Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async virtual Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var result = await _repository.GetSingleAsync(x => x.Where(y => y.Id == id), cancellationToken);
-            return result;
+            return _mapper.Map<TModel>(result);
         }
 
-        public async virtual Task<IEnumerable<T>> GetAsync(CancellationToken cancellationToken)
+        public async virtual Task<IEnumerable<TModel>> GetAsync(CancellationToken cancellationToken)
         {
             var result = await _repository.GetAsync(x => x, cancellationToken);
-            return result;
+            return _mapper.Map<IEnumerable<TModel>>(result);
         }
 
-        public virtual Task<T> CreateAsync(T model, CancellationToken cancellationToken)
+        public virtual async Task<TModel> CreateAsync(TModel model, CancellationToken cancellationToken)
         {
-            return _repository.InsertAsync(model, cancellationToken);
+            var entity = _mapper.Map<TEntity>(model);
+            var result = await _repository.InsertAsync(entity, cancellationToken);
+            return await GetByIdAsync(result.Id, cancellationToken);
         }
 
-        public virtual async Task<T> UpdateAsync(Guid id, T model, CancellationToken cancellationToken)
+        public virtual async Task<TModel> UpdateAsync(Guid id, TModel model, CancellationToken cancellationToken)
         {
             model.Id = id;
+
+            var entity = _mapper.Map<TEntity>(model);
+
             try
             {
-                return await _repository.UpdateAsync(model, cancellationToken);
+                var result = await _repository.UpdateAsync(entity, cancellationToken);
+                return await GetByIdAsync(result.Id, cancellationToken);
             }
             catch (DbUpdateException)
             {
@@ -53,7 +64,7 @@ namespace Cocktails.Services
 
         public Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            return _repository.DeleteAsync(new T { Id = id }, cancellationToken);
+            return _repository.DeleteAsync(new TEntity { Id = id }, cancellationToken);
         }
     }
 }

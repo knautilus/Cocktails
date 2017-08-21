@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Cocktails.Services
 {
-    public interface IService<TModel>
+    public interface IService<TEntity, TModel>
+        where TEntity : class
         where TModel : class
     {
         Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);

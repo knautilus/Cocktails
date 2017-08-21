@@ -8,7 +8,9 @@ namespace Cocktails.Data.EntityFramework.EntityBuiders
         public CategoryBuilder(EntityTypeBuilder<Category> builder) : base (builder)
         {
             builder
-                .Property(x => x.Name).IsRequired(true);
+                .Property(x => x.Name)
+                .HasMaxLength(128)
+                .IsRequired(true);
         }
     }
 }

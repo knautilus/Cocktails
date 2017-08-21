@@ -11,9 +11,10 @@ using System;
 namespace Cocktails.Data.EntityFramework.Migrations
 {
     [DbContext(typeof(CocktailsContext))]
-    partial class CocktailsContextModelSnapshot : ModelSnapshot
+    [Migration("20170821164727_AddMaxLength")]
+    partial class AddMaxLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

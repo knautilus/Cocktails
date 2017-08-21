@@ -49,7 +49,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
                 throw new ArgumentNullException("entity");
             }
             var entry = _entities.Add(entity);
-            UpdateEntry(entry);
+            IgnoreReadonlyFields(entry);
 
             if (_options.AutoCommit)
             {
@@ -67,7 +67,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
             }
             entity = SetModifiedDate(entity);
             var entry = _entities.Update(entity);
-            UpdateEntry(entry);
+            IgnoreReadonlyFields(entry);
 
             if (_options.AutoCommit)
             {
@@ -102,8 +102,9 @@ namespace Cocktails.Data.EntityFramework.Repositories
             return model;
         }
 
-        private EntityEntry<T> UpdateEntry(EntityEntry<T> entry)
+        private EntityEntry<T> IgnoreReadonlyFields(EntityEntry<T> entry)
         {
+            entry.Property(x => x.Id).IsModified = false;
             entry.Property(x => x.CreatedDate).IsModified = false;
             return entry;
         }
