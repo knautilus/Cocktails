@@ -42,7 +42,7 @@ namespace Cocktails.Services
         {
             var entity = _mapper.Map<TEntity>(model);
             var result = await _repository.InsertAsync(entity, cancellationToken);
-            return _mapper.Map<TModel>(result);
+            return await GetByIdAsync(result.Id, cancellationToken);
         }
 
         public virtual async Task<TModel> UpdateAsync(Guid id, TModel model, CancellationToken cancellationToken)
@@ -54,7 +54,7 @@ namespace Cocktails.Services
             try
             {
                 var result = await _repository.UpdateAsync(entity, cancellationToken);
-                return _mapper.Map<TModel>(result);
+                return await GetByIdAsync(result.Id, cancellationToken);
             }
             catch (DbUpdateException)
             {

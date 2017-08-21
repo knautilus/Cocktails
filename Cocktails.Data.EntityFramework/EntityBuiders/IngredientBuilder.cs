@@ -18,7 +18,9 @@ namespace Cocktails.Data.EntityFramework.EntityBuiders
                 .HasForeignKey(i => i.FlavorId);
 
             builder
-                .Property(x => x.Name).IsRequired(true);
+                .Property(x => x.Name)
+                .HasMaxLength(128)
+                .IsRequired(true);
         }
     }
 }

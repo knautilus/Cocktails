@@ -51,7 +51,7 @@ namespace Cocktails.Services
             {
                 await _mixRepository.CommitAsync(cancellationToken);
             }
-            return result;
+            return await GetByIdAsync(result.Id, cancellationToken);
         }
 
         private async Task ProcessMixesAsync(Guid id, CocktailModel model, CancellationToken cancellationToken)
