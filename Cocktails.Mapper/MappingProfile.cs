@@ -9,19 +9,19 @@ namespace Cocktails.Mapper
         public MappingProfile()
         {
             CreateMap<Category, CategoryModel>();
-            CreateMap<CategoryModel, Category>();
+            CreateMap<CategoryModel, Category>().IgnoreReadOnly();
 
             CreateMap<Flavor, FlavorModel>();
-            CreateMap<FlavorModel, Flavor>();
+            CreateMap<FlavorModel, Flavor>().IgnoreReadOnly();
 
             CreateMap<Ingredient, IngredientModel>();
-            CreateMap<IngredientModel, Ingredient>();
+            CreateMap<IngredientModel, Ingredient>().IgnoreReadOnly();
 
             CreateMap<Mix, MixModel>();
-            CreateMap<MixModel, Mix>();
+            CreateMap<MixModel, Mix>().IgnoreReadOnly();
 
             CreateMap<Cocktail, CocktailModel>();
-            CreateMap<CocktailModel, Cocktail>();
+            CreateMap<CocktailModel, Cocktail>().IgnoreReadOnly();
         }
     }
 }

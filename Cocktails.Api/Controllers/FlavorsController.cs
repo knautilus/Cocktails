@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 using Cocktails.Data.Domain;
 using Cocktails.Services;
@@ -10,26 +12,43 @@ using Cocktails.ViewModels;
 
 namespace Cocktails.Api.Controllers
 {
+    /// <summary>
+    /// API Controller for Flavors
+    /// </summary>
     [Route("api/[controller]")]
     public class FlavorsController : Controller
     {
         private readonly IService<Flavor, FlavorModel> _service;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="service"></param>
         public FlavorsController(IService<Flavor, FlavorModel> service)
         {
             _service = service;
         }
 
-        // GET api/flavors
+        /// <summary>
+        /// Returns a collection of ingredient flavors
+        /// </summary>
+        /// <param name="cancellationToken"></param>
         [HttpGet]
+        [SwaggerResponse(200, description: "Success", type: typeof(FlavorModel[]))]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await _service.GetAsync(cancellationToken);
             return Ok(result);
         }
 
-        // GET api/flavors/5
+        /// <summary>
+        /// Returns a specific ingredient flavor
+        /// </summary>
+        /// <param name="id">Item Id (GUID)</param>
+        /// <param name="cancellationToken"></param>
         [HttpGet("{id:guid}", Name = "GetFlavor")]
+        [SwaggerResponse(200, description: "Item found", type: typeof(FlavorModel))]
+        [SwaggerResponse(400, description: "Item not found", type: typeof(IdModel))]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await _service.GetByIdAsync(id, cancellationToken);
@@ -40,17 +59,29 @@ namespace Cocktails.Api.Controllers
             return Ok(result);
         }
 
-        // POST api/flavors
+        /// <summary>
+        /// Adds an ingredient flavor
+        /// </summary>
+        /// <param name="model">Flavor JSON representation</param>
+        /// <param name="cancellationToken"></param>
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] FlavorModel model, CancellationToken cancellationToken)
+        [SwaggerResponse(201, description: "Item created successfully", type: typeof(FlavorModel))]
+        public async Task<IActionResult> PostAsync([FromBody, Required] FlavorModel model, CancellationToken cancellationToken)
         {
             var result = await _service.CreateAsync(model, cancellationToken);
             return CreatedAtRoute("GetFlavor", new IdModel(result.Id), result);
         }
 
-        // PUT api/flavors/5
+        /// <summary>
+        /// Updates a specific ingredient flavor
+        /// </summary>
+        /// <param name="id">Item Id (GUID)</param>
+        /// <param name="model">Flavor JSON representation</param>
+        /// <param name="cancellationToken"></param>
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody] FlavorModel model, CancellationToken cancellationToken)
+        [SwaggerResponse(200, description: "Item updated successfully", type: typeof(FlavorModel))]
+        [SwaggerResponse(404, description: "Item not found", type: typeof(IdModel))]
+        public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody, Required] FlavorModel model, CancellationToken cancellationToken)
         {
             var result = await _service.UpdateAsync(id, model, cancellationToken);
             if (result == null)
