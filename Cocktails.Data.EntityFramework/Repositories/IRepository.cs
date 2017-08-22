@@ -8,13 +8,13 @@ using System.Linq;
 
 namespace Cocktails.Data.EntityFramework.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<T> GetSingleAsync(Func<IQueryable<T>, IQueryable<T>> query, CancellationToken cancellationToken);
-        Task<IEnumerable<T>> GetAsync(Func<IQueryable<T>, IQueryable<T>> query, CancellationToken cancellationToken);
-        Task<T> InsertAsync(T entity, CancellationToken cancellationToken);
-        Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
-        Task DeleteAsync(T entity, CancellationToken cancellationToken);
+        Task<TEntity> GetSingleAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken);
+        Task<IEnumerable<TEntity>> GetAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken);
+        Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken);
+        Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken);
+        Task DeleteAsync(TEntity entity, CancellationToken cancellationToken);
         Task CommitAsync(CancellationToken cancellationToken);
     }
 }

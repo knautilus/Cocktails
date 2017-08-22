@@ -47,16 +47,15 @@ namespace Cocktails.Services
 
         public virtual async Task<TModel> UpdateAsync(Guid id, TModel model, CancellationToken cancellationToken)
         {
-            model.Id = id;
-
             var entity = _mapper.Map<TEntity>(model);
+            entity.Id = id;
 
             try
             {
                 var result = await _repository.UpdateAsync(entity, cancellationToken);
                 return await GetByIdAsync(result.Id, cancellationToken);
             }
-            catch (DbUpdateException)
+            catch (DbUpdateConcurrencyException)
             {
                 return null;
             }

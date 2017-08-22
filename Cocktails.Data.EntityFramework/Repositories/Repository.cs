@@ -12,37 +12,37 @@ using Cocktails.Data.EntityFramework.Options;
 
 namespace Cocktails.Data.EntityFramework.Repositories
 {
-    public class Repository<T> : IRepository<T>
-        where T : BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity>
+        where TEntity : BaseEntity
     {
         private readonly DbContext _context;
-        private readonly DbSet<T> _entities;
+        private readonly DbSet<TEntity> _entities;
         private readonly IRepositoryOptions _options;
 
         public Repository(DbContext context, IRepositoryOptions options)
         {
             _context = context;
-            _entities = context.Set<T>();
+            _entities = context.Set<TEntity>();
             _options = options;
         }
 
-        public Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken)
+        public Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
         {
             return Task.FromResult(_entities.AsEnumerable());
         }
 
-        public Task<T> GetSingleAsync(Func<IQueryable<T>, IQueryable<T>> query, CancellationToken cancellationToken)
+        public Task<TEntity> GetSingleAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
         {
             return query(_entities.AsQueryable()).FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<T>> GetAsync(Func<IQueryable<T>, IQueryable<T>> query, CancellationToken cancellationToken)
+        public async Task<IEnumerable<TEntity>> GetAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
         {
             var result = await query(_entities.AsQueryable()).ToListAsync();
             return result;
         }
 
-        public async Task<T> InsertAsync(T entity, CancellationToken cancellationToken)
+        public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken)
         {
             if (entity == null)
             {
@@ -59,7 +59,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
             return entity;
         }
 
-        public async Task<T> UpdateAsync(T entity, CancellationToken cancellationToken)
+        public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken)
         {
             if (entity == null)
             {
@@ -77,7 +77,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
             return entity;
         }
 
-        public async Task DeleteAsync(T entity, CancellationToken cancellationToken)
+        public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
         {
             if (entity == null)
             {
@@ -96,15 +96,14 @@ namespace Cocktails.Data.EntityFramework.Repositories
             return _context.SaveChangesAsync(cancellationToken);
         }
 
-        private T SetModifiedDate(T model)
+        private TEntity SetModifiedDate(TEntity model)
         {
             model.ModifiedDate = DateTimeOffset.UtcNow;
             return model;
         }
 
-        private EntityEntry<T> IgnoreReadonlyFields(EntityEntry<T> entry)
+        private EntityEntry<TEntity> IgnoreReadonlyFields(EntityEntry<TEntity> entry)
         {
-            entry.Property(x => x.Id).IsModified = false;
             entry.Property(x => x.CreatedDate).IsModified = false;
             return entry;
         }
