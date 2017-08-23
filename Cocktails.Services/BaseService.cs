@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
+using Cocktails.Common.Exceptions;
 using Cocktails.Data.Domain;
 using Cocktails.Data.EntityFramework.Repositories;
 using Cocktails.Mapper;
@@ -26,13 +27,13 @@ namespace Cocktails.Services
             _mapper = mapper;
         }
 
-        public async virtual Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public virtual async Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var result = await _repository.GetSingleAsync(x => x.Where(y => y.Id == id), cancellationToken);
             return _mapper.Map<TModel>(result);
         }
 
-        public async virtual Task<IEnumerable<TModel>> GetAsync(CancellationToken cancellationToken)
+        public virtual async Task<IEnumerable<TModel>> GetAsync(CancellationToken cancellationToken)
         {
             var result = await _repository.GetAsync(x => x, cancellationToken);
             return _mapper.Map<IEnumerable<TModel>>(result);
@@ -41,29 +42,48 @@ namespace Cocktails.Services
         public virtual async Task<TModel> CreateAsync(TModel model, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<TEntity>(model);
-            var result = await _repository.InsertAsync(entity, cancellationToken);
-            return await GetByIdAsync(result.Id, cancellationToken);
+            try
+            {
+                var result = await _repository.InsertAsync(entity, cancellationToken);
+                return await GetByIdAsync(result.Id, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                throw GetDetailedException(ex);
+            }
         }
 
         public virtual async Task<TModel> UpdateAsync(Guid id, TModel model, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<TEntity>(model);
             entity.Id = id;
-
             try
             {
                 var result = await _repository.UpdateAsync(entity, cancellationToken);
                 return await GetByIdAsync(result.Id, cancellationToken);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                return null;
+                throw GetDetailedException(ex);
             }
         }
 
         public Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             return _repository.DeleteAsync(new TEntity { Id = id }, cancellationToken);
+        }
+
+        protected virtual Exception GetDetailedException(Exception exception)
+        {
+            if (exception is DbUpdateConcurrencyException)
+            {
+                return new NotFoundException("Id not found");
+            }
+            if (exception is DbUpdateException)
+            {
+                return new BadRequestException("Foreign Id not found");
+            }
+            return exception;
         }
     }
 }
