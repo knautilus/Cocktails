@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
+using Cocktails.Common.Exceptions;
+using Cocktails.Common.Extensions;
 using Cocktails.Data.Domain;
 using Cocktails.Data.EntityFramework.Repositories;
 using Cocktails.Mapper;
@@ -33,6 +35,27 @@ namespace Cocktails.Services
                 .Include(y => y.Flavor)
                 .Include(y => y.Category), cancellationToken);
             return _mapper.Map<IEnumerable<IngredientModel>>(result);
+        }
+
+        protected override Exception GetDetailedException(Exception exception)
+        {
+            if (exception is DbUpdateConcurrencyException)
+            {
+                return new NotFoundException("Id not found");
+            }
+            if (exception is DbUpdateException dbEx)
+            {
+                if (dbEx.Contains("FK_Ingredients_Flavors_FlavorId"))
+                {
+                    return new BadRequestException("FlavorId not found");
+                }
+                if (dbEx.Contains("FK_Ingredients_Categories_CategoryId"))
+                {
+                    return new BadRequestException("CategoryId not found");
+                }
+                return new BadRequestException(dbEx.GetMostInner()?.Message);
+            }
+            return exception;
         }
     }
 }

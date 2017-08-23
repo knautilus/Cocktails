@@ -6,7 +6,7 @@ namespace Cocktails.ViewModels
 {
     public class IngredientModel : BaseModel
     {
-        [Required]
+        [Required, MaxLength(128)]
         public string Name { get; set; }
 
         [Required]

@@ -4,7 +4,7 @@ namespace Cocktails.ViewModels
 {
     public class CategoryModel : BaseModel
     {
-        [Required]
+        [Required, MaxLength(128)]
         public string Name { get; set; }
     }
 }
