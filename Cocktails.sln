@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.ViewModels", "Coc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Mapper", "Cocktails.Mapper\Cocktails.Mapper.csproj", "{5CE9E347-F50F-40ED-8B8A-22E09F42677F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Tests", "Cokctails.Services.Tests\Cocktails.Tests.csproj", "{3C86FA54-A325-4359-9A75-DD99770F8460}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Tests", "Cocktails.Tests\Cocktails.Tests.csproj", "{3C86FA54-A325-4359-9A75-DD99770F8460}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

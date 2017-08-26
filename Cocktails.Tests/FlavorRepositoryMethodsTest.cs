@@ -27,7 +27,7 @@ namespace Cocktails.Tests
         }
 
         [Test]
-        public async Task AddFlavorUpdatesDb()
+        public async Task InsertFlavorUpdatesDb()
         {
             var flavor = new Flavor { Name = "flavor1" };
 
@@ -35,14 +35,45 @@ namespace Cocktails.Tests
 
             var result = await repository.InsertAsync(flavor, _token);
 
-            Assert.That(_cocktailsContext.Flavors.Any(x => x.Name == flavor.Name));
+            Assert.AreEqual(flavor, result);
+            Assert.Contains(flavor, _cocktailsContext.Flavors.ToArray());
+        }
+
+        [Test]
+        public async Task UpdateFlavorUpdatesDb()
+        {
+            var count = _cocktailsContext.Flavors.Count();
+            var newName = "new name";
+            var flavor = _cocktailsContext.Flavors.First();
+            var id = flavor.Id;
+
+            var repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
+
+            flavor.Name = newName;
+            var result = await repository.UpdateAsync(flavor, _token);
+
+            Assert.AreEqual(flavor, result);
+            Assert.AreEqual(count, _cocktailsContext.Flavors.Count());
+            Assert.Contains(flavor, _cocktailsContext.Flavors.ToArray());
+        }
+
+        [Test]
+        public void UpdateFlavorWithWrongId()
+        {
+            var count = _cocktailsContext.Flavors.Count();
+            var newName = "new name";
+            var flavor = new Flavor { Id = Guid.NewGuid(), Name = newName };
+
+            var repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
+
+            Assert.ThrowsAsync(typeof(DbUpdateConcurrencyException), async () => await repository.UpdateAsync(flavor, _token));
         }
 
         [Test]
         public async Task DeleteFlavorUpdatesDb()
         {
-            var flavor = _cocktailsContext.Flavors.First();
             var count = _cocktailsContext.Flavors.Count();
+            var flavor = _cocktailsContext.Flavors.First();
             var id = flavor.Id;
 
             var repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
