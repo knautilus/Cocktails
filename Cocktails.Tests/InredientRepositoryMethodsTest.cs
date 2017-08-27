@@ -18,12 +18,14 @@ namespace Cocktails.Tests
     {
         private CocktailsContext _cocktailsContext;
         private CancellationToken _token;
+        private Repository<Ingredient> _repository;
 
         [SetUp]
         public void SetUp()
         {
             InitContext();
             _token = new CancellationToken();
+            _repository = new Repository<Ingredient>(_cocktailsContext, new RepositoryOptions());
         }
 
         [Test]
@@ -37,9 +39,7 @@ namespace Cocktails.Tests
                 CategoryId = category.Id
             };
 
-            var repository = new Repository<Ingredient>(_cocktailsContext, new RepositoryOptions());
-
-            var result = await repository.InsertAsync(ingredient, _token);
+            var result = await _repository.InsertAsync(ingredient, _token);
 
             Assert.AreEqual(ingredient, result);
             Assert.IsNotNull(result.Flavor);
@@ -59,9 +59,7 @@ namespace Cocktails.Tests
                 CategoryId = Guid.NewGuid()
             };
 
-            var repository = new Repository<Ingredient>(_cocktailsContext, new RepositoryOptions());
-
-            var result = await repository.InsertAsync(ingredient, _token);
+            var result = await _repository.InsertAsync(ingredient, _token);
 
             Assert.AreEqual(ingredient, result);
             Assert.IsNull(result.Flavor);

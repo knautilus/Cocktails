@@ -18,12 +18,14 @@ namespace Cocktails.Tests
     {
         private CocktailsContext _cocktailsContext;
         private CancellationToken _token;
+        private Repository<Flavor> _repository;
 
         [SetUp]
         public void SetUp()
         {
             InitContext();
             _token = new CancellationToken();
+            _repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
         }
 
         [Test]
@@ -31,9 +33,7 @@ namespace Cocktails.Tests
         {
             var flavor = new Flavor { Name = "flavor1" };
 
-            var repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
-
-            var result = await repository.InsertAsync(flavor, _token);
+            var result = await _repository.InsertAsync(flavor, _token);
 
             Assert.AreEqual(flavor, result);
             Assert.Contains(flavor, _cocktailsContext.Flavors.ToArray());
@@ -47,10 +47,8 @@ namespace Cocktails.Tests
             var flavor = _cocktailsContext.Flavors.First();
             var id = flavor.Id;
 
-            var repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
-
             flavor.Name = newName;
-            var result = await repository.UpdateAsync(flavor, _token);
+            var result = await _repository.UpdateAsync(flavor, _token);
 
             Assert.AreEqual(flavor, result);
             Assert.AreEqual(count, _cocktailsContext.Flavors.Count());
@@ -60,13 +58,11 @@ namespace Cocktails.Tests
         [Test]
         public void UpdateFlavorWithWrongId()
         {
-            var count = _cocktailsContext.Flavors.Count();
             var newName = "new name";
             var flavor = new Flavor { Id = Guid.NewGuid(), Name = newName };
 
-            var repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
-
-            Assert.ThrowsAsync(typeof(DbUpdateConcurrencyException), async () => await repository.UpdateAsync(flavor, _token));
+            Assert.ThrowsAsync(typeof(DbUpdateConcurrencyException),
+                async () => await _repository.UpdateAsync(flavor, _token));
         }
 
         [Test]
@@ -76,12 +72,19 @@ namespace Cocktails.Tests
             var flavor = _cocktailsContext.Flavors.First();
             var id = flavor.Id;
 
-            var repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
-
-            await repository.DeleteAsync(flavor, _token);
+            await _repository.DeleteAsync(flavor, _token);
 
             Assert.AreEqual(count - 1, _cocktailsContext.Flavors.Count());
             Assert.That(_cocktailsContext.Flavors.All(x => x.Id != id));
+        }
+
+        [Test]
+        public void DeleteFlavorWithWrongId()
+        {
+            var flavor = new Flavor { Id = Guid.NewGuid() };
+
+            Assert.ThrowsAsync(typeof(DbUpdateConcurrencyException),
+                async () => await _repository.DeleteAsync(flavor, _token));
         }
 
         [Test]
@@ -93,9 +96,7 @@ namespace Cocktails.Tests
             _cocktailsContext.Add(flavor);
             _cocktailsContext.SaveChanges();
 
-            var repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
-
-            var result = await repository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
+            var result = await _repository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(flavor.Id, result.Id);
@@ -107,9 +108,7 @@ namespace Cocktails.Tests
         {
             var id = Guid.NewGuid();
 
-            var repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
-
-            var result = await repository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
+            var result = await _repository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
 
             Assert.IsNull(result);
         }

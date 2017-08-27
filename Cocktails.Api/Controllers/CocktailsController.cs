@@ -127,8 +127,15 @@ namespace Cocktails.Api.Controllers
         [SwaggerResponse(204, description: "Item deleted successfully")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            await _service.DeleteAsync(id, cancellationToken);
-            return NoContent();
+            try
+            {
+                await _service.DeleteAsync(id, cancellationToken);
+                return NoContent();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new ApiErrorResponse(404, ex.Message));
+            }
         }
     }
 }
