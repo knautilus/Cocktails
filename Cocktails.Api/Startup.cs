@@ -58,6 +58,7 @@ namespace Cocktails.Api
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            services.AddApiVersioning();
             services.AddOptions();
 
             // Add settings from configuration

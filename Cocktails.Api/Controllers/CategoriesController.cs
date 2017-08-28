@@ -17,7 +17,8 @@ namespace Cocktails.Api.Controllers
     /// <summary>
     /// API Controller for Categories
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiVersion("1")]
     public class CategoriesController : Controller
     {
         private readonly IService<Category, CategoryModel> _service;

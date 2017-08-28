@@ -17,7 +17,8 @@ namespace Cocktails.Api.Controllers
     /// <summary>
     /// API Controller for Cocktails
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiVersion("1")]
     public class CocktailsController : Controller
     {
         private readonly IService<Cocktail, CocktailModel> _service;
