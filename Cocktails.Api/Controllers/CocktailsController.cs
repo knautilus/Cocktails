@@ -17,7 +17,8 @@ namespace Cocktails.Api.Controllers
     /// <summary>
     /// API Controller for Cocktails
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiVersion("1")]
     public class CocktailsController : Controller
     {
         private readonly IService<Cocktail, CocktailModel> _service;
@@ -127,8 +128,15 @@ namespace Cocktails.Api.Controllers
         [SwaggerResponse(204, description: "Item deleted successfully")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            await _service.DeleteAsync(id, cancellationToken);
-            return NoContent();
+            try
+            {
+                await _service.DeleteAsync(id, cancellationToken);
+                return NoContent();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new ApiErrorResponse(404, ex.Message));
+            }
         }
     }
 }

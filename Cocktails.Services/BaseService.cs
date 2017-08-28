@@ -68,9 +68,16 @@ namespace Cocktails.Services
             }
         }
 
-        public Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            return _repository.DeleteAsync(new TEntity { Id = id }, cancellationToken);
+            try
+            {
+                await _repository.DeleteAsync(new TEntity { Id = id }, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                throw GetDetailedException(ex);
+            }
         }
 
         protected virtual Exception GetDetailedException(Exception exception)
