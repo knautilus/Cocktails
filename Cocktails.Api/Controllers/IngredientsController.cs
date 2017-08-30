@@ -8,7 +8,6 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 using Cocktails.Common.Exceptions;
 using Cocktails.Common.Models;
-using Cocktails.Data.Domain;
 using Cocktails.Services;
 using Cocktails.ViewModels;
 
@@ -21,13 +20,13 @@ namespace Cocktails.Api.Controllers
     [ApiVersion("1")]
     public class IngredientsController : Controller
     {
-        private readonly IService<Ingredient, IngredientModel> _service;
+        private readonly IIngredientService _service;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="service"></param>
-        public IngredientsController(IService<Ingredient, IngredientModel> service)
+        public IngredientsController(IIngredientService service)
         {
             _service = service;
         }
@@ -40,7 +39,7 @@ namespace Cocktails.Api.Controllers
         [SwaggerResponse(200, description: "Success", type: typeof(IngredientModel[]))]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
-            var result = await _service.GetAsync(cancellationToken);
+            var result = await _service.GetAllAsync(cancellationToken);
             return Ok(result);
         }
 
@@ -59,6 +58,19 @@ namespace Cocktails.Api.Controllers
             {
                 return NotFound(new ApiErrorResponse(404, "Ingredient with id '{id}' not found"));
             }
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Returns ingredient by specific category id
+        /// </summary>
+        /// <param name="categoryId">Category Id (GUID)</param>
+        /// <param name="cancellationToken"></param>
+        [HttpGet("{categoryId:guid}")]
+        [SwaggerResponse(200, description: "Success", type: typeof(IngredientModel[]))]
+        public async Task<IActionResult> GetByCategoryIdAsync([FromRoute] Guid categoryId, CancellationToken cancellationToken)
+        {
+            var result = await _service.GetByCategoryIdAsync(categoryId, cancellationToken);
             return Ok(result);
         }
 

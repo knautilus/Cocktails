@@ -10,7 +10,7 @@ namespace Cocktails.Services
         where TModel : class
     {
         Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-        Task<IEnumerable<TModel>> GetAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<TModel>> GetAllAsync(CancellationToken cancellationToken);
         Task<TModel> CreateAsync(TModel model, CancellationToken cancellationToken);
         Task<TModel> UpdateAsync(Guid id, TModel model, CancellationToken cancellationToken);
         Task DeleteAsync(Guid id, CancellationToken cancellationToken);

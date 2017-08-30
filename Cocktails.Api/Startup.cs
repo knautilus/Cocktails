@@ -103,7 +103,7 @@ namespace Cocktails.Api
 
             services.AddScoped(typeof(IService<Cocktail, CocktailModel>), typeof(CocktailService));
             services.AddScoped(typeof(IService<Flavor, FlavorModel>), typeof(FlavorService));
-            services.AddScoped(typeof(IService<Ingredient, IngredientModel>), typeof(IngredientService));
+            services.AddScoped(typeof(IIngredientService), typeof(IngredientService));
             services.AddScoped(typeof(IService<Category, CategoryModel>), typeof(CategoryService));
             services.AddScoped(typeof(IModelMapper), typeof(ModelMapper));
         }
