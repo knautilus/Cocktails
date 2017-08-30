@@ -66,7 +66,7 @@ namespace Cocktails.Api.Controllers
         /// </summary>
         /// <param name="categoryId">Category Id (GUID)</param>
         /// <param name="cancellationToken"></param>
-        [HttpGet("{categoryId:guid}", Name = "GetIngredient")]
+        [HttpGet("{categoryId:guid}")]
         [SwaggerResponse(200, description: "Success", type: typeof(IngredientModel[]))]
         public async Task<IActionResult> GetByCategoryIdAsync([FromRoute] Guid categoryId, CancellationToken cancellationToken)
         {
