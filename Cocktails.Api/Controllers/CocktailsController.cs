@@ -39,7 +39,7 @@ namespace Cocktails.Api.Controllers
         [SwaggerResponse(200, description: "Success", type: typeof(CocktailModel[]))]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
-            var result = await _service.GetAsync(cancellationToken);
+            var result = await _service.GetAllAsync(cancellationToken);
             return Ok(result);
         }
 

@@ -13,9 +13,8 @@ namespace Cocktails.Data.EntityFramework.Contexts
         public DbSet<Category> Categories { get; set; }
         public DbSet<Mix> Mixes { get; set; }
 
-        public CocktailsContext(DbContextOptions<CocktailsContext> options) : base(options)
-        {
-        }
+        public CocktailsContext(DbContextOptions<CocktailsContext> options)
+            : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

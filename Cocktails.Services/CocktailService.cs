@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +15,10 @@ namespace Cocktails.Services
     public class CocktailService : BaseService<Cocktail, CocktailModel>
     {
         private readonly IRepository<Mix> _mixRepository;
+        protected override Func<IQueryable<Cocktail>, IQueryable<Cocktail>> IncludeQuery =>
+            x => x
+                .Include(y => y.Mixes)
+                .ThenInclude(y => y.Ingredient);
 
         public CocktailService(
             IRepository<Cocktail> cocktailRepository,
@@ -24,23 +27,6 @@ namespace Cocktails.Services
             : base(cocktailRepository, mapper)
         {
             _mixRepository = mixRepository;
-        }
-
-        public override async Task<CocktailModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-        {
-            var result = await _repository.GetSingleAsync(x => x
-                .Where(y => y.Id == id)
-                .Include(y => y.Mixes)
-                .ThenInclude(y => y.Ingredient), cancellationToken);
-            return _mapper.Map<CocktailModel>(result);
-        }
-
-        public override async Task<IEnumerable<CocktailModel>> GetAsync(CancellationToken cancellationToken)
-        {
-            var result = await _repository.GetAsync(x => x
-                .Include(y => y.Mixes)
-                .ThenInclude(y => y.Ingredient), cancellationToken);
-            return _mapper.Map<IEnumerable<CocktailModel>>(result);
         }
 
         public override async Task<CocktailModel> UpdateAsync(Guid id, CocktailModel model, CancellationToken cancellationToken)
