@@ -35,12 +35,13 @@ namespace Cocktails.Api.Controllers
         /// <summary>
         /// Returns a collection of ingredient categories
         /// </summary>
+        /// <param name="context"></param>
         /// <param name="cancellationToken"></param>
         [HttpGet]
-        [SwaggerResponse(200, description: "Success", type: typeof(CategoryModel[]))]
-        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+        [SwaggerResponse(200, description: "Success", type: typeof(CollectionWrapper<CategoryModel>))]
+        public async Task<IActionResult> GetAllAsync([FromQuery] QueryContext context, CancellationToken cancellationToken)
         {
-            var result = await _service.GetAllAsync(cancellationToken);
+            var result = await _service.GetAllAsync(context, cancellationToken);
             return Ok(result);
         }
 

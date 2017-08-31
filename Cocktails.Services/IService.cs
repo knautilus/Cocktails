@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Cocktails.ViewModels;
 
 namespace Cocktails.Services
 {
@@ -10,7 +11,7 @@ namespace Cocktails.Services
         where TModel : class
     {
         Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-        Task<IEnumerable<TModel>> GetAllAsync(CancellationToken cancellationToken);
+        Task<CollectionWrapper<TModel>> GetAllAsync(QueryContext context, CancellationToken cancellationToken);
         Task<TModel> CreateAsync(TModel model, CancellationToken cancellationToken);
         Task<TModel> UpdateAsync(Guid id, TModel model, CancellationToken cancellationToken);
         Task DeleteAsync(Guid id, CancellationToken cancellationToken);

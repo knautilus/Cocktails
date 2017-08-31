@@ -16,7 +16,7 @@ namespace Cocktails.Api.Controllers
     /// <summary>
     /// API Controller for Ingredients
     /// </summary>
-    [Route("v{version:apiVersion}/[controller]")]
+    [Route("v{version:apiVersion}")]
     [ApiVersion("1")]
     public class IngredientsController : Controller
     {
@@ -34,12 +34,13 @@ namespace Cocktails.Api.Controllers
         /// <summary>
         /// Returns a collection of ingredients
         /// </summary>
+        /// <param name="context"></param>
         /// <param name="cancellationToken"></param>
-        [HttpGet]
-        [SwaggerResponse(200, description: "Success", type: typeof(IngredientModel[]))]
-        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+        [HttpGet("ingredients")]
+        [SwaggerResponse(200, description: "Success", type: typeof(CollectionWrapper<IngredientModel>))]
+        public async Task<IActionResult> GetAllAsync([FromQuery] QueryContext context, CancellationToken cancellationToken)
         {
-            var result = await _service.GetAllAsync(cancellationToken);
+            var result = await _service.GetAllAsync(context, cancellationToken);
             return Ok(result);
         }
 
@@ -48,7 +49,7 @@ namespace Cocktails.Api.Controllers
         /// </summary>
         /// <param name="id">Item Id (GUID)</param>
         /// <param name="cancellationToken"></param>
-        [HttpGet("{id:guid}", Name = "GetIngredient")]
+        [HttpGet("ingredients/{id:guid}", Name = "GetIngredient")]
         [SwaggerResponse(200, description: "Item found", type: typeof(IngredientModel))]
         [SwaggerResponse(404, description: "Item not found", type: typeof(ApiErrorResponse))]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
@@ -62,15 +63,16 @@ namespace Cocktails.Api.Controllers
         }
 
         /// <summary>
-        /// Returns ingredient by specific category id
+        /// Returns ingredients by specific category id
         /// </summary>
         /// <param name="categoryId">Category Id (GUID)</param>
+        /// <param name="context"></param>
         /// <param name="cancellationToken"></param>
-        [HttpGet("{categoryId:guid}")]
-        [SwaggerResponse(200, description: "Success", type: typeof(IngredientModel[]))]
-        public async Task<IActionResult> GetByCategoryIdAsync([FromRoute] Guid categoryId, CancellationToken cancellationToken)
+        [HttpGet("categories/{categoryId:guid}/ingredients")]
+        [SwaggerResponse(200, description: "Success", type: typeof(CollectionWrapper<IngredientModel>))]
+        public async Task<IActionResult> GetByCategoryIdAsync([FromRoute, Required] Guid categoryId, [FromQuery] QueryContext context, CancellationToken cancellationToken)
         {
-            var result = await _service.GetByCategoryIdAsync(categoryId, cancellationToken);
+            var result = await _service.GetByCategoryIdAsync(categoryId, context, cancellationToken);
             return Ok(result);
         }
 
@@ -79,7 +81,7 @@ namespace Cocktails.Api.Controllers
         /// </summary>
         /// <param name="model">Ingredient JSON representation</param>
         /// <param name="cancellationToken"></param>
-        [HttpPost]
+        [HttpPost("ingredients")]
         [SwaggerResponse(201, description: "Item created successfully", type: typeof(IngredientModel))]
         [SwaggerResponse(400, description: "Invalid model state", type: typeof(ApiErrorResponse))]
         public async Task<IActionResult> PostAsync([FromBody, Required] IngredientModel model, CancellationToken cancellationToken)
@@ -106,7 +108,7 @@ namespace Cocktails.Api.Controllers
         /// <param name="id">Item Id (GUID)</param>
         /// <param name="model">Ingredient JSON representation</param>
         /// <param name="cancellationToken"></param>
-        [HttpPut("{id:guid}")]
+        [HttpPut("ingredients/{id:guid}")]
         [SwaggerResponse(200, description: "Item updated successfully", type: typeof(IngredientModel))]
         [SwaggerResponse(404, description: "Item not found", type: typeof(ApiErrorResponse))]
         public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody, Required] IngredientModel model, CancellationToken cancellationToken)

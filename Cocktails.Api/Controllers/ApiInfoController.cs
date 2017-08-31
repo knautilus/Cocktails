@@ -8,6 +8,7 @@ namespace Cocktails.Api.Controllers
     /// <summary>
     /// API Controller for ApiInfo
     /// </summary>
+    [ApiVersionNeutral]
     public class ApiInfoController : Controller
     {
         private readonly ApiInfo _info;

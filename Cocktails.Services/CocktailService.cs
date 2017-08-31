@@ -15,7 +15,7 @@ namespace Cocktails.Services
     public class CocktailService : BaseService<Cocktail, CocktailModel>
     {
         private readonly IRepository<Mix> _mixRepository;
-        protected override Func<IQueryable<Cocktail>, IQueryable<Cocktail>> IncludeQuery =>
+        protected override Func<IQueryable<Cocktail>, IQueryable<Cocktail>> IncludeFunction =>
             x => x
                 .Include(y => y.Mixes)
                 .ThenInclude(y => y.Ingredient);

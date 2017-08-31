@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ using Cocktails.Data.Domain;
 using Cocktails.Data.EntityFramework.Repositories;
 using Cocktails.Mapper;
 using Cocktails.ViewModels;
+using Cocktails.Common;
 
 namespace Cocktails.Services
 {
@@ -20,7 +22,8 @@ namespace Cocktails.Services
     {
         protected readonly IRepository<TEntity> Repository;
         protected readonly IModelMapper Mapper;
-        protected virtual Func<IQueryable<TEntity>, IQueryable<TEntity>> IncludeQuery =>
+
+        protected virtual Func<IQueryable<TEntity>, IQueryable<TEntity>> IncludeFunction =>
             x => x;
 
         public BaseService(IRepository<TEntity> repository, IModelMapper mapper)
@@ -31,14 +34,14 @@ namespace Cocktails.Services
 
         public virtual async Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var result = await Repository.GetSingleAsync(x => IncludeQuery(x.Where(y => y.Id == id)), cancellationToken);
+            var result = await Repository.GetSingleAsync(x => IncludeFunction(x.Where(y => y.Id == id)), cancellationToken);
             return Mapper.Map<TModel>(result);
         }
 
-        public virtual async Task<IEnumerable<TModel>> GetAllAsync(CancellationToken cancellationToken)
+        public virtual async Task<CollectionWrapper<TModel>> GetAllAsync(QueryContext context, CancellationToken cancellationToken)
         {
-            var result = await Repository.GetAsync(x => IncludeQuery(x), cancellationToken);
-            return Mapper.Map<IEnumerable<TModel>>(result);
+            var result = await Repository.GetAsync(x => GetQuery(context)(IncludeFunction(x)), cancellationToken);
+            return WrapCollection(Mapper.Map<IEnumerable<TModel>>(result), context);
         }
 
         public virtual async Task<TModel> CreateAsync(TModel model, CancellationToken cancellationToken)
@@ -80,6 +83,85 @@ namespace Cocktails.Services
             {
                 throw GetDetailedException(ex);
             }
+        }
+
+        protected Func<IQueryable<TEntity>, IQueryable<TEntity>> GetQuery(QueryContext context)
+        {
+            Expression<Func<TEntity, DateTimeOffset>> sortSelector = x => x.ModifiedDate;
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> resultSortFunction;
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> sortFunction;
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> cursorFunction = x => x;
+            if (context.IsSortAsc)
+            {
+                resultSortFunction = x => x.OrderBy(sortSelector);
+                if (context.Before.HasValue)
+                {
+                    sortFunction = x => x.OrderByDescending(sortSelector);
+                    cursorFunction = x => x.Where(Predicates.LessThanPredicate(sortSelector, () => context.Before.Value));
+                }
+                else if (context.After.HasValue)
+                {
+                    sortFunction = x => x.OrderBy(sortSelector);
+                    cursorFunction = x => x.Where(Predicates.GreaterThanPredicate(sortSelector, () => context.After.Value));
+                }
+                else
+                {
+                    sortFunction = x => x.OrderBy(sortSelector);
+                }
+            }
+            else
+            {
+                resultSortFunction = x => x.OrderByDescending(sortSelector);
+                if (context.Before.HasValue)
+                {
+                    sortFunction = x => x.OrderBy(sortSelector);
+                    cursorFunction = x => x.Where(Predicates.GreaterThanPredicate(sortSelector, () => context.Before.Value));
+                }
+                else if (context.After.HasValue)
+                {
+                    sortFunction = x => x.OrderByDescending(sortSelector);
+                    cursorFunction = x => x.Where(Predicates.LessThanPredicate(sortSelector, () => context.After.Value));
+                }
+                else
+                {
+                    sortFunction = x => x.OrderByDescending(sortSelector);
+                }
+            }
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> query = x => sortFunction(cursorFunction(x)).Take(context.Count);
+            if(context.Before.HasValue)
+            {
+                return x => resultSortFunction(query(x));
+            }
+            return query;
+        }
+
+        protected CollectionWrapper<TModel> WrapCollection(IEnumerable<TModel> data, QueryContext context)
+        {
+            CollectionWrapper<TModel> wrapper = new CollectionWrapper<TModel>
+            {
+                Data = data,
+                Paging = new PagingModel()
+            };
+            if (data.Count() == context.Count)
+            {
+                wrapper.Paging.Before = data.First().ModifiedDate;
+                wrapper.Paging.After = data.Last().ModifiedDate;
+            }
+            else
+            {
+                if (context.Before.HasValue)
+                {
+                    wrapper.Paging.Before = null;
+                    wrapper.Paging.After = data.LastOrDefault()?.ModifiedDate;
+                }
+                else
+                {
+                    wrapper.Paging.Before = data.FirstOrDefault()?.ModifiedDate;
+                    wrapper.Paging.After = null;
+                }
+            }
+
+            return wrapper;
         }
 
         protected virtual Exception GetDetailedException(Exception exception)
