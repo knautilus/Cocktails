@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace Cocktails.ViewModels
+﻿namespace Cocktails.ViewModels
 {
     public class PagingModel
     {
-        public DateTimeOffset? Before { get; set; }
-        public DateTimeOffset? After { get; set; }
+        public string Before { get; set; }
+        public string After { get; set; }
     }
 }

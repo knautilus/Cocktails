@@ -34,7 +34,7 @@ namespace Cocktails.Api.Controllers
         /// <summary>
         /// Returns a collection of ingredients
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Sorting and paging parameters</param>
         /// <param name="cancellationToken"></param>
         [HttpGet("ingredients")]
         [SwaggerResponse(200, description: "Success", type: typeof(CollectionWrapper<IngredientModel>))]
@@ -66,7 +66,7 @@ namespace Cocktails.Api.Controllers
         /// Returns ingredients by specific category id
         /// </summary>
         /// <param name="categoryId">Category Id (GUID)</param>
-        /// <param name="context"></param>
+        /// <param name="context">Sorting and paging parameters</param>
         /// <param name="cancellationToken"></param>
         [HttpGet("categories/{categoryId:guid}/ingredients")]
         [SwaggerResponse(200, description: "Success", type: typeof(CollectionWrapper<IngredientModel>))]

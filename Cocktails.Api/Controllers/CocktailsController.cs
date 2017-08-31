@@ -34,7 +34,7 @@ namespace Cocktails.Api.Controllers
         /// <summary>
         /// Returns a collection of cocktails
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Sorting and paging parameters</param>
         /// <param name="cancellationToken"></param>
         [HttpGet]
         [SwaggerResponse(200, description: "Success", type: typeof(CollectionWrapper<CocktailModel>))]

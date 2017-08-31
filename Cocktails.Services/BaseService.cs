@@ -90,45 +90,47 @@ namespace Cocktails.Services
             Expression<Func<TEntity, DateTimeOffset>> sortSelector = x => x.ModifiedDate;
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> resultSortFunction;
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> sortFunction;
-            Func<IQueryable<TEntity>, IQueryable<TEntity>> cursorFunction = x => x;
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> cursorFunction;
             if (context.IsSortAsc)
             {
                 resultSortFunction = x => x.OrderBy(sortSelector);
-                if (context.Before.HasValue)
+                if (context.BeforeDate.HasValue)
                 {
                     sortFunction = x => x.OrderByDescending(sortSelector);
-                    cursorFunction = x => x.Where(Predicates.LessThanPredicate(sortSelector, () => context.Before.Value));
+                    cursorFunction = x => x.Where(Predicates.LessThanPredicate(sortSelector, () => context.BeforeDate.Value));
                 }
-                else if (context.After.HasValue)
+                else if (context.AfterDate.HasValue)
                 {
                     sortFunction = x => x.OrderBy(sortSelector);
-                    cursorFunction = x => x.Where(Predicates.GreaterThanPredicate(sortSelector, () => context.After.Value));
+                    cursorFunction = x => x.Where(Predicates.GreaterThanPredicate(sortSelector, () => context.AfterDate.Value));
                 }
                 else
                 {
                     sortFunction = x => x.OrderBy(sortSelector);
+                    cursorFunction = x => x;
                 }
             }
             else
             {
                 resultSortFunction = x => x.OrderByDescending(sortSelector);
-                if (context.Before.HasValue)
+                if (context.BeforeDate.HasValue)
                 {
                     sortFunction = x => x.OrderBy(sortSelector);
-                    cursorFunction = x => x.Where(Predicates.GreaterThanPredicate(sortSelector, () => context.Before.Value));
+                    cursorFunction = x => x.Where(Predicates.GreaterThanPredicate(sortSelector, () => context.BeforeDate.Value));
                 }
-                else if (context.After.HasValue)
+                else if (context.AfterDate.HasValue)
                 {
                     sortFunction = x => x.OrderByDescending(sortSelector);
-                    cursorFunction = x => x.Where(Predicates.LessThanPredicate(sortSelector, () => context.After.Value));
+                    cursorFunction = x => x.Where(Predicates.LessThanPredicate(sortSelector, () => context.AfterDate.Value));
                 }
                 else
                 {
                     sortFunction = x => x.OrderByDescending(sortSelector);
+                    cursorFunction = x => x;
                 }
             }
             Func<IQueryable<TEntity>, IQueryable<TEntity>> query = x => sortFunction(cursorFunction(x)).Take(context.Count);
-            if(context.Before.HasValue)
+            if(context.BeforeDate.HasValue)
             {
                 return x => resultSortFunction(query(x));
             }
@@ -137,6 +139,7 @@ namespace Cocktails.Services
 
         protected CollectionWrapper<TModel> WrapCollection(IEnumerable<TModel> data, QueryContext context)
         {
+            Func<TModel, string> cursorSelector = x => x?.ModifiedDate.Ticks.ToString();
             CollectionWrapper<TModel> wrapper = new CollectionWrapper<TModel>
             {
                 Data = data,
@@ -144,23 +147,22 @@ namespace Cocktails.Services
             };
             if (data.Count() == context.Count)
             {
-                wrapper.Paging.Before = data.First().ModifiedDate;
-                wrapper.Paging.After = data.Last().ModifiedDate;
+                wrapper.Paging.Before = cursorSelector(data.First());
+                wrapper.Paging.After = cursorSelector(data.Last());
             }
             else
             {
-                if (context.Before.HasValue)
+                if (context.BeforeDate.HasValue)
                 {
                     wrapper.Paging.Before = null;
-                    wrapper.Paging.After = data.LastOrDefault()?.ModifiedDate;
+                    wrapper.Paging.After = cursorSelector(data.LastOrDefault());
                 }
                 else
                 {
-                    wrapper.Paging.Before = data.FirstOrDefault()?.ModifiedDate;
+                    wrapper.Paging.Before = cursorSelector(data.FirstOrDefault());
                     wrapper.Paging.After = null;
                 }
             }
-
             return wrapper;
         }
 
