@@ -34,12 +34,13 @@ namespace Cocktails.Api.Controllers
         /// <summary>
         /// Returns a collection of cocktails
         /// </summary>
+        /// <param name="context">Sorting and paging parameters</param>
         /// <param name="cancellationToken"></param>
         [HttpGet]
-        [SwaggerResponse(200, description: "Success", type: typeof(CocktailModel[]))]
-        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+        [SwaggerResponse(200, description: "Success", type: typeof(CollectionWrapper<CocktailModel>))]
+        public async Task<IActionResult> GetAllAsync([FromQuery] QueryContext context, CancellationToken cancellationToken)
         {
-            var result = await _service.GetAllAsync(cancellationToken);
+            var result = await _service.GetAllAsync(context, cancellationToken);
             return Ok(result);
         }
 
