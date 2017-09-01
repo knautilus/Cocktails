@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -67,6 +68,7 @@ namespace Cocktails.Api.Controllers
         /// </summary>
         /// <param name="model">Cocktail JSON representation</param>
         /// <param name="cancellationToken"></param>
+        [Authorize]
         [HttpPost]
         [SwaggerResponse(201, description: "Item created successfully", type: typeof(CocktailModel))]
         [SwaggerResponse(400, description: "Invalid model state", type: typeof(ApiErrorResponse))]
@@ -94,6 +96,7 @@ namespace Cocktails.Api.Controllers
         /// <param name="id">Item Id (GUID)</param>
         /// <param name="model">Cocktail JSON representation</param>
         /// <param name="cancellationToken"></param>
+        [Authorize]
         [HttpPut("{id:guid}")]
         [SwaggerResponse(200, description: "Item updated successfully", type: typeof(CocktailModel))]
         [SwaggerResponse(400, description: "Invalid model state", type: typeof(ApiErrorResponse))]
@@ -125,6 +128,7 @@ namespace Cocktails.Api.Controllers
         /// </summary>
         /// <param name="id">Item Id (GUID)</param>
         /// <param name="cancellationToken"></param>
+        [Authorize]
         [HttpDelete("{id:guid}")]
         [SwaggerResponse(204, description: "Item deleted successfully")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)

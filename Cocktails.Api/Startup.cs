@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
@@ -22,6 +25,7 @@ using Cocktails.Data.EntityFramework.Repositories;
 using Cocktails.Services;
 using Cocktails.ViewModels;
 using Cocktails.Mapper;
+using Cocktails.Security;
 
 namespace Cocktails.Api
 {
@@ -39,7 +43,6 @@ namespace Cocktails.Api
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
@@ -58,23 +61,39 @@ namespace Cocktails.Api
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            services.AddAuthentication(cfg => {
+                cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration["AuthSettings:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["AuthSettings:Audience"],
+                    ValidateLifetime = true,
+                    IssuerSigningKey = SecurityHelper.GetSymmetricSecurityKey(Configuration["AuthSettings:SecretKey"]),
+                    ValidateIssuerSigningKey = true
+                };
+            });
+
             services.AddApiVersioning();
+
             services.AddOptions();
-
-            // Add settings from configuration
-            services.Configure<ApiInfo>(Configuration.GetSection("ApiInfo"));
-
             services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
             });
+            // Add settings from configuration
+            services.Configure<ApiInfo>(Configuration.GetSection("ApiInfo"));
 
             services.AddAutoMapper();
 
             // Register the Swagger generator, defining one or more Swagger documents
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(s =>
             {
-                c.SwaggerDoc("v1", new Info
+                s.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
                     Title = "Cocktails API",
@@ -85,11 +104,12 @@ namespace Cocktails.Api
                 //Set the comments path for the swagger json and ui.
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Cocktails.Api.xml");
-                c.IncludeXmlComments(xmlPath);
+                s.IncludeXmlComments(xmlPath);
             });
 
             services.AddDbContext<CocktailsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddScoped(typeof(DbContext), typeof(CocktailsContext));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IRepositoryOptions), typeof(RepositoryOptions));
@@ -123,6 +143,8 @@ namespace Cocktails.Api
                .AddRedirectToHttps();
 
             app.UseRewriter(options);
+
+            app.UseAuthentication();
 
             app.UseMvc();
 
