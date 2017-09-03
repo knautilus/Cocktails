@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
+    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
+    <ProjectReference Include="..\Cocktails.Mapper\Cocktails.Mapper.csproj" />
+    <ProjectReference Include="..\Cocktails.Security\Cocktails.Security.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.IdentityModel.Tokens.Jwt">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\system.identitymodel.tokens.jwt\5.1.4\lib\netstandard1.4\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

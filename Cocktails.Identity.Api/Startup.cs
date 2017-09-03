@@ -1,13 +1,19 @@
 ﻿using System;
+
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using Cocktails.Data.Domain;
-using Microsoft.AspNetCore.Identity;
 using Cocktails.Data.EntityFramework.Contexts;
 using Cocktails.Common.Models;
-using Microsoft.EntityFrameworkCore;
+using Cocktails.Identity.Services;
+using Cocktails.Mapper;
+
 
 namespace Cocktails.Identity.Api
 {
@@ -35,7 +41,10 @@ namespace Cocktails.Identity.Api
 
             services.AddApiVersioning();
 
+            services.AddAutoMapper();
+
             services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
+            services.Configure<ApiInfo>(Configuration.GetSection("IdentityApiInfo"));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>()
@@ -62,7 +71,8 @@ namespace Cocktails.Identity.Api
             services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddScoped(typeof(DbContext), typeof(IdentityContext));
+            services.AddScoped(typeof(IAccountService), typeof(AccountService));
+            services.AddScoped(typeof(IModelMapper), typeof(ModelMapper));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

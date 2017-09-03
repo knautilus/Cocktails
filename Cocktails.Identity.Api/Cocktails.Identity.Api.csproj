@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.0.0" />
   </ItemGroup>
@@ -30,6 +31,7 @@
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
     <ProjectReference Include="..\Cocktails.Data.EntityFramework\Cocktails.Data.EntityFramework.csproj" />
+    <ProjectReference Include="..\Cocktails.Identity.Services\Cocktails.Identity.Services.csproj" />
     <ProjectReference Include="..\Cocktails.Security\Cocktails.Security.csproj" />
     <ProjectReference Include="..\Cocktails.ViewModels\Cocktails.ViewModels.csproj" />
   </ItemGroup>

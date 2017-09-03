@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using Cocktails.Data.Domain;
 using Cocktails.ViewModels;
 
@@ -30,6 +31,9 @@ namespace Cocktails.Mapper
 
             CreateMap<Cocktail, CocktailModel>();
             CreateMap<CocktailModel, Cocktail>().IgnoreReadOnly();
+
+            CreateMap<RegisterModel, User>(MemberList.Source)
+                .ForMember(x => x.UserName, opt => opt.MapFrom(y => y.Username));
         }
     }
 }

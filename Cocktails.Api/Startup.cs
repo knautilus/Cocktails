@@ -85,8 +85,8 @@ namespace Cocktails.Api
             {
                 options.Filters.Add(new RequireHttpsAttribute());
             });
-            // Add settings from configuration
-            services.Configure<ApiInfo>(Configuration.GetSection("ApiInfo"));
+
+            services.Configure<ApiInfo>(Configuration.GetSection("CocktailsApiInfo"));
 
             services.AddAutoMapper();
 
