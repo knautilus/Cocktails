@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44392/",
-      "sslPort": 44392
+      "applicationUrl": "https://localhost:44363/",
+      "sslPort": 44363
     }
   },
   "profiles": {
@@ -15,14 +15,14 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Cocktails": {
+    "Cocktails.Identity.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "~/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:44392/"
+      "applicationUrl": "http://localhost:64208/"
     }
   }
 }

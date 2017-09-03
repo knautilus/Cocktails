@@ -20,7 +20,7 @@ namespace Cocktails.Common.Models
             switch (statusCode)
             {
                 case 400:
-                    return "Invalid parameter(-s)";
+                    return "Invalid property";
                 case 404:
                     return "Resource not found";
                 case 500:
