@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -81,9 +82,11 @@ namespace Cocktails.Api.Controllers
         /// </summary>
         /// <param name="model">Ingredient JSON representation</param>
         /// <param name="cancellationToken"></param>
+        [Authorize]
         [HttpPost("ingredients")]
         [SwaggerResponse(201, description: "Item created successfully", type: typeof(IngredientModel))]
         [SwaggerResponse(400, description: "Invalid model state", type: typeof(ApiErrorResponse))]
+        [SwaggerResponse(401, description: "Unauthorized")]
         public async Task<IActionResult> PostAsync([FromBody, Required] IngredientModel model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -108,8 +111,10 @@ namespace Cocktails.Api.Controllers
         /// <param name="id">Item Id (GUID)</param>
         /// <param name="model">Ingredient JSON representation</param>
         /// <param name="cancellationToken"></param>
+        [Authorize]
         [HttpPut("ingredients/{id:guid}")]
         [SwaggerResponse(200, description: "Item updated successfully", type: typeof(IngredientModel))]
+        [SwaggerResponse(401, description: "Unauthorized")]
         [SwaggerResponse(404, description: "Item not found", type: typeof(ApiErrorResponse))]
         public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody, Required] IngredientModel model, CancellationToken cancellationToken)
         {
