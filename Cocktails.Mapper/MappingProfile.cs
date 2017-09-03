@@ -32,7 +32,7 @@ namespace Cocktails.Mapper
             CreateMap<Cocktail, CocktailModel>();
             CreateMap<CocktailModel, Cocktail>().IgnoreReadOnly();
 
-            CreateMap<RegisterModel, User>(MemberList.Source)
+            CreateMap<RegisterModel, User>(MemberList.None)
                 .ForMember(x => x.UserName, opt => opt.MapFrom(y => y.Username));
         }
     }

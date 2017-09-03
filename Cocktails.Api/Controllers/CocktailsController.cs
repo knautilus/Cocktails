@@ -72,6 +72,7 @@ namespace Cocktails.Api.Controllers
         [HttpPost]
         [SwaggerResponse(201, description: "Item created successfully", type: typeof(CocktailModel))]
         [SwaggerResponse(400, description: "Invalid model state", type: typeof(ApiErrorResponse))]
+        [SwaggerResponse(401, description: "Unauthorized")]
         public async Task<IActionResult> PostAsync([FromBody, Required] CocktailModel model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -100,6 +101,7 @@ namespace Cocktails.Api.Controllers
         [HttpPut("{id:guid}")]
         [SwaggerResponse(200, description: "Item updated successfully", type: typeof(CocktailModel))]
         [SwaggerResponse(400, description: "Invalid model state", type: typeof(ApiErrorResponse))]
+        [SwaggerResponse(401, description: "Unauthorized")]
         [SwaggerResponse(404, description: "Item not found", type: typeof(ApiErrorResponse))]
         public async Task<IActionResult> PutAsync([FromRoute] Guid id, [FromBody, Required] CocktailModel model, CancellationToken cancellationToken)
         {
@@ -131,6 +133,8 @@ namespace Cocktails.Api.Controllers
         [Authorize]
         [HttpDelete("{id:guid}")]
         [SwaggerResponse(204, description: "Item deleted successfully")]
+        [SwaggerResponse(401, description: "Unauthorized")]
+        [SwaggerResponse(404, description: "Item not found", type: typeof(ApiErrorResponse))]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             try

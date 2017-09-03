@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
+using Swashbuckle.AspNetCore.Swagger;
 
 using Cocktails.Data.Domain;
 using Cocktails.Data.EntityFramework.Contexts;
@@ -14,9 +17,11 @@ using Cocktails.Common.Models;
 using Cocktails.Identity.Services;
 using Cocktails.Mapper;
 
-
 namespace Cocktails.Identity.Api
 {
+    /// <summary>
+    /// Startup class
+    /// </summary>
     public class Startup
     {
         private IConfigurationRoot Configuration { get; }
@@ -34,7 +39,10 @@ namespace Cocktails.Identity.Api
             Configuration = builder.Build();
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -68,6 +76,23 @@ namespace Cocktails.Identity.Api
                 options.User.RequireUniqueEmail = true;
             });
 
+            // Register the Swagger generator, defining one or more Swagger documents
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Identity API",
+                    Description = "A simple example ASP.NET Core 2 Web API",
+                    TermsOfService = "None"
+                });
+
+                //Set the comments path for the swagger json and ui.
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "Cocktails.Identity.Api.xml");
+                s.IncludeXmlComments(xmlPath);
+            });
+
             services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -75,7 +100,11 @@ namespace Cocktails.Identity.Api
             services.AddScoped(typeof(IModelMapper), typeof(ModelMapper));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -84,6 +113,14 @@ namespace Cocktails.Identity.Api
             }
 
             app.UseMvc();
+
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cocktails API v1");
+            });
         }
     }
 }
