@@ -26,11 +26,6 @@ namespace Cocktails.Data.EntityFramework.Repositories
             _options = options;
         }
 
-        public Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
-        {
-            return Task.FromResult(_entities.AsEnumerable());
-        }
-
         public Task<TEntity> GetSingleAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
         {
             return query(_entities.AsQueryable()).FirstOrDefaultAsync(cancellationToken);
