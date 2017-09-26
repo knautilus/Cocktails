@@ -15,7 +15,7 @@ using Cocktails.Common.Models;
 using Cocktails.Data.Domain;
 using Cocktails.Mapper;
 using Cocktails.Security;
-using Cocktails.ViewModels;
+using Cocktails.Identity.ViewModels;
 
 namespace Cocktails.Identity.Services
 {
@@ -44,7 +44,7 @@ namespace Cocktails.Identity.Services
             var userCreationResult = await _userManager.CreateAsync(newUser, registerModel.Password);
             if (!userCreationResult.Succeeded)
             {
-                throw new BadRequestException(userCreationResult.Errors.Select(x => x.Description));
+                throw new BadRequestException(userCreationResult.Errors.Select(x => x.Description).ToArray());
             }
         }
 
@@ -89,7 +89,7 @@ namespace Cocktails.Identity.Services
 
             ClaimsIdentity identity = new ClaimsIdentity(
                 new GenericIdentity(user.UserName, "TokenAuth"),
-                new[] { new Claim("Id", user.Id.ToString()) });
+                new[] { new Claim("Id", user.Id) });
 
             return identity;
         }

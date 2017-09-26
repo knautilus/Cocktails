@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Cocktails.ViewModels;
+using Cocktails.Identity.ViewModels;
 
 namespace Cocktails.Identity.Services
 {

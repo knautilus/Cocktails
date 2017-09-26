@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Cocktails.Common.Exceptions;
 using Cocktails.Common.Models;
 using Cocktails.Identity.Services;
-using Cocktails.ViewModels;
+using Cocktails.Identity.ViewModels;
 
 namespace Cocktails.Identity.Api.Controllers
 {

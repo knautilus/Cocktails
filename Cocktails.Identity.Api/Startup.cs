@@ -14,6 +14,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Cocktails.Data.Domain;
 using Cocktails.Data.EntityFramework.Contexts;
 using Cocktails.Common.Models;
+using Cocktails.Identity.Mapper;
 using Cocktails.Identity.Services;
 using Cocktails.Mapper;
 
@@ -49,7 +50,7 @@ namespace Cocktails.Identity.Api
 
             services.AddApiVersioning();
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(expr => expr.AddProfile(typeof(MappingProfile)));
 
             services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
             services.Configure<ApiInfo>(Configuration.GetSection("IdentityApiInfo"));

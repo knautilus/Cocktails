@@ -6,13 +6,14 @@ namespace Cocktails.Common.Exceptions
 {
     public class BadRequestException : Exception
     {
-        public IEnumerable<string> Errors { get; private set; }
+        public IEnumerable<string> Errors { get; }
 
         public BadRequestException(string message) : base(message)
         {
-            Errors = new string[] { message };
+            Errors = new[] { message };
         }
-        public BadRequestException(IEnumerable<string> messages) : base(messages.FirstOrDefault())
+
+        public BadRequestException(ICollection<string> messages) : base(messages.FirstOrDefault())
         {
             Errors = messages;
         }

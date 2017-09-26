@@ -14,7 +14,7 @@ using Cocktails.Data.EntityFramework.Repositories;
 namespace Cocktails.Tests
 {
     [TestFixture]
-    class FlavorRepositoryMethodsTests
+    public class FlavorRepositoryMethodsTests
     {
         private CocktailsContext _cocktailsContext;
         private CancellationToken _token;
