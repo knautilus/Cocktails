@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Api", "Cocktails.Api\Cocktails.Api.csproj", "{A657ACA1-3AD4-456E-9494-23A4902B0CE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Catalog.Api", "Cocktails.Catalog.Api\Cocktails.Catalog.Api.csproj", "{A657ACA1-3AD4-456E-9494-23A4902B0CE5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.Domain", "Cocktails.Data.Domain\Cocktails.Data.Domain.csproj", "{0A77F33F-41A2-49C7-92CF-9033189D47AD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.EntityFramework", "Cocktails.Data.EntityFramework\Cocktails.Data.EntityFramework.csproj", "{AF518219-33E3-44FE-AA97-2F5AB1B32A81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Services", "Cocktails.Services\Cocktails.Services.csproj", "{17F225A0-C2EC-4C87-99B3-8C722759A62D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Catalog.Services", "Cocktails.Catalog.Services\Cocktails.Catalog.Services.csproj", "{17F225A0-C2EC-4C87-99B3-8C722759A62D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Common", "Cocktails.Common\Cocktails.Common.csproj", "{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.ViewModels", "Cocktails.ViewModels\Cocktails.ViewModels.csproj", "{516524E9-11BA-4169-9385-4BFC1F284729}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Catalog.ViewModels", "Cocktails.Catalog.ViewModels\Cocktails.Catalog.ViewModels.csproj", "{516524E9-11BA-4169-9385-4BFC1F284729}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Mapper", "Cocktails.Mapper\Cocktails.Mapper.csproj", "{5CE9E347-F50F-40ED-8B8A-22E09F42677F}"
 EndProject
@@ -29,7 +29,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Security", "Cockt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Identity.Api", "Cocktails.Identity.Api\Cocktails.Identity.Api.csproj", "{8C9AEBA5-12DA-460E-BE6F-CACAC66BE18A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Identity.Services", "Cocktails.Identity.Services\Cocktails.Identity.Services.csproj", "{188C66D1-9034-4F89-9BFC-A48028F52C37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Identity.Services", "Cocktails.Identity.Services\Cocktails.Identity.Services.csproj", "{188C66D1-9034-4F89-9BFC-A48028F52C37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data", "Cocktails.Data\Cocktails.Data.csproj", "{46E08ACC-A8D3-4990-9C6D-0EA88893E16C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{42B27BBA-AFAD-47BE-97C2-D31F05317965}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{43B09BD1-2BC4-4CB6-A7B0-93354E186630}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6FE71C83-2F6E-4186-A1E6-089B78916EEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{876E1BD4-EFC5-4C28-A83F-FDC2196DE38F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{4AB2097B-E21C-4E93-B813-EE80FD637E15}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Identity.ViewModels", "Cocktails.Identity.ViewModels\Cocktails.Identity.ViewModels.csproj", "{326BC283-5611-4B19-917B-C0BD1495E26F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Catalog.Mapper", "Cocktails.Catalog.Mapper\Cocktails.Catalog.Mapper.csproj", "{38E5D00B-0CB1-4925-9A8A-066CE7F8ED36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Identity.Mapper", "Cocktails.Identity.Mapper\Cocktails.Identity.Mapper.csproj", "{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapping", "Mapping", "{F0567B4E-4C68-4DE7-8669-0A7523B52591}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,9 +101,42 @@ Global
 		{188C66D1-9034-4F89-9BFC-A48028F52C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{188C66D1-9034-4F89-9BFC-A48028F52C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{188C66D1-9034-4F89-9BFC-A48028F52C37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46E08ACC-A8D3-4990-9C6D-0EA88893E16C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46E08ACC-A8D3-4990-9C6D-0EA88893E16C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46E08ACC-A8D3-4990-9C6D-0EA88893E16C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46E08ACC-A8D3-4990-9C6D-0EA88893E16C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{326BC283-5611-4B19-917B-C0BD1495E26F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{326BC283-5611-4B19-917B-C0BD1495E26F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{326BC283-5611-4B19-917B-C0BD1495E26F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{326BC283-5611-4B19-917B-C0BD1495E26F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E5D00B-0CB1-4925-9A8A-066CE7F8ED36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E5D00B-0CB1-4925-9A8A-066CE7F8ED36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E5D00B-0CB1-4925-9A8A-066CE7F8ED36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E5D00B-0CB1-4925-9A8A-066CE7F8ED36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A657ACA1-3AD4-456E-9494-23A4902B0CE5} = {42B27BBA-AFAD-47BE-97C2-D31F05317965}
+		{0A77F33F-41A2-49C7-92CF-9033189D47AD} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
+		{AF518219-33E3-44FE-AA97-2F5AB1B32A81} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
+		{17F225A0-C2EC-4C87-99B3-8C722759A62D} = {876E1BD4-EFC5-4C28-A83F-FDC2196DE38F}
+		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C} = {4AB2097B-E21C-4E93-B813-EE80FD637E15}
+		{516524E9-11BA-4169-9385-4BFC1F284729} = {876E1BD4-EFC5-4C28-A83F-FDC2196DE38F}
+		{5CE9E347-F50F-40ED-8B8A-22E09F42677F} = {F0567B4E-4C68-4DE7-8669-0A7523B52591}
+		{3C86FA54-A325-4359-9A75-DD99770F8460} = {6FE71C83-2F6E-4186-A1E6-089B78916EEB}
+		{E074CA62-D57D-4712-8EA1-876C0C6B3D70} = {4AB2097B-E21C-4E93-B813-EE80FD637E15}
+		{8C9AEBA5-12DA-460E-BE6F-CACAC66BE18A} = {42B27BBA-AFAD-47BE-97C2-D31F05317965}
+		{188C66D1-9034-4F89-9BFC-A48028F52C37} = {876E1BD4-EFC5-4C28-A83F-FDC2196DE38F}
+		{46E08ACC-A8D3-4990-9C6D-0EA88893E16C} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
+		{326BC283-5611-4B19-917B-C0BD1495E26F} = {876E1BD4-EFC5-4C28-A83F-FDC2196DE38F}
+		{38E5D00B-0CB1-4925-9A8A-066CE7F8ED36} = {F0567B4E-4C68-4DE7-8669-0A7523B52591}
+		{30880F7F-9CEC-490C-83FB-DBC3D042A3A0} = {F0567B4E-4C68-4DE7-8669-0A7523B52591}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB01C30C-6A7C-4F5C-BF8A-FCCCAC297C59}

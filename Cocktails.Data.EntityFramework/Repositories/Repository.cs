@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using Cocktails.Data.Domain;
-using Cocktails.Data.EntityFramework.Options;
 
 namespace Cocktails.Data.EntityFramework.Repositories
 {
@@ -31,9 +29,9 @@ namespace Cocktails.Data.EntityFramework.Repositories
             return query(_entities.AsQueryable()).FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
+        public async Task<TEntity[]> GetAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
         {
-            var result = await query(_entities.AsQueryable()).ToListAsync();
+            var result = await query(_entities.AsQueryable()).ToArrayAsync(cancellationToken);
             return result;
         }
 
@@ -41,7 +39,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
         {
             if (entity == null)
             {
-                throw new ArgumentNullException("entity");
+                throw new ArgumentNullException(nameof(entity));
             }
             var entry = _entities.Add(entity);
             IgnoreReadonlyFields(entry);
@@ -58,7 +56,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
         {
             if (entity == null)
             {
-                throw new ArgumentNullException("entity");
+                throw new ArgumentNullException(nameof(entity));
             }
             entity = SetModifiedDate(entity);
             var entry = _entities.Update(entity);
@@ -76,7 +74,7 @@ namespace Cocktails.Data.EntityFramework.Repositories
         {
             if (entity == null)
             {
-                throw new ArgumentNullException("entity");
+                throw new ArgumentNullException(nameof(entity));
             }
             _entities.Remove(entity);
 
@@ -97,10 +95,9 @@ namespace Cocktails.Data.EntityFramework.Repositories
             return model;
         }
 
-        private EntityEntry<TEntity> IgnoreReadonlyFields(EntityEntry<TEntity> entry)
+        private void IgnoreReadonlyFields(EntityEntry<TEntity> entry)
         {
             entry.Property(x => x.CreatedDate).IsModified = false;
-            return entry;
         }
     }
 }

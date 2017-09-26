@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 
+using Cocktails.Catalog.Mapper;
+using Cocktails.Catalog.Services;
+using Cocktails.Catalog.ViewModels;
+using Cocktails.Data;
 using Cocktails.Data.Domain;
-using Cocktails.Data.EntityFramework.Repositories;
 using Cocktails.Mapper;
-using Cocktails.Services;
-using Cocktails.ViewModels;
 
 namespace Cocktails.Tests
 {
     [TestFixture]
-    class FlavorServiceMethodsTests
+    public class FlavorServiceMethodsTests
     {
         private IModelMapper _mapper;
         private CancellationToken _token;
@@ -90,7 +91,6 @@ namespace Cocktails.Tests
             _repositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Func<IQueryable<Flavor>, IQueryable<Flavor>>>(), _token), Times.Never);
             _repositoryMock.Verify(x => x.InsertAsync(It.IsAny<Flavor>(), _token), Times.Never);
             _repositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Flavor>(), _token), Times.Never);
-
         }
 
         private void InitMapper()

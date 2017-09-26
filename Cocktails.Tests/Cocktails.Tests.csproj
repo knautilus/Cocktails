@@ -7,15 +7,16 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="Moq" Version="4.7.99" />
-    <PackageReference Include="NUnit" Version="3.7.1" />
+    <PackageReference Include="Moq" Version="4.7.127" />
+    <PackageReference Include="NUnit" Version="3.8.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.8.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Catalog.Mapper\Cocktails.Catalog.Mapper.csproj" />
+    <ProjectReference Include="..\Cocktails.Catalog.Services\Cocktails.Catalog.Services.csproj" />
     <ProjectReference Include="..\Cocktails.Data.EntityFramework\Cocktails.Data.EntityFramework.csproj" />
     <ProjectReference Include="..\Cocktails.Mapper\Cocktails.Mapper.csproj" />
-    <ProjectReference Include="..\Cocktails.Services\Cocktails.Services.csproj" />
   </ItemGroup>
 
 </Project>

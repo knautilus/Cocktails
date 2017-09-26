@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.1.1" />
+    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
   </ItemGroup>
 
 </Project>

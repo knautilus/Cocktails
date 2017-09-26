@@ -15,7 +15,7 @@ namespace Cocktails.Mapper
             {
                 var descriptor = TypeDescriptor.GetProperties(sourceType)[property.Name];
                 var attribute = (ReadOnlyAttribute)descriptor.Attributes[typeof(ReadOnlyAttribute)];
-                if (attribute.IsReadOnly == true)
+                if (attribute.IsReadOnly)
                 {
                     expression.ForMember(property.Name, opt => opt.Ignore());
                 }
