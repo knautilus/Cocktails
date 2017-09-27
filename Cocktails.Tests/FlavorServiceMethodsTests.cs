@@ -7,7 +7,7 @@ using Moq;
 using NUnit.Framework;
 
 using Cocktails.Catalog.Mapper;
-using Cocktails.Catalog.Services;
+using Cocktails.Catalog.Services.EFCore;
 using Cocktails.Catalog.ViewModels;
 using Cocktails.Data;
 using Cocktails.Data.Domain;

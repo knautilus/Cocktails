@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using Cocktails.Data.Domain;
 
-namespace Cocktails.Data.EntityFramework.Contexts
+namespace Cocktails.Data.EFCore.Contexts
 {
     public class IdentityContext : IdentityDbContext<User>
     {

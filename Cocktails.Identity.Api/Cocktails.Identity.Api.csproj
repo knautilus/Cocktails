@@ -35,7 +35,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
-    <ProjectReference Include="..\Cocktails.Data.EntityFramework\Cocktails.Data.EntityFramework.csproj" />
+    <ProjectReference Include="..\Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj" />
     <ProjectReference Include="..\Cocktails.Identity.Mapper\Cocktails.Identity.Mapper.csproj" />
     <ProjectReference Include="..\Cocktails.Identity.Services\Cocktails.Identity.Services.csproj" />
     <ProjectReference Include="..\Cocktails.Identity.ViewModels\Cocktails.Identity.ViewModels.csproj" />

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Cocktails.Data.EntityFramework.Migrations
+namespace Cocktails.Data.EFCore.Migrations
 {
     public partial class AddMaxLength : Migration
     {

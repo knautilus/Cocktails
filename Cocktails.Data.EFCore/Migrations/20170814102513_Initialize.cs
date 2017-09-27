@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Cocktails.Data.EntityFramework.Migrations
+namespace Cocktails.Data.EFCore.Migrations
 {
     public partial class Initialize : Migration
     {

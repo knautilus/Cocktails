@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Cocktails.Data.Domain;
 
-namespace Cocktails.Data.EntityFramework.EntityBuiders
+namespace Cocktails.Data.EFCore.EntityBuiders
 {
     public class FlavorBuilder : BaseBuilder<Flavor>
     {

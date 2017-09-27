@@ -12,14 +12,12 @@ using Cocktails.Data;
 using Cocktails.Data.Domain;
 using Cocktails.Mapper;
 
-namespace Cocktails.Catalog.Services
+namespace Cocktails.Catalog.Services.EFCore
 {
     public class IngredientService : BaseService<Ingredient, IngredientModel>, IIngredientService
     {
         protected override Func<IQueryable<Ingredient>, IQueryable<Ingredient>> IncludeFunction =>
-            x => x
-                .Include(y => y.Flavor)
-                .Include(y => y.Category);
+            QueryFunctions.IngredientsIncludeFunction;
 
         public IngredientService(IRepository<Ingredient> repository, IModelMapper mapper)
             : base(repository, mapper) {}
@@ -28,7 +26,7 @@ namespace Cocktails.Catalog.Services
         {
             var result = await Repository.GetAsync(
                 x => GetQuery(context)(
-                    IncludeFunction(x.Where(y => y.CategoryId == categoryId))),
+                    IncludeFunction(QueryFunctions.IngredientsByCategoryIdFunction(x, categoryId))),
                 cancellationToken);
             return WrapCollection(Mapper.Map<IngredientModel[]>(result), context);
         }
