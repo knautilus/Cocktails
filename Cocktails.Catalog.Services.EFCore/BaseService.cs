@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-// TODO remove EF from service layer
 using Microsoft.EntityFrameworkCore;
 
 using Cocktails.Catalog.ViewModels;
@@ -14,7 +13,7 @@ using Cocktails.Data.Domain;
 using Cocktails.Mapper;
 using Cocktails.Common;
 
-namespace Cocktails.Catalog.Services
+namespace Cocktails.Catalog.Services.EFCore
 {
     public abstract class BaseService<TEntity, TModel> : IService<TEntity, TModel>
         where TModel : BaseModel
@@ -34,7 +33,7 @@ namespace Cocktails.Catalog.Services
 
         public virtual async Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var result = await Repository.GetSingleAsync(x => IncludeFunction(x.Where(y => y.Id == id)), cancellationToken);
+            var result = await Repository.GetSingleAsync(x => IncludeFunction(QueryFunctions.GetByIdFunction<TEntity>()(x, id)), cancellationToken);
             return Mapper.Map<TModel>(result);
         }
 
@@ -73,7 +72,7 @@ namespace Cocktails.Catalog.Services
             }
         }
 
-        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public virtual async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             try
             {

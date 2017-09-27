@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using Cocktails.Data.Domain;
 
-namespace Cocktails.Data.EntityFramework.Repositories
+namespace Cocktails.Data.EFCore.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : BaseEntity

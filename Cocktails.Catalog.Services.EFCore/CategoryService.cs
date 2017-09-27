@@ -3,7 +3,7 @@ using Cocktails.Data;
 using Cocktails.Data.Domain;
 using Cocktails.Mapper;
 
-namespace Cocktails.Catalog.Services
+namespace Cocktails.Catalog.Services.EFCore
 {
     public class CategoryService : BaseService<Category, CategoryModel>
     {

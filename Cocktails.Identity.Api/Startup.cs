@@ -12,7 +12,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 
 using Cocktails.Data.Domain;
-using Cocktails.Data.EntityFramework.Contexts;
+using Cocktails.Data.EFCore.Contexts;
 using Cocktails.Common.Models;
 using Cocktails.Identity.Mapper;
 using Cocktails.Identity.Services;

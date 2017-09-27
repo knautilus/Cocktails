@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Catalog.Api", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.Domain", "Cocktails.Data.Domain\Cocktails.Data.Domain.csproj", "{0A77F33F-41A2-49C7-92CF-9033189D47AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.EntityFramework", "Cocktails.Data.EntityFramework\Cocktails.Data.EntityFramework.csproj", "{AF518219-33E3-44FE-AA97-2F5AB1B32A81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.EFCore", "Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj", "{AF518219-33E3-44FE-AA97-2F5AB1B32A81}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Catalog.Services", "Cocktails.Catalog.Services\Cocktails.Catalog.Services.csproj", "{17F225A0-C2EC-4C87-99B3-8C722759A62D}"
 EndProject
@@ -45,11 +45,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{4AB2097B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Identity.ViewModels", "Cocktails.Identity.ViewModels\Cocktails.Identity.ViewModels.csproj", "{326BC283-5611-4B19-917B-C0BD1495E26F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Catalog.Mapper", "Cocktails.Catalog.Mapper\Cocktails.Catalog.Mapper.csproj", "{38E5D00B-0CB1-4925-9A8A-066CE7F8ED36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Catalog.Mapper", "Cocktails.Catalog.Mapper\Cocktails.Catalog.Mapper.csproj", "{38E5D00B-0CB1-4925-9A8A-066CE7F8ED36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Identity.Mapper", "Cocktails.Identity.Mapper\Cocktails.Identity.Mapper.csproj", "{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Identity.Mapper", "Cocktails.Identity.Mapper\Cocktails.Identity.Mapper.csproj", "{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapping", "Mapping", "{F0567B4E-4C68-4DE7-8669-0A7523B52591}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Catalog.Services.EFCore", "Cocktails.Catalog.Services.EFCore\Cocktails.Catalog.Services.EFCore.csproj", "{77D91877-0016-4A4F-A82D-F06246D1D789}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +119,10 @@ Global
 		{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30880F7F-9CEC-490C-83FB-DBC3D042A3A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D91877-0016-4A4F-A82D-F06246D1D789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D91877-0016-4A4F-A82D-F06246D1D789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D91877-0016-4A4F-A82D-F06246D1D789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D91877-0016-4A4F-A82D-F06246D1D789}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +143,7 @@ Global
 		{326BC283-5611-4B19-917B-C0BD1495E26F} = {876E1BD4-EFC5-4C28-A83F-FDC2196DE38F}
 		{38E5D00B-0CB1-4925-9A8A-066CE7F8ED36} = {F0567B4E-4C68-4DE7-8669-0A7523B52591}
 		{30880F7F-9CEC-490C-83FB-DBC3D042A3A0} = {F0567B4E-4C68-4DE7-8669-0A7523B52591}
+		{77D91877-0016-4A4F-A82D-F06246D1D789} = {876E1BD4-EFC5-4C28-A83F-FDC2196DE38F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB01C30C-6A7C-4F5C-BF8A-FCCCAC297C59}

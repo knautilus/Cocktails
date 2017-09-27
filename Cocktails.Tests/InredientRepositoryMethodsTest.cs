@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
 using Cocktails.Data.Domain;
-using Cocktails.Data.EntityFramework.Contexts;
-using Cocktails.Data.EntityFramework.Options;
-using Cocktails.Data.EntityFramework.Repositories;
+using Cocktails.Data.EFCore.Contexts;
+using Cocktails.Data.EFCore.Options;
+using Cocktails.Data.EFCore.Repositories;
 
 namespace Cocktails.Tests
 {

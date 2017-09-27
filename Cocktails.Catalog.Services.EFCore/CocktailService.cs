@@ -3,22 +3,18 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.EntityFrameworkCore;
-
 using Cocktails.Catalog.ViewModels;
 using Cocktails.Data;
 using Cocktails.Data.Domain;
 using Cocktails.Mapper;
 
-namespace Cocktails.Catalog.Services
+namespace Cocktails.Catalog.Services.EFCore
 {
     public class CocktailService : BaseService<Cocktail, CocktailModel>, ICocktailService
     {
         private readonly IRepository<Mix> _mixRepository;
         protected override Func<IQueryable<Cocktail>, IQueryable<Cocktail>> IncludeFunction =>
-            x => x
-                .Include(y => y.Mixes)
-                .ThenInclude(y => y.Ingredient);
+            QueryFunctions.CocktailsIncludeFunction;
 
         public CocktailService(
             IRepository<Cocktail> cocktailRepository,
@@ -34,7 +30,7 @@ namespace Cocktails.Catalog.Services
         {
             var result = await Repository.GetAsync(
                 x => GetQuery(context)(
-                    IncludeFunction(x.Where(y => y.Name.Contains(cocktailName)))),
+                    IncludeFunction(QueryFunctions.CocktailsByNameFunction(x, cocktailName))),
                 cancellationToken);
             return WrapCollection(Mapper.Map<CocktailModel[]>(result), context);
         }
@@ -53,7 +49,7 @@ namespace Cocktails.Catalog.Services
 
         private async Task ProcessMixesAsync(Guid id, CocktailModel model, CancellationToken cancellationToken)
         {
-            var mixes = await _mixRepository.GetAsync(x => x.Where(y => y.Id == id), cancellationToken);
+            var mixes = await _mixRepository.GetAsync(x => QueryFunctions.GetByIdFunction<Mix>()(x, id), cancellationToken);
             foreach (var mix in mixes)
             {
                 var modelMix = model.Mixes.FirstOrDefault(x => x.IngredientId == mix.IngredientId);

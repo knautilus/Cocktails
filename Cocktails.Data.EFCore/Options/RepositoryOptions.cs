@@ -1,4 +1,4 @@
-﻿namespace Cocktails.Data.EntityFramework.Options
+﻿namespace Cocktails.Data.EFCore.Options
 {
     public class RepositoryOptions : IRepositoryOptions
     {

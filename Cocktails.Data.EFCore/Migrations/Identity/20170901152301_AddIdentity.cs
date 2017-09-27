@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace Cocktails.Data.EntityFramework.Migrations.Identity
+namespace Cocktails.Data.EFCore.Migrations.Identity
 {
     public partial class AddIdentity : Migration
     {

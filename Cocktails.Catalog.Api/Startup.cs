@@ -18,13 +18,14 @@ using Swashbuckle.AspNetCore.Swagger;
 
 using Cocktails.Catalog.Mapper;
 using Cocktails.Catalog.Services;
+using Cocktails.Catalog.Services.EFCore;
 using Cocktails.Catalog.ViewModels;
 using Cocktails.Common.Models;
 using Cocktails.Data;
 using Cocktails.Data.Domain;
-using Cocktails.Data.EntityFramework.Contexts;
-using Cocktails.Data.EntityFramework.Options;
-using Cocktails.Data.EntityFramework.Repositories;
+using Cocktails.Data.EFCore.Contexts;
+using Cocktails.Data.EFCore.Options;
+using Cocktails.Data.EFCore.Repositories;
 using Cocktails.Mapper;
 using Cocktails.Security;
 

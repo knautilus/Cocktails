@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using Cocktails.Data.Domain;
-using Cocktails.Data.EntityFramework.EntityBuiders;
+using Cocktails.Data.EFCore.EntityBuiders;
 
-namespace Cocktails.Data.EntityFramework.Contexts
+namespace Cocktails.Data.EFCore.Contexts
 {
     public class CocktailsContext : DbContext
     {
