@@ -7,25 +7,23 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
 using Cocktails.Data.Domain;
-using Cocktails.Data.EFCore.Contexts;
 using Cocktails.Data.EFCore.Options;
 using Cocktails.Data.EFCore.Repositories;
 
 namespace Cocktails.Tests
 {
     [TestFixture]
-    public class FlavorRepositoryMethodsTests
+    public class FlavorRepositoryMethodsTests : DbContextTest
     {
-        private CocktailsContext _cocktailsContext;
         private CancellationToken _token;
         private Repository<Flavor> _repository;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            InitContext();
+            base.SetUp();
             _token = new CancellationToken();
-            _repository = new Repository<Flavor>(_cocktailsContext, new RepositoryOptions());
+            _repository = new Repository<Flavor>(CocktailsContext, new RepositoryOptions());
         }
 
         [Test]
@@ -36,29 +34,28 @@ namespace Cocktails.Tests
             var result = await _repository.InsertAsync(flavor, _token);
 
             Assert.AreEqual(flavor, result);
-            Assert.Contains(flavor, _cocktailsContext.Flavors.ToArray());
+            Assert.Contains(flavor, CocktailsContext.Flavors.ToArray());
         }
 
         [Test]
         public async Task UpdateFlavorUpdatesDb()
         {
-            var count = _cocktailsContext.Flavors.Count();
-            var newName = "new name";
-            var flavor = _cocktailsContext.Flavors.First();
-            var id = flavor.Id;
+            var count = CocktailsContext.Flavors.Count();
+            const string newName = "new name";
+            var flavor = CocktailsContext.Flavors.First();
 
             flavor.Name = newName;
             var result = await _repository.UpdateAsync(flavor, _token);
 
             Assert.AreEqual(flavor, result);
-            Assert.AreEqual(count, _cocktailsContext.Flavors.Count());
-            Assert.Contains(flavor, _cocktailsContext.Flavors.ToArray());
+            Assert.AreEqual(count, CocktailsContext.Flavors.Count());
+            Assert.Contains(flavor, CocktailsContext.Flavors.ToArray());
         }
 
         [Test]
         public void UpdateFlavorWithWrongId()
         {
-            var newName = "new name";
+            const string newName = "new name";
             var flavor = new Flavor { Id = Guid.NewGuid(), Name = newName };
 
             Assert.ThrowsAsync(typeof(DbUpdateConcurrencyException),
@@ -68,14 +65,14 @@ namespace Cocktails.Tests
         [Test]
         public async Task DeleteFlavorUpdatesDb()
         {
-            var count = _cocktailsContext.Flavors.Count();
-            var flavor = _cocktailsContext.Flavors.First();
+            var count = CocktailsContext.Flavors.Count();
+            var flavor = CocktailsContext.Flavors.First();
             var id = flavor.Id;
 
             await _repository.DeleteAsync(flavor, _token);
 
-            Assert.AreEqual(count - 1, _cocktailsContext.Flavors.Count());
-            Assert.That(_cocktailsContext.Flavors.All(x => x.Id != id));
+            Assert.AreEqual(count - 1, CocktailsContext.Flavors.Count());
+            Assert.That(CocktailsContext.Flavors.All(x => x.Id != id));
         }
 
         [Test]
@@ -93,8 +90,8 @@ namespace Cocktails.Tests
             var id = Guid.NewGuid();
             var flavor = new Flavor { Id = id, Name = "flavor" };
 
-            _cocktailsContext.Add(flavor);
-            _cocktailsContext.SaveChanges();
+            CocktailsContext.Add(flavor);
+            CocktailsContext.SaveChanges();
 
             var result = await _repository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
 
@@ -111,20 +108,6 @@ namespace Cocktails.Tests
             var result = await _repository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
 
             Assert.IsNull(result);
-        }
-
-        private void InitContext()
-        {
-            var builder = new DbContextOptionsBuilder<CocktailsContext>().UseInMemoryDatabase("cocktailsdb");
-
-            _cocktailsContext = new CocktailsContext(builder.Options);
-
-            var flavors = Enumerable.Range(1, 10)
-                .Select(i => new Flavor { Id = Guid.NewGuid(), Name = $"Flavor{i}" });
-
-            _cocktailsContext.Flavors.AddRange(flavors);
-
-            int changed = _cocktailsContext.SaveChanges();
         }
     }
 }
