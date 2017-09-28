@@ -25,8 +25,9 @@ namespace Cocktails.Catalog.Services.EFCore
         public async Task<CollectionWrapper<IngredientModel>> GetByCategoryIdAsync(Guid categoryId, QueryContext context, CancellationToken cancellationToken)
         {
             var result = await Repository.GetAsync(
-                x => GetQuery(context)(
-                    IncludeFunction(QueryFunctions.IngredientsByCategoryIdFunction(x, categoryId))),
+                x => 
+                    IncludeFunction(QueryFunctions.IngredientsByCategoryIdFunction(x, categoryId))
+                    .Paginate(context, y => y.ModifiedDate),
                 cancellationToken);
             return WrapCollection(Mapper.Map<IngredientModel[]>(result), context);
         }

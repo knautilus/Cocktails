@@ -9,13 +9,13 @@ using Cocktails.Data.Domain;
 namespace Cocktails.Tests
 {
     [TestFixture]
-    public class QueryFunctionsTests : DbContextTest
+    public class QueryFunctionsTests : DbContextTestBase
     {
         [Test]
         public void GetByIdTest()
         {
             var rnd = new Random();
-            var index = rnd.Next(0, CocktailsContext.Ingredients.Count());
+            var index = rnd.Next(CocktailsContext.Ingredients.Count() - 1);
             var item = CocktailsContext.Ingredients.ToArray()[index];
             var id = item.Id;
 
@@ -66,7 +66,7 @@ namespace Cocktails.Tests
         public void GetIngredientsByCategoryIdTest()
         {
             var rnd = new Random();
-            var index = rnd.Next(0, CocktailsContext.Ingredients.Count());
+            var index = rnd.Next(CocktailsContext.Ingredients.Count() - 1);
             var item = CocktailsContext.Ingredients.ToArray()[index];
             var categoryId = item.CategoryId;
 

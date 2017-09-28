@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +10,6 @@ using Cocktails.Common.Exceptions;
 using Cocktails.Data;
 using Cocktails.Data.Domain;
 using Cocktails.Mapper;
-using Cocktails.Common;
 
 namespace Cocktails.Catalog.Services.EFCore
 {
@@ -39,7 +37,7 @@ namespace Cocktails.Catalog.Services.EFCore
 
         public virtual async Task<CollectionWrapper<TModel>> GetAllAsync(QueryContext context, CancellationToken cancellationToken)
         {
-            var result = await Repository.GetAsync(x => GetQuery(context)(IncludeFunction(x)), cancellationToken);
+            var result = await Repository.GetAsync(x => IncludeFunction(x).Paginate(context, y => y.ModifiedDate), cancellationToken);
             return WrapCollection(Mapper.Map<TModel[]>(result), context);
         }
 
@@ -84,58 +82,6 @@ namespace Cocktails.Catalog.Services.EFCore
             }
         }
 
-        protected Func<IQueryable<TEntity>, IQueryable<TEntity>> GetQuery(QueryContext context)
-        {
-            Expression<Func<TEntity, DateTimeOffset>> sortSelector = x => x.ModifiedDate;
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> resultSortFunction;
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> sortFunction;
-            Func<IQueryable<TEntity>, IQueryable<TEntity>> cursorFunction;
-            if (context.IsSortAsc)
-            {
-                resultSortFunction = x => x.OrderBy(sortSelector);
-                if (context.BeforeDate.HasValue)
-                {
-                    sortFunction = x => x.OrderByDescending(sortSelector);
-                    cursorFunction = x => x.Where(Predicates.LessThanPredicate(sortSelector, () => context.BeforeDate.Value));
-                }
-                else if (context.AfterDate.HasValue)
-                {
-                    sortFunction = x => x.OrderBy(sortSelector);
-                    cursorFunction = x => x.Where(Predicates.GreaterThanPredicate(sortSelector, () => context.AfterDate.Value));
-                }
-                else
-                {
-                    sortFunction = x => x.OrderBy(sortSelector);
-                    cursorFunction = x => x;
-                }
-            }
-            else
-            {
-                resultSortFunction = x => x.OrderByDescending(sortSelector);
-                if (context.BeforeDate.HasValue)
-                {
-                    sortFunction = x => x.OrderBy(sortSelector);
-                    cursorFunction = x => x.Where(Predicates.GreaterThanPredicate(sortSelector, () => context.BeforeDate.Value));
-                }
-                else if (context.AfterDate.HasValue)
-                {
-                    sortFunction = x => x.OrderByDescending(sortSelector);
-                    cursorFunction = x => x.Where(Predicates.LessThanPredicate(sortSelector, () => context.AfterDate.Value));
-                }
-                else
-                {
-                    sortFunction = x => x.OrderByDescending(sortSelector);
-                    cursorFunction = x => x;
-                }
-            }
-            Func<IQueryable<TEntity>, IQueryable<TEntity>> query = x => sortFunction(cursorFunction(x)).Take(context.Count);
-            if(context.BeforeDate.HasValue)
-            {
-                return x => resultSortFunction(query(x));
-            }
-            return query;
-        }
-
         protected CollectionWrapper<TModel> WrapCollection(TModel[] data, QueryContext context)
         {
             Func<TModel, string> cursorSelector = x => x?.ModifiedDate.Ticks.ToString();
@@ -144,7 +90,7 @@ namespace Cocktails.Catalog.Services.EFCore
                 Data = data,
                 Paging = new PagingModel()
             };
-            if (data.Length == context.Count)
+            if (data.Length == context.Limit)
             {
                 wrapper.Paging.Before = cursorSelector(data.First());
                 wrapper.Paging.After = cursorSelector(data.Last());
