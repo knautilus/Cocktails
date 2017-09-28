@@ -12,7 +12,7 @@ using Cocktails.Data.EFCore.Repositories;
 namespace Cocktails.Tests
 {
     [TestFixture]
-    public class IngredientRepositoryMethodsTests : DbContextTest
+    public class IngredientRepositoryMethodsTests : DbContextTestBase
     {
         private CancellationToken _token;
         private Repository<Ingredient> _repository;

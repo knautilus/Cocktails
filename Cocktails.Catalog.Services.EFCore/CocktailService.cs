@@ -29,8 +29,9 @@ namespace Cocktails.Catalog.Services.EFCore
             QueryContext context, CancellationToken cancellationToken)
         {
             var result = await Repository.GetAsync(
-                x => GetQuery(context)(
-                    IncludeFunction(QueryFunctions.CocktailsByNameFunction(x, cocktailName))),
+                x => 
+                    IncludeFunction(QueryFunctions.CocktailsByNameFunction(x, cocktailName))
+                    .Paginate(context, y => y.ModifiedDate),
                 cancellationToken);
             return WrapCollection(Mapper.Map<CocktailModel[]>(result), context);
         }
