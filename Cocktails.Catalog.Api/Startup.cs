@@ -92,7 +92,6 @@ namespace Cocktails.Catalog.Api
 
             services.AddAutoMapper(expr => expr.AddProfile(typeof(MappingProfile)));
 
-            // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new Info
@@ -102,10 +101,8 @@ namespace Cocktails.Catalog.Api
                     Description = "A simple example ASP.NET Core 2 Web API",
                     TermsOfService = "None"
                 });
-
-                //Set the comments path for the swagger json and ui.
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "Cocktails.Api.xml");
+                var xmlPath = Path.Combine(basePath, "Cocktails.Catalog.Api.xml");
                 s.IncludeXmlComments(xmlPath);
             });
 
@@ -137,7 +134,6 @@ namespace Cocktails.Catalog.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
 
             var options = new RewriteOptions()
                .AddRedirectToHttps();
@@ -148,10 +144,7 @@ namespace Cocktails.Catalog.Api
 
             app.UseMvc();
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cocktails API v1");
