@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -77,7 +78,6 @@ namespace Cocktails.Identity.Api
                 options.User.RequireUniqueEmail = true;
             });
 
-            // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new Info
@@ -87,8 +87,6 @@ namespace Cocktails.Identity.Api
                     Description = "A simple example ASP.NET Core 2 Web API",
                     TermsOfService = "None"
                 });
-
-                //Set the comments path for the swagger json and ui.
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Cocktails.Identity.Api.xml");
                 s.IncludeXmlComments(xmlPath);
@@ -106,18 +104,13 @@ namespace Cocktails.Identity.Api
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 
             app.UseMvc();
 
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cocktails API v1");
