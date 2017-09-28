@@ -20,7 +20,7 @@ namespace Cocktails.Tests
         [SetUp]
         public override void SetUp()
         {
-            base.InitContext();
+            base.SetUp();
             _token = new CancellationToken();
             _repository = new Repository<Ingredient>(CocktailsContext, new RepositoryOptions());
         }

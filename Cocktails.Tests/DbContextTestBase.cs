@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 using Cocktails.Data.Domain;
@@ -24,10 +26,10 @@ namespace Cocktails.Tests
             CocktailsContext.Dispose();
         }
 
-        protected virtual void InitContext()
+        private void InitContext()
         {
             var rand = new Random();
-            CocktailsContext = new CocktailsContext(TestsHelper.CreateContextOptions());
+            CocktailsContext = new CocktailsContext(CreateContextOptions());
 
             var flavors = Enumerable.Range(1, 100)
                 .Select(i => new Flavor
@@ -75,6 +77,19 @@ namespace Cocktails.Tests
             CocktailsContext.Cocktails.AddRange(cocktails);
 
             CocktailsContext.SaveChanges();
+        }
+
+        private static DbContextOptions<CocktailsContext> CreateContextOptions()
+        {
+            var serviceProvider = new ServiceCollection()
+                .AddEntityFrameworkInMemoryDatabase()
+                .BuildServiceProvider();
+
+            var builder = new DbContextOptionsBuilder<CocktailsContext>();
+            builder.UseInMemoryDatabase("cocktailsdb")
+                .UseInternalServiceProvider(serviceProvider);
+
+            return builder.Options;
         }
     }
 }

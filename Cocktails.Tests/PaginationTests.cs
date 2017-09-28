@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+
+using NUnit.Framework;
+
 using Cocktails.Catalog.Services.EFCore;
 using Cocktails.Catalog.ViewModels;
-using NUnit.Framework;
 
 namespace Cocktails.Tests
 {
