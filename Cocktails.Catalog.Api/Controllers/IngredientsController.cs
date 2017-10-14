@@ -37,7 +37,7 @@ namespace Cocktails.Catalog.Api.Controllers
         /// </summary>
         /// <param name="context">Sorting and paging parameters</param>
         /// <param name="cancellationToken"></param>
-        [HttpGet("ingredients")]
+        [HttpGet("Ingredients")]
         [SwaggerResponse(200, description: "Success", type: typeof(CollectionWrapper<IngredientModel>))]
         public async Task<IActionResult> GetAllAsync([FromQuery] QueryContext context, CancellationToken cancellationToken)
         {
@@ -50,7 +50,7 @@ namespace Cocktails.Catalog.Api.Controllers
         /// </summary>
         /// <param name="id">Item Id (GUID)</param>
         /// <param name="cancellationToken"></param>
-        [HttpGet("ingredients/{id:guid}", Name = "GetIngredient")]
+        [HttpGet("Ingredients/{id:guid}", Name = "GetIngredient")]
         [SwaggerResponse(200, description: "Item found", type: typeof(IngredientModel))]
         [SwaggerResponse(404, description: "Item not found", type: typeof(ApiErrorResponse))]
         public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
@@ -69,7 +69,7 @@ namespace Cocktails.Catalog.Api.Controllers
         /// <param name="categoryId">Category Id (GUID)</param>
         /// <param name="context">Sorting and paging parameters</param>
         /// <param name="cancellationToken"></param>
-        [HttpGet("categories/{categoryId:guid}/ingredients")]
+        [HttpGet("Categories/{categoryId:guid}/Ingredients")]
         [SwaggerResponse(200, description: "Success", type: typeof(CollectionWrapper<IngredientModel>))]
         public async Task<IActionResult> GetByCategoryIdAsync([FromRoute, Required] Guid categoryId, [FromQuery] QueryContext context, CancellationToken cancellationToken)
         {
@@ -83,7 +83,7 @@ namespace Cocktails.Catalog.Api.Controllers
         /// <param name="model">Ingredient JSON representation</param>
         /// <param name="cancellationToken"></param>
         [Authorize]
-        [HttpPost("ingredients")]
+        [HttpPost("Ingredients")]
         [SwaggerResponse(201, description: "Item created successfully", type: typeof(IngredientModel))]
         [SwaggerResponse(400, description: "Invalid model state", type: typeof(ApiErrorResponse))]
         [SwaggerResponse(401, description: "Unauthorized")]
@@ -112,7 +112,7 @@ namespace Cocktails.Catalog.Api.Controllers
         /// <param name="model">Ingredient JSON representation</param>
         /// <param name="cancellationToken"></param>
         [Authorize]
-        [HttpPut("ingredients/{id:guid}")]
+        [HttpPut("Ingredients/{id:guid}")]
         [SwaggerResponse(200, description: "Item updated successfully", type: typeof(IngredientModel))]
         [SwaggerResponse(401, description: "Unauthorized")]
         [SwaggerResponse(404, description: "Item not found", type: typeof(ApiErrorResponse))]

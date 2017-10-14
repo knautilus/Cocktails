@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		appsettings.Development.json = appsettings.Development.json
 		appsettings.json = appsettings.json
+		localhost.pfx = localhost.pfx
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Security", "Cocktails.Security\Cocktails.Security.csproj", "{E074CA62-D57D-4712-8EA1-876C0C6B3D70}"
@@ -51,7 +52,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Identity.Mapper",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapping", "Mapping", "{F0567B4E-4C68-4DE7-8669-0A7523B52591}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Catalog.Services.EFCore", "Cocktails.Catalog.Services.EFCore\Cocktails.Catalog.Services.EFCore.csproj", "{77D91877-0016-4A4F-A82D-F06246D1D789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Catalog.Services.EFCore", "Cocktails.Catalog.Services.EFCore\Cocktails.Catalog.Services.EFCore.csproj", "{77D91877-0016-4A4F-A82D-F06246D1D789}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
