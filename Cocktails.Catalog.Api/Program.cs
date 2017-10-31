@@ -13,7 +13,7 @@ namespace Cocktails.Catalog.Api
     public class Program
     {
         /// <summary>
-        /// 
+        /// Entry point method
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
@@ -22,7 +22,7 @@ namespace Cocktails.Catalog.Api
         }
 
         /// <summary>
-        /// 
+        /// Configure web host
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>

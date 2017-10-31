@@ -15,13 +15,11 @@ namespace Cocktails.Data.EFCore.Repositories
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _entities;
-        private readonly IRepositoryOptions _options;
 
-        public Repository(DbContext context, IRepositoryOptions options)
+        public Repository(DbContext context)
         {
             _context = context;
             _entities = context.Set<TEntity>();
-            _options = options;
         }
 
         public Task<TEntity> GetSingleAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
@@ -35,7 +33,7 @@ namespace Cocktails.Data.EFCore.Repositories
             return result;
         }
 
-        public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken)
+        public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
         {
             if (entity == null)
             {
@@ -44,7 +42,7 @@ namespace Cocktails.Data.EFCore.Repositories
             var entry = _entities.Add(entity);
             IgnoreReadonlyFields(entry);
 
-            if (_options.AutoCommit)
+            if (autoCommit)
             {
                 await CommitAsync(cancellationToken);
             }
@@ -52,7 +50,7 @@ namespace Cocktails.Data.EFCore.Repositories
             return entity;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+        public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
         {
             if (entity == null)
             {
@@ -62,7 +60,7 @@ namespace Cocktails.Data.EFCore.Repositories
             var entry = _entities.Update(entity);
             IgnoreReadonlyFields(entry);
 
-            if (_options.AutoCommit)
+            if (autoCommit)
             {
                 await CommitAsync(cancellationToken);
             }
@@ -70,7 +68,7 @@ namespace Cocktails.Data.EFCore.Repositories
             return entity;
         }
 
-        public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
+        public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
         {
             if (entity == null)
             {
@@ -78,7 +76,7 @@ namespace Cocktails.Data.EFCore.Repositories
             }
             _entities.Remove(entity);
 
-            if (_options.AutoCommit)
+            if (autoCommit)
             {
                 await CommitAsync(cancellationToken);
             }

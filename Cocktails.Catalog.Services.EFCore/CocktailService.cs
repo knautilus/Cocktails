@@ -39,13 +39,7 @@ namespace Cocktails.Catalog.Services.EFCore
         public override async Task<CocktailModel> UpdateAsync(Guid id, CocktailModel model, CancellationToken cancellationToken)
         {
             await ProcessMixesAsync(id, model, cancellationToken);
-            var result = await base.UpdateAsync(id, model, cancellationToken);
-            if (result != null)
-            {
-                await _mixRepository.CommitAsync(cancellationToken);
-                return await GetByIdAsync(result.Id, cancellationToken);
-            }
-            return null; // TODO handle null?
+            return await base.UpdateAsync(id, model, cancellationToken);
         }
 
         private async Task ProcessMixesAsync(Guid id, CocktailModel model, CancellationToken cancellationToken)
@@ -59,13 +53,13 @@ namespace Cocktails.Catalog.Services.EFCore
                     if (modelMix.Amount != mix.Amount)
                     {
                         mix.Amount = modelMix.Amount;
-                        await _mixRepository.UpdateAsync(mix, cancellationToken);
+                        await _mixRepository.UpdateAsync(mix, cancellationToken, false);
                     }
                     model.Mixes.Remove(modelMix);
                 }
                 else
                 {
-                    await _mixRepository.DeleteAsync(mix, cancellationToken);
+                    await _mixRepository.DeleteAsync(mix, cancellationToken, false);
                 }
             }
         }

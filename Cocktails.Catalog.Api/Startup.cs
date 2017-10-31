@@ -24,7 +24,6 @@ using Cocktails.Common.Models;
 using Cocktails.Data;
 using Cocktails.Data.Domain;
 using Cocktails.Data.EFCore.Contexts;
-using Cocktails.Data.EFCore.Options;
 using Cocktails.Data.EFCore.Repositories;
 using Cocktails.Mapper;
 using Cocktails.Security;
@@ -111,11 +110,6 @@ namespace Cocktails.Catalog.Api
 
             services.AddScoped(typeof(DbContext), typeof(CocktailsContext));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IRepositoryOptions), typeof(RepositoryOptions));
-
-            services.AddScoped<IRepository<Mix>>(provider => new Repository<Mix>(
-                provider.GetService<DbContext>(),
-                new RepositoryOptions { AutoCommit = false }));
 
             services.AddScoped(typeof(IService<Cocktail, CocktailModel>), typeof(CocktailService));
             services.AddScoped(typeof(IService<Flavor, FlavorModel>), typeof(FlavorService));

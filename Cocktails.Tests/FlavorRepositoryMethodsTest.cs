@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
 using Cocktails.Data.Domain;
-using Cocktails.Data.EFCore.Options;
 using Cocktails.Data.EFCore.Repositories;
 
 namespace Cocktails.Tests
@@ -23,7 +22,7 @@ namespace Cocktails.Tests
         {
             base.SetUp();
             _token = new CancellationToken();
-            _repository = new Repository<Flavor>(CocktailsContext, new RepositoryOptions());
+            _repository = new Repository<Flavor>(CocktailsContext);
         }
 
         [Test]

@@ -40,7 +40,7 @@ namespace Cocktails.Tests
             var flavor = new Flavor { Id = Guid.NewGuid(), Name = flavorModel.Name };
 
             _repositoryMock
-                .Setup(x => x.InsertAsync(It.IsAny<Flavor>(), _token))
+                .Setup(x => x.InsertAsync(It.IsAny<Flavor>(), _token, true))
                 .Returns(Task.FromResult(flavor));
             _repositoryMock
                 .Setup(x => x.GetSingleAsync(It.IsAny<Func<IQueryable<Flavor>, IQueryable<Flavor>>>(), _token))
@@ -49,10 +49,10 @@ namespace Cocktails.Tests
             var result = await _service.CreateAsync(flavorModel, _token);
 
             Assert.AreEqual(flavorModel.Name, result.Name);
-            _repositoryMock.Verify(x => x.InsertAsync(It.Is<Flavor>(y => y.Name == flavorModel.Name), _token), Times.Once);
+            _repositoryMock.Verify(x => x.InsertAsync(It.Is<Flavor>(y => y.Name == flavorModel.Name), _token, true), Times.Once);
             _repositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Func<IQueryable<Flavor>, IQueryable<Flavor>>>(), _token), Times.Once);
-            _repositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Flavor>(), _token), Times.Never);
-            _repositoryMock.Verify(x => x.DeleteAsync(It.IsAny<Flavor>(), _token), Times.Never);
+            _repositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Flavor>(), _token, true), Times.Never);
+            _repositoryMock.Verify(x => x.DeleteAsync(It.IsAny<Flavor>(), _token, true), Times.Never);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Cocktails.Tests
             var flavor = new Flavor { Id = flavorModel.Id, Name = flavorModel.Name };
 
             _repositoryMock
-                .Setup(x => x.UpdateAsync(It.IsAny<Flavor>(), _token))
+                .Setup(x => x.UpdateAsync(It.IsAny<Flavor>(), _token, true))
                 .Returns(Task.FromResult(flavor));
             _repositoryMock
                 .Setup(x => x.GetSingleAsync(It.IsAny<Func<IQueryable<Flavor>, IQueryable<Flavor>>>(), _token))
@@ -74,10 +74,10 @@ namespace Cocktails.Tests
             var result = await _service.UpdateAsync(id, flavorModel, _token);
 
             Assert.AreEqual(flavorModel.Name, result.Name);
-            _repositoryMock.Verify(x => x.UpdateAsync(It.Is<Flavor>(y => y.Id == id), _token), Times.Once);
+            _repositoryMock.Verify(x => x.UpdateAsync(It.Is<Flavor>(y => y.Id == id), _token, true), Times.Once);
             _repositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Func<IQueryable<Flavor>, IQueryable<Flavor>>>(), _token), Times.Once);
-            _repositoryMock.Verify(x => x.InsertAsync(It.IsAny<Flavor>(), _token), Times.Never);
-            _repositoryMock.Verify(x => x.DeleteAsync(It.IsAny<Flavor>(), _token), Times.Never);
+            _repositoryMock.Verify(x => x.InsertAsync(It.IsAny<Flavor>(), _token, true), Times.Never);
+            _repositoryMock.Verify(x => x.DeleteAsync(It.IsAny<Flavor>(), _token, true), Times.Never);
         }
 
         [Test]
@@ -87,10 +87,10 @@ namespace Cocktails.Tests
 
             await _service.DeleteAsync(id, _token);
 
-            _repositoryMock.Verify(x => x.DeleteAsync(It.Is<Flavor>(y => y.Id == id), _token), Times.Once);
+            _repositoryMock.Verify(x => x.DeleteAsync(It.Is<Flavor>(y => y.Id == id), _token, true), Times.Once);
             _repositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Func<IQueryable<Flavor>, IQueryable<Flavor>>>(), _token), Times.Never);
-            _repositoryMock.Verify(x => x.InsertAsync(It.IsAny<Flavor>(), _token), Times.Never);
-            _repositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Flavor>(), _token), Times.Never);
+            _repositoryMock.Verify(x => x.InsertAsync(It.IsAny<Flavor>(), _token, true), Times.Never);
+            _repositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Flavor>(), _token, true), Times.Never);
         }
 
         private void InitMapper()
