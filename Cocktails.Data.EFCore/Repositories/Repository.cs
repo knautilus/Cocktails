@@ -4,19 +4,18 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using Cocktails.Data.Domain;
 
 namespace Cocktails.Data.EFCore.Repositories
 {
-    public class ContentRepository<TEntity> : IContentRepository<TEntity>
-        where TEntity : BaseContentEntity
+    public class Repository<TEntity> : IRepository<TEntity>
+        where TEntity : BaseEntity
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _entities;
 
-        public ContentRepository(DbContext context)
+        public Repository(DbContext context)
         {
             _context = context;
             _entities = context.Set<TEntity>();
@@ -40,7 +39,6 @@ namespace Cocktails.Data.EFCore.Repositories
                 throw new ArgumentNullException(nameof(entity));
             }
             var entry = _entities.Add(entity);
-            IgnoreReadonlyFields(entry);
 
             if (autoCommit)
             {
@@ -56,9 +54,8 @@ namespace Cocktails.Data.EFCore.Repositories
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            entity = SetModifiedDate(entity);
+
             var entry = _entities.Update(entity);
-            IgnoreReadonlyFields(entry);
 
             if (autoCommit)
             {
@@ -85,17 +82,6 @@ namespace Cocktails.Data.EFCore.Repositories
         public Task CommitAsync(CancellationToken cancellationToken)
         {
             return _context.SaveChangesAsync(cancellationToken);
-        }
-
-        private TEntity SetModifiedDate(TEntity model)
-        {
-            model.ModifiedDate = DateTimeOffset.UtcNow;
-            return model;
-        }
-
-        private void IgnoreReadonlyFields(EntityEntry<TEntity> entry)
-        {
-            entry.Property(x => x.CreatedDate).IsModified = false;
         }
     }
 }

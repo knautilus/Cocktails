@@ -1,10 +1,11 @@
 ﻿using System.Security.Claims;
 
 namespace Cocktails.Data.Domain
+{
     /// <summary>
     /// Represents a claim that a user possesses.
     /// </summary>
-public class UserClaim
+    public class UserClaim
     {
         /// <summary>
         /// Gets or sets the identifier for this user claim.

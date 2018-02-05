@@ -5,9 +5,9 @@ using Cocktails.Data.Domain;
 
 namespace Cocktails.Data.EFCore.EntityBuiders
 {
-    public class BaseBuilder<T> where T : BaseEntity
+    public class BaseContentBuilder<T> where T : BaseContentEntity
     {
-        public BaseBuilder(EntityTypeBuilder<T> builder)
+        public BaseContentBuilder(EntityTypeBuilder<T> builder)
         {
             builder
                 .Property(b => b.CreatedDate)

@@ -19,7 +19,7 @@ namespace Cocktails.Catalog.Services.EFCore
         protected override Func<IQueryable<Ingredient>, IQueryable<Ingredient>> IncludeFunction =>
             QueryFunctions.IngredientsIncludeFunction;
 
-        public IngredientService(IRepository<Ingredient> repository, IModelMapper mapper)
+        public IngredientService(IContentRepository<Ingredient> repository, IModelMapper mapper)
             : base(repository, mapper) {}
 
         public async Task<CollectionWrapper<IngredientModel>> GetByCategoryIdAsync(Guid categoryId, QueryContext context, CancellationToken cancellationToken)

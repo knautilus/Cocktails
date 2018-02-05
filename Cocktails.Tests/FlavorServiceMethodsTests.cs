@@ -20,7 +20,7 @@ namespace Cocktails.Tests
     {
         private IModelMapper _mapper;
         private CancellationToken _token;
-        private Mock<IRepository<Flavor>> _repositoryMock;
+        private Mock<IContentRepository<Flavor>> _repositoryMock;
         private FlavorService _service;
 
         [SetUp]
@@ -28,7 +28,7 @@ namespace Cocktails.Tests
         {
             InitMapper();
             _token = new CancellationToken();
-            _repositoryMock = new Mock<IRepository<Flavor>>();
+            _repositoryMock = new Mock<IContentRepository<Flavor>>();
             _service = new FlavorService(_repositoryMock.Object, _mapper);
         }
 

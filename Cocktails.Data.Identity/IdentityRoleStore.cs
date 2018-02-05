@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Cocktails.Data.Identity
 {
-    // TODO: Refactor this, remove unnexxessary methods (or may be remove this class)
-    // TODO: Use Psi.Domain.Integration.AspNetCore.Identity
     public class IdentityRoleStore : IRoleStore<Role>
     {
         #region Dependencies
@@ -54,15 +52,15 @@ namespace Cocktails.Data.Identity
 
         public async Task<Role> FindByIdAsync(string roleId, CancellationToken ct)
         {
-            if (!byte.TryParse(roleId, out var id)) throw new ArgumentException(nameof(roleId));
+            if (!Guid.TryParse(roleId, out var id)) throw new ArgumentException(nameof(roleId));
 
             var role = await _storage.GetById(id, ct);
 
             return role;
         }
 
-        public async Task<Role> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken) =>
-            (await _storage.GetByName(normalizedRoleName)).SingleOrDefault();
+        public async Task<Role> FindByNameAsync(string normalizedRoleName, CancellationToken ct) =>
+            await _storage.GetByName(normalizedRoleName, ct);
 
         #endregion
 

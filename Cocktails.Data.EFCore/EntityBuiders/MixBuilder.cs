@@ -3,7 +3,7 @@ using Cocktails.Data.Domain;
 
 namespace Cocktails.Data.EFCore.EntityBuiders
 {
-    public class MixBuilder : BaseBuilder<Mix>
+    public class MixBuilder : BaseContentBuilder<Mix>
     {
         public MixBuilder(EntityTypeBuilder<Mix> builder) : base(builder)
         {

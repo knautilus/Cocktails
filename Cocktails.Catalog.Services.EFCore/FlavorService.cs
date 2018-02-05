@@ -7,7 +7,7 @@ namespace Cocktails.Catalog.Services.EFCore
 {
     public class FlavorService : BaseService<Flavor, FlavorModel>
     {
-        public FlavorService(IRepository<Flavor> repository, IModelMapper mapper)
+        public FlavorService(IContentRepository<Flavor> repository, IModelMapper mapper)
             : base(repository, mapper) {}
     }
 }

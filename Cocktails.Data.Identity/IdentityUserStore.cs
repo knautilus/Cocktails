@@ -83,9 +83,4 @@ namespace Cocktails.Data.Identity
 
         #endregion
     }
-
-    internal interface IUserStorage : IRepository<User>
-    {
-
-    }
 }

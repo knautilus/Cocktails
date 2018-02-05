@@ -18,6 +18,8 @@ using Cocktails.Common.Models;
 using Cocktails.Identity.Mapper;
 using Cocktails.Identity.Services;
 using Cocktails.Mapper;
+using Cocktails.Data.Identity;
+using Cocktails.Data.EFCore.Repositories;
 
 namespace Cocktails.Identity.Api
 {
@@ -96,6 +98,10 @@ namespace Cocktails.Identity.Api
 
             services.AddScoped(typeof(IAccountService), typeof(AccountService));
             services.AddScoped(typeof(IModelMapper), typeof(ModelMapper));
+            services.AddScoped(typeof(IUserStore<User>), typeof(IdentityUserStore));
+            services.AddScoped(typeof(IRoleStore<Role>), typeof(IdentityRoleStore));
+            //services.AddScoped(typeof(IUserStorage), typeof(UserStorage)); // TODO
+            services.AddScoped(typeof(IRoleStorage), typeof(RoleStorage));
         }
 
         /// <summary>
