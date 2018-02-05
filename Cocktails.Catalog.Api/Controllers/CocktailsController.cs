@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -85,6 +86,8 @@ namespace Cocktails.Catalog.Api.Controllers
         [SwaggerResponse(401, description: "Unauthorized")]
         public async Task<IActionResult> PostAsync([FromBody, Required] CocktailModel model, CancellationToken cancellationToken)
         {
+            User.FindFirstValue("Id");
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(new ApiBadRequestResponse(ModelState));

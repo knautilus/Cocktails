@@ -11,7 +11,7 @@ using Cocktails.Data.Domain;
 namespace Cocktails.Data.EFCore.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity>
-        where TEntity : BaseEntity
+        where TEntity : BaseContentEntity
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _entities;

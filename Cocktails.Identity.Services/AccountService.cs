@@ -89,7 +89,7 @@ namespace Cocktails.Identity.Services
 
             ClaimsIdentity identity = new ClaimsIdentity(
                 new GenericIdentity(user.UserName, "TokenAuth"),
-                new[] { new Claim("Id", user.Id) });
+                new[] { new Claim("Id", user.Id.ToString()) });
 
             return identity;
         }
