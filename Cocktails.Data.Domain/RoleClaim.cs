@@ -6,17 +6,12 @@ namespace Cocktails.Data.Domain
     /// <summary>
     /// Represents a claim that is granted to all users within a role.
     /// </summary>
-    public class RoleClaim
+    public class RoleClaim : BaseEntity<long>
     {
-        /// <summary>
-        /// Gets or sets the identifier for this role claim.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Gets or sets the of the primary key of the role associated with this claim.
         /// </summary>
-        public Guid RoleId { get; set; }
+        public long RoleId { get; set; }
 
         /// <summary>
         /// Gets or sets the claim type for this claim.

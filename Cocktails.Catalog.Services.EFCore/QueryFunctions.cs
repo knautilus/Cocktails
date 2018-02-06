@@ -7,7 +7,7 @@ namespace Cocktails.Catalog.Services.EFCore
 {
     public class QueryFunctions
     {
-        public static Func<IQueryable<T>, Guid, IQueryable<T>> GetByIdFunction<T>() where T : BaseEntity =>
+        public static Func<IQueryable<T>, Guid, IQueryable<T>> GetByIdFunction<T>() where T : BaseEntity<Guid> =>
             (x, id) => x.Where(y => y.Id == id);
 
         public static Func<IQueryable<Cocktail>, IQueryable<Cocktail>> CocktailsIncludeFunction =

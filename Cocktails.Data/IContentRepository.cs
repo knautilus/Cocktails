@@ -2,5 +2,8 @@
 
 namespace Cocktails.Data
 {
-    public interface IContentRepository<TEntity> : IRepository<TEntity> where TEntity : BaseContentEntity { }
+    public interface IContentRepository<TKey, TEntity> : IRepository<TEntity>
+        where TKey: struct
+        where TEntity : BaseContentEntity<TKey>
+    { }
 }

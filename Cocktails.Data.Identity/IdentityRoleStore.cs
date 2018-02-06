@@ -10,13 +10,13 @@ namespace Cocktails.Data.Identity
     {
         #region Dependencies
 
-        private readonly IRoleStorage _storage;
+        private readonly IRoleStorage<long> _storage;
 
         #endregion
 
         #region Constructor
 
-        public IdentityRoleStore(IRoleStorage storage) =>
+        public IdentityRoleStore(IRoleStorage<long> storage) =>
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
 
         #endregion
@@ -52,7 +52,7 @@ namespace Cocktails.Data.Identity
 
         public async Task<Role> FindByIdAsync(string roleId, CancellationToken ct)
         {
-            if (!Guid.TryParse(roleId, out var id)) throw new ArgumentException(nameof(roleId));
+            if (!long.TryParse(roleId, out var id)) throw new ArgumentException(nameof(roleId));
 
             var role = await _storage.GetById(id, ct);
 

@@ -10,11 +10,11 @@ namespace Cocktails.Data.Domain
         /// <summary>
         /// Gets or sets the primary key of the user that is linked to a role.
         /// </summary>
-        public Guid UserId { get; set; }
+        public long UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the primary key of the role that is linked to the user.
         /// </summary>
-        public Guid RoleId { get; set; }
+        public long RoleId { get; set; }
     }
 }

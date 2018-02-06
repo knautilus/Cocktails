@@ -11,7 +11,7 @@ using System;
 namespace Cocktails.Data.EFCore.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20180131125855_Initialize")]
+    [Migration("20180206143359_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace Cocktails.Data.EFCore.Migrations.Identity
 
             modelBuilder.Entity("Cocktails.Data.Domain.RoleClaim", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
@@ -74,7 +74,7 @@ namespace Cocktails.Data.EFCore.Migrations.Identity
 
             modelBuilder.Entity("Cocktails.Data.Domain.UserClaim", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");

@@ -15,15 +15,15 @@ namespace Cocktails.Catalog.Services.EFCore
 {
     public abstract class BaseService<TEntity, TModel> : IService<TEntity, TModel>
         where TModel : BaseModel
-        where TEntity : BaseContentEntity, new()
+        where TEntity : BaseContentEntity<Guid>, new()
     {
-        protected readonly IContentRepository<TEntity> Repository;
+        protected readonly IContentRepository<Guid, TEntity> Repository;
         protected readonly IModelMapper Mapper;
 
         protected virtual Func<IQueryable<TEntity>, IQueryable<TEntity>> IncludeFunction =>
             x => x;
 
-        protected BaseService(IContentRepository<TEntity> repository, IModelMapper mapper)
+        protected BaseService(IContentRepository<Guid, TEntity> repository, IModelMapper mapper)
         {
             Repository = repository;
             Mapper = mapper;

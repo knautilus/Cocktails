@@ -1,17 +1,13 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 
 namespace Cocktails.Data.Domain
 {
     /// <summary>
     /// Represents a claim that a user possesses.
     /// </summary>
-    public class UserClaim
+    public class UserClaim : BaseEntity<long>
     {
-        /// <summary>
-        /// Gets or sets the identifier for this user claim.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Gets or sets the primary key of the user associated with this claim.
         /// </summary>

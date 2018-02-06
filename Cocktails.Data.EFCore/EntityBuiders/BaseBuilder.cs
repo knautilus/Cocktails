@@ -5,7 +5,7 @@ using Cocktails.Data.Domain;
 
 namespace Cocktails.Data.EFCore.EntityBuiders
 {
-    public class BaseContentBuilder<T> where T : BaseContentEntity
+    public class BaseContentBuilder<T> where T : class, IContentEntity
     {
         public BaseContentBuilder(EntityTypeBuilder<T> builder)
         {

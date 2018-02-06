@@ -109,7 +109,7 @@ namespace Cocktails.Catalog.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(DbContext), typeof(CocktailsContext));
-            services.AddScoped(typeof(IContentRepository<>), typeof(ContentRepository<>));
+            services.AddScoped(typeof(IContentRepository<,>), typeof(ContentRepository<,>));
 
             services.AddScoped(typeof(IService<Cocktail, CocktailModel>), typeof(CocktailService));
             services.AddScoped(typeof(IService<Flavor, FlavorModel>), typeof(FlavorService));

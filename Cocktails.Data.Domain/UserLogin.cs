@@ -25,6 +25,6 @@ namespace Cocktails.Data.Domain
         /// <summary>
         /// Gets or sets the of the primary key of the user associated with this login.
         /// </summary>
-        public Guid UserId { get; set; }
+        public long UserId { get; set; }
     }
 }

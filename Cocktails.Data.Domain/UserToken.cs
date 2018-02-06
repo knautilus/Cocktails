@@ -10,7 +10,7 @@ namespace Cocktails.Data.Domain
         /// <summary>
         /// Gets or sets the primary key of the user that the token belongs to.
         /// </summary>
-        public Guid UserId { get; set; }
+        public long UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the LoginProvider this token is from.

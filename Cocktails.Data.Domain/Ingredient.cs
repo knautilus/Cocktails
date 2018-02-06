@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Cocktails.Data.Domain
 {
-    public class Ingredient : BaseContentEntity
+    public class Ingredient : BaseContentEntity<Guid>
     {
         public string Name { get; set; }
 

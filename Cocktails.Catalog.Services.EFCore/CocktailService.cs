@@ -12,13 +12,13 @@ namespace Cocktails.Catalog.Services.EFCore
 {
     public class CocktailService : BaseService<Cocktail, CocktailModel>, ICocktailService
     {
-        private readonly IContentRepository<Mix> _mixRepository;
+        private readonly IContentRepository<Guid, Mix> _mixRepository;
         protected override Func<IQueryable<Cocktail>, IQueryable<Cocktail>> IncludeFunction =>
             QueryFunctions.CocktailsIncludeFunction;
 
         public CocktailService(
-            IContentRepository<Cocktail> cocktailRepository,
-            IContentRepository<Mix> mixRepository,
+            IContentRepository<Guid, Cocktail> cocktailRepository,
+            IContentRepository<Guid, Mix> mixRepository,
             IModelMapper mapper)
             : base(cocktailRepository, mapper)
         {

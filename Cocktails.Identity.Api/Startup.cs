@@ -62,22 +62,23 @@ namespace Cocktails.Identity.Api
                 .AddDefaultTokenProviders();
 
             // Configure Identity
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    // Password settings
-            //    options.Password.RequireDigit = false;
-            //    options.Password.RequiredLength = 8;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireUppercase = false;
-            //    options.Password.RequireLowercase = false;
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
 
-            //    // Lockout settings
-            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-            //    options.Lockout.MaxFailedAccessAttempts = 10;
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
 
-            //    // User settings
-            //    options.User.RequireUniqueEmail = true;
-            //});
+                // User settings
+                options.User.RequireUniqueEmail = true;
+
+            });
 
             services.AddSwaggerGen(s =>
             {
@@ -96,12 +97,14 @@ namespace Cocktails.Identity.Api
             services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped(typeof(DbContext), typeof(IdentityContext));
+
             services.AddScoped(typeof(IAccountService), typeof(AccountService));
             services.AddScoped(typeof(IModelMapper), typeof(ModelMapper));
             services.AddScoped(typeof(IUserStore<User>), typeof(IdentityUserStore));
             services.AddScoped(typeof(IRoleStore<Role>), typeof(IdentityRoleStore));
-            //services.AddScoped(typeof(IUserStorage), typeof(UserStorage)); // TODO
-            services.AddScoped(typeof(IRoleStorage), typeof(RoleStorage));
+            services.AddScoped(typeof(IUserStorage<long>), typeof(UserStorage));
+            services.AddScoped(typeof(IRoleStorage<long>), typeof(RoleStorage));
         }
 
         /// <summary>
@@ -109,6 +112,7 @@ namespace Cocktails.Identity.Api
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
+        /// <param name="loggerFactory"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));

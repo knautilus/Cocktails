@@ -14,14 +14,14 @@ namespace Cocktails.Tests
     public class IngredientRepositoryMethodsTests : DbContextTestBase
     {
         private CancellationToken _token;
-        private Repository<Ingredient> _repository;
+        private ContentRepository<Guid, Ingredient> contentRepository;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
             _token = new CancellationToken();
-            _repository = new Repository<Ingredient>(CocktailsContext);
+            contentRepository = new ContentRepository<Guid, Ingredient>(CocktailsContext);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Cocktails.Tests
                 CategoryId = category.Id
             };
 
-            var result = await _repository.InsertAsync(ingredient, _token);
+            var result = await contentRepository.InsertAsync(ingredient, _token);
 
             Assert.AreEqual(ingredient, result);
             Assert.IsNotNull(result.Flavor);
@@ -53,7 +53,7 @@ namespace Cocktails.Tests
                 CategoryId = Guid.NewGuid()
             };
 
-            var result = await _repository.InsertAsync(ingredient, _token);
+            var result = await contentRepository.InsertAsync(ingredient, _token);
 
             Assert.AreEqual(ingredient, result);
             Assert.IsNull(result.Flavor);

@@ -10,8 +10,9 @@ using Cocktails.Data.Domain;
 
 namespace Cocktails.Data.EFCore.Repositories
 {
-    public class ContentRepository<TEntity> : IContentRepository<TEntity>
-        where TEntity : BaseContentEntity
+    public class ContentRepository<TKey, TEntity> : IContentRepository<TKey, TEntity>
+        where TKey : struct
+        where TEntity : BaseContentEntity<TKey>
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _entities;

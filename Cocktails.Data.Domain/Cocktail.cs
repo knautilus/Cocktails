@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Cocktails.Data.Domain
 {
-    public class Cocktail : BaseContentEntity
+    public class Cocktail : BaseContentEntity<Guid>
     {
         public string Name { get; set; }
         public string Description { get; set; }

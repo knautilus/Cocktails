@@ -2,8 +2,8 @@
 
 namespace Cocktails.Data.Domain
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity<TKey> where TKey : struct
     {
-        public Guid Id { get; set; }
+        public TKey Id { get; set; }
     }
 }

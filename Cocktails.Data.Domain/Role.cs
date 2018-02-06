@@ -5,7 +5,7 @@ namespace Cocktails.Data.Domain
     /// <summary>
     /// Represents a role in the identity system
     /// </summary>
-    public class Role : BaseEntity
+    public class Role : BaseEntity<long>
     {
         public Role() { }
 

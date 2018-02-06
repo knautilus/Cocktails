@@ -2,7 +2,7 @@
 
 namespace Cocktails.Data.Domain
 {
-    public class User : BaseEntity
+    public class User : BaseEntity<long>
     {
         public string UserName { get; set; }
         public string Email { get; set; }

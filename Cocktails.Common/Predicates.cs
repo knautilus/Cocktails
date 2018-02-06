@@ -20,5 +20,13 @@ namespace Cocktails.Common
                 selector.Parameters);
             return expression;
         }
+
+        public static Expression<Func<T, bool>> EqualPredicate<T, TValue>(Expression<Func<T, TValue>> selector, Expression<Func<TValue>> value)
+        {
+            var expression = Expression.Lambda<Func<T, bool>>(
+                Expression.Equal(selector.Body, value.Body),
+                selector.Parameters);
+            return expression;
+        }
     }
 }

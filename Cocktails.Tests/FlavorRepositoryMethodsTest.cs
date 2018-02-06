@@ -15,14 +15,14 @@ namespace Cocktails.Tests
     public class FlavorRepositoryMethodsTests : DbContextTestBase
     {
         private CancellationToken _token;
-        private Repository<Flavor> _repository;
+        private ContentRepository<Guid, Flavor> contentRepository;
 
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
             _token = new CancellationToken();
-            _repository = new Repository<Flavor>(CocktailsContext);
+            contentRepository = new ContentRepository<Guid, Flavor>(CocktailsContext);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Cocktails.Tests
         {
             var flavor = new Flavor { Name = "flavor1" };
 
-            var result = await _repository.InsertAsync(flavor, _token);
+            var result = await contentRepository.InsertAsync(flavor, _token);
 
             Assert.AreEqual(flavor, result);
             Assert.Contains(flavor, CocktailsContext.Flavors.ToArray());
@@ -44,7 +44,7 @@ namespace Cocktails.Tests
             var flavor = CocktailsContext.Flavors.First();
 
             flavor.Name = newName;
-            var result = await _repository.UpdateAsync(flavor, _token);
+            var result = await contentRepository.UpdateAsync(flavor, _token);
 
             Assert.AreEqual(flavor, result);
             Assert.AreEqual(count, CocktailsContext.Flavors.Count());
@@ -58,7 +58,7 @@ namespace Cocktails.Tests
             var flavor = new Flavor { Id = Guid.NewGuid(), Name = newName };
 
             Assert.ThrowsAsync(typeof(DbUpdateConcurrencyException),
-                async () => await _repository.UpdateAsync(flavor, _token));
+                async () => await contentRepository.UpdateAsync(flavor, _token));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Cocktails.Tests
             var flavor = CocktailsContext.Flavors.First();
             var id = flavor.Id;
 
-            await _repository.DeleteAsync(flavor, _token);
+            await contentRepository.DeleteAsync(flavor, _token);
 
             Assert.AreEqual(count - 1, CocktailsContext.Flavors.Count());
             Assert.That(CocktailsContext.Flavors.All(x => x.Id != id));
@@ -80,7 +80,7 @@ namespace Cocktails.Tests
             var flavor = new Flavor { Id = Guid.NewGuid() };
 
             Assert.ThrowsAsync(typeof(DbUpdateConcurrencyException),
-                async () => await _repository.DeleteAsync(flavor, _token));
+                async () => await contentRepository.DeleteAsync(flavor, _token));
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace Cocktails.Tests
             CocktailsContext.Add(flavor);
             CocktailsContext.SaveChanges();
 
-            var result = await _repository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
+            var result = await contentRepository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(flavor.Id, result.Id);
@@ -104,7 +104,7 @@ namespace Cocktails.Tests
         {
             var id = Guid.NewGuid();
 
-            var result = await _repository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
+            var result = await contentRepository.GetSingleAsync(x => x.Where(y => y.Id == id), _token);
 
             Assert.IsNull(result);
         }

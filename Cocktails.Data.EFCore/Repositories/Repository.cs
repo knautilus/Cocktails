@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
-using Cocktails.Data.Domain;
-
 namespace Cocktails.Data.EFCore.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity>
-        where TEntity : BaseEntity
+        where TEntity : class
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _entities;
@@ -38,7 +36,8 @@ namespace Cocktails.Data.EFCore.Repositories
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            var entry = _entities.Add(entity);
+
+            _entities.Add(entity);
 
             if (autoCommit)
             {
@@ -55,7 +54,7 @@ namespace Cocktails.Data.EFCore.Repositories
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var entry = _entities.Update(entity);
+            _entities.Update(entity);
 
             if (autoCommit)
             {
