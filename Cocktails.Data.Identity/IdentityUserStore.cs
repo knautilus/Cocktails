@@ -31,11 +31,17 @@ namespace Cocktails.Data.Identity
             return res != null ? IdentityResult.Success : IdentityResult.Failed();
         }
 
-        public Task<IdentityResult> UpdateAsync(User user, CancellationToken ct) =>
-            throw new NotSupportedException();
+        public async Task<IdentityResult> UpdateAsync(User user, CancellationToken ct)
+        {
+            var res = await _storage.UpdateAsync(user, ct);
+            return res != null ? IdentityResult.Success : IdentityResult.Failed();
+        }
 
-        public Task<IdentityResult> DeleteAsync(User user, CancellationToken ct) =>
-            throw new NotSupportedException();
+        public async Task<IdentityResult> DeleteAsync(User user, CancellationToken ct)
+        {
+            await _storage.DeleteAsync(user, ct);
+            return IdentityResult.Success;
+        }
 
         public async Task<User> FindByIdAsync(string userId, CancellationToken ct)
         {
@@ -50,13 +56,14 @@ namespace Cocktails.Data.Identity
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken ct) =>
             await _storage.GetByName(normalizedUserName, ct);
 
-        public Task<string> GetUserIdAsync(User user, CancellationToken ct) => Task.FromResult(user.Id.ToString());
+        public Task<string> GetUserIdAsync(User user, CancellationToken ct) =>
+            Task.FromResult(user.Id.ToString());
 
         public Task<string> GetUserNameAsync(User user, CancellationToken ct) =>
             Task.FromResult(user.UserName);
 
-        public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken ct) =>
-            GetUserNameAsync(user, ct);
+        public async Task<string> GetNormalizedUserNameAsync(User user, CancellationToken ct) =>
+            (await GetUserNameAsync(user, ct)).ToUpper();
 
         public Task SetUserNameAsync(User user, string userName, CancellationToken ct)
         {
@@ -67,18 +74,12 @@ namespace Cocktails.Data.Identity
                 throw new ArgumentNullException(nameof(user));
             }
             user.UserName = userName;
+            // TODO update user in db?
             return TaskCache.CompletedTask;
         }
 
         public Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken ct)
         {
-            ct.ThrowIfCancellationRequested();
-            ThrowIfDisposed();
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-            //user.UserName = userName;
             return TaskCache.CompletedTask;
         }
 
@@ -135,7 +136,7 @@ namespace Cocktails.Data.Identity
         /// <param name="email">The email to set.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
-        public virtual Task SetEmailAsync(User user, string email, CancellationToken cancellationToken = default(CancellationToken))
+        public Task SetEmailAsync(User user, string email, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
@@ -144,6 +145,7 @@ namespace Cocktails.Data.Identity
                 throw new ArgumentNullException(nameof(user));
             }
             user.Email = email;
+            // TODO update user in db?
             return TaskCache.CompletedTask;
         }
 
@@ -153,7 +155,7 @@ namespace Cocktails.Data.Identity
         /// <param name="user">The user whose email should be returned.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
         /// <returns>The task object containing the results of the asynchronous operation, the email address for the specified <paramref name="user"/>.</returns>
-        public virtual Task<string> GetEmailAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<string> GetEmailAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
@@ -184,6 +186,7 @@ namespace Cocktails.Data.Identity
                 throw new ArgumentNullException(nameof(user));
             }
             user.EmailConfirmed = confirmed;
+            // TODO update user in db?
             return TaskCache.CompletedTask;
         }
 
@@ -195,10 +198,8 @@ namespace Cocktails.Data.Identity
         /// <returns>
         /// The task object containing the results of the asynchronous lookup operation, the normalized email address if any associated with the specified user.
         /// </returns>
-        public virtual Task<string> GetNormalizedEmailAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return GetEmailAsync(user, cancellationToken);
-        }
+        public async Task<string> GetNormalizedEmailAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
+            => (await GetEmailAsync(user, cancellationToken)).ToUpper();
 
         /// <summary>
         /// Sets the normalized email for the specified <paramref name="user"/>.
@@ -207,15 +208,8 @@ namespace Cocktails.Data.Identity
         /// <param name="normalizedEmail">The normalized email to set for the specified <paramref name="user"/>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
-        public virtual Task SetNormalizedEmailAsync(User user, string normalizedEmail, CancellationToken cancellationToken = default(CancellationToken))
+        public Task SetNormalizedEmailAsync(User user, string normalizedEmail, CancellationToken cancellationToken = default(CancellationToken))
         {
-            cancellationToken.ThrowIfCancellationRequested();
-            ThrowIfDisposed();
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-            //user.NormalizedEmail = normalizedEmail;
             return TaskCache.CompletedTask;
         }
 

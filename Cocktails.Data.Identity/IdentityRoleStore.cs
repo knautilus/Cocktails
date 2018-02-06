@@ -23,14 +23,23 @@ namespace Cocktails.Data.Identity
 
         #region IRoleStore
 
-        public Task<IdentityResult> CreateAsync(Role role, CancellationToken ct) =>
-            throw new NotSupportedException();
+        public async Task<IdentityResult> CreateAsync(Role role, CancellationToken ct)
+        {
+            var res = await _storage.InsertAsync(role, ct);
+            return res != null ? IdentityResult.Success : IdentityResult.Failed();
+        }
 
-        public Task<IdentityResult> UpdateAsync(Role role, CancellationToken ct) =>
-            throw new NotSupportedException();
+        public async Task<IdentityResult> UpdateAsync(Role role, CancellationToken ct)
+        {
+            var res = await _storage.UpdateAsync(role, ct);
+            return res != null ? IdentityResult.Success : IdentityResult.Failed();
+        }
 
-        public Task<IdentityResult> DeleteAsync(Role role, CancellationToken ct) =>
-            throw new NotSupportedException();
+        public async Task<IdentityResult> DeleteAsync(Role role, CancellationToken ct)
+        {
+            await _storage.DeleteAsync(role, ct);
+            return IdentityResult.Success;
+        }
 
 
         public Task<string> GetRoleIdAsync(Role role, CancellationToken ct) =>
@@ -40,7 +49,7 @@ namespace Cocktails.Data.Identity
             Task.FromResult(role.Name);
 
         public Task<string> GetNormalizedRoleNameAsync(Role role, CancellationToken ct) =>
-            Task.FromResult(role.Name);
+            Task.FromResult(role.Name.ToUpper());
 
 
         public Task SetRoleNameAsync(Role role, string roleName, CancellationToken ct) =>
