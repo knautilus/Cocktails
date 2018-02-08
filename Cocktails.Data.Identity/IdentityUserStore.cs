@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,19 +8,23 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Cocktails.Data.Identity
 {
-    public class IdentityUserStore : IUserPasswordStore<User>, IUserEmailStore<User>
+    public class IdentityUserStore : IUserPasswordStore<User>, IUserEmailStore<User>, IUserLoginStore<User>
     {
         #region Fields
 
         private bool _disposed;
-        private readonly IUserStorage<long> _storage;
+        private readonly IUserStorage<long> _userStorage;
+        private readonly ILoginStorage _loginStorage;
 
         #endregion
 
         #region Constructor
 
-        public IdentityUserStore(IUserStorage<long> storage) =>
-            _storage = storage ?? throw new ArgumentNullException(nameof(storage));
+        public IdentityUserStore(IUserStorage<long> userStorage, ILoginStorage loginStorage)
+        {
+            _userStorage = userStorage ?? throw new ArgumentNullException(nameof(userStorage));
+            _loginStorage = loginStorage;
+        }
 
         #endregion
 
@@ -27,19 +32,19 @@ namespace Cocktails.Data.Identity
 
         public async Task<IdentityResult> CreateAsync(User user, CancellationToken ct)
         {
-            var res = await _storage.InsertAsync(user, ct);
+            var res = await _userStorage.InsertAsync(user, ct);
             return res != null ? IdentityResult.Success : IdentityResult.Failed();
         }
 
         public async Task<IdentityResult> UpdateAsync(User user, CancellationToken ct)
         {
-            var res = await _storage.UpdateAsync(user, ct);
+            var res = await _userStorage.UpdateAsync(user, ct);
             return res != null ? IdentityResult.Success : IdentityResult.Failed();
         }
 
         public async Task<IdentityResult> DeleteAsync(User user, CancellationToken ct)
         {
-            await _storage.DeleteAsync(user, ct);
+            await _userStorage.DeleteAsync(user, ct);
             return IdentityResult.Success;
         }
 
@@ -48,13 +53,13 @@ namespace Cocktails.Data.Identity
             if (!long.TryParse(userId, out var id))
                 throw new ArgumentException();
 
-            var user = await _storage.GetById(id, ct);
+            var user = await _userStorage.GetById(id, ct);
 
             return user;
         }
 
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken ct) =>
-            await _storage.GetByName(normalizedUserName, ct);
+            await _userStorage.GetByName(normalizedUserName, ct);
 
         public Task<string> GetUserIdAsync(User user, CancellationToken ct) =>
             Task.FromResult(user.Id.ToString());
@@ -225,7 +230,7 @@ namespace Cocktails.Data.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-            return _storage.GetSingleAsync(x => x.Where(u => u.Email == normalizedEmail), cancellationToken);
+            return _userStorage.GetSingleAsync(x => x.Where(u => u.Email == normalizedEmail), cancellationToken);
         }
 
         #endregion
@@ -236,6 +241,68 @@ namespace Cocktails.Data.Identity
             {
                 throw new ObjectDisposedException(GetType().Name);
             }
+        }
+
+        public async Task AddLoginAsync(User user, UserLoginInfo login, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            if (login == null)
+            {
+                throw new ArgumentNullException(nameof(login));
+            }
+            await _loginStorage.InsertAsync(CreateUserLogin(user, login), cancellationToken);
+        }
+
+        public Task RemoveLoginAsync(User user, string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
+
+        public async Task<IList<UserLoginInfo>> GetLoginsAsync(User user, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            var userId = user.Id;
+            return (await _loginStorage.GetAsync(x => x.Where(l => l.UserId.Equals(userId)), cancellationToken))
+                .Select(l => new UserLoginInfo(l.LoginProvider, l.ProviderKey, l.ProviderDisplayName)).ToList();
+        }
+
+        public async Task<User> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            var userLogin = await FindUserLoginAsync(loginProvider, providerKey, cancellationToken);
+            if (userLogin != null)
+            {
+                return await _userStorage.GetById(userLogin.UserId, cancellationToken);
+            }
+            return null;
+        }
+
+        private UserLogin CreateUserLogin(User user, UserLoginInfo login)
+        {
+            return new UserLogin
+            {
+                UserId = user.Id,
+                ProviderKey = login.ProviderKey,
+                LoginProvider = login.LoginProvider,
+                ProviderDisplayName = login.ProviderDisplayName
+            };
+        }
+
+        private Task<UserLogin> FindUserLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
+            return _loginStorage.GetSingleAsync(x => x.Where(userLogin => userLogin.LoginProvider == loginProvider && userLogin.ProviderKey == providerKey), cancellationToken);
         }
     }
 

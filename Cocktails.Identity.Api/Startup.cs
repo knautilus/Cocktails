@@ -61,6 +61,8 @@ namespace Cocktails.Identity.Api
             services.AddIdentity<User, Role>()
                 .AddDefaultTokenProviders();
 
+            //services.AddAuthentication(x => x.AddScheme())
+
             // Configure Identity
             services.Configure<IdentityOptions>(options =>
             {
@@ -105,6 +107,7 @@ namespace Cocktails.Identity.Api
             services.AddScoped(typeof(IRoleStore<Role>), typeof(IdentityRoleStore));
             services.AddScoped(typeof(IUserStorage<long>), typeof(UserStorage));
             services.AddScoped(typeof(IRoleStorage<long>), typeof(RoleStorage));
+            services.AddScoped(typeof(ILoginStorage), typeof(LoginStorage));
         }
 
         /// <summary>

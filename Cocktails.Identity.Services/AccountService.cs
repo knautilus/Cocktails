@@ -22,18 +22,33 @@ namespace Cocktails.Identity.Services
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly AuthSettings _authSettings;
         private readonly IModelMapper _mapper;
 
-        public AccountService(UserManager<User> userManager, IOptions<AuthSettings> authSettings, IModelMapper mapper)
+        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<AuthSettings> authSettings, IModelMapper mapper)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _authSettings = authSettings.Value;
             _mapper = mapper;
         }
 
         public async Task RegisterAsync(RegisterModel registerModel, CancellationToken cancellationToken)
         {
+            if (registerModel.LoginProvider == LoginProviderType.Facebook)
+            {
+                
+                //var result = await _signInManager.ExternalLoginSignInAsync("Facebook", registerModel.AccessToken, true);
+                //if (!result.Succeeded)
+                //{
+                //    throw new BadRequestException(result.ToString());
+                //}
+                return;
+            }
+
+            //_signInManager.ExternalLoginSignInAsync()
+
             if (string.IsNullOrWhiteSpace(registerModel.Password))
             {
                 throw new BadRequestException("Password cannot be empty");
