@@ -1,51 +1,34 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Cocktails.Common.Exceptions;
 using Cocktails.Identity.ViewModels;
 using RestSharp;
 
 namespace Cocktails.Identity.Services
 {
-    public class FacebookService
+    public class FacebookService : ISocialService<FacebookUser>
     {
-        private const string FacebookDataUrl = "https://graph.facebook.com/me?fields=id,name,email,gender,birthday,picture&access_token={0}";
+        private const string FacebookBaseUrl = "https://graph.facebook.com";
+        private const string FacebookDataUrl = "me?fields=id,name,email,gender,birthday,picture&access_token={0}";
 
-        public Task<FacebookUser> GetProfileAsync(string accessToken, CancellationToken cancellationToken)
+        public async Task<FacebookUser> GetProfileAsync(string accessToken, CancellationToken cancellationToken)
         {
-            //var imageSize = ImagesSettingsContainer
-            //    .Settings
-            //    .Entities
-            //    .First(x => x.EntityType == EntityType.Users)
-            //    .Sizes
-            //    .First(x => x.Type == ImageSizeType.L);
+            var requestUrl = string.Format(FacebookDataUrl, accessToken);
 
-            var requestUrl = string.Format(FacebookDataUrl, /*imageSize.Width, imageSize.Height,*/ accessToken);
+            var client = new RestClient(FacebookBaseUrl);
+            var request = new RestRequest(requestUrl, Method.GET);
 
-            FacebookUser user;
-            try
+            var response = await client.ExecuteTaskAsync<FacebookUser>(request, cancellationToken);
+            if (!response.IsSuccessful)
             {
-                var client = new RestClient();
-                var request = new RestRequest(new Uri(requestUrl), Method.GET);
-                //request.RequestFormat = DataFormat.Json;
-                //request.AddBody(new UserCreateModel
-                //{
-                //    access_token = token,
-                //    users = new[] { new UserModel { email = userEmail, role_id = 1 } }
-                //});
-
-                user = client.Get<FacebookUser>(request).Data;
-
-                //user = await _httpClient.GetAsync<FacebookUser>(requestUrl, cancellationToken);
+                throw new BadRequestException("Invalid oauth token");
             }
-            catch (HttpRequestException)
-            {
-                throw new ArgumentException("Invalid oauth token");
-            }
+            var user = response.Data;
 
             user.PictureUrl = user.Picture.Data.Url;
 
-            return Task.FromResult(user);
+            return user;
         }
     }
 }

@@ -2,7 +2,8 @@
 {
     public enum LoginProviderType
     {
+        None = 0,
         Facebook,
-        Google
+        GooglePlus
     }
 }
