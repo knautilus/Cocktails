@@ -20,6 +20,8 @@ using Cocktails.Identity.Services;
 using Cocktails.Mapper;
 using Cocktails.Data.Identity;
 using Cocktails.Data.EFCore.Repositories;
+using Cocktails.Mailing;
+using Cocktails.Mailing.Mailgun;
 
 namespace Cocktails.Identity.Api
 {
@@ -56,6 +58,7 @@ namespace Cocktails.Identity.Api
             services.AddAutoMapper(expr => expr.AddProfile(typeof(MappingProfile)));
 
             services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
+            services.Configure<MailingSettings>(Configuration.GetSection("MailingSettings"));
             services.Configure<ApiInfo>(Configuration.GetSection("IdentityApiInfo"));
 
             services.AddIdentity<User, Role>()
@@ -108,6 +111,8 @@ namespace Cocktails.Identity.Api
             services.AddScoped(typeof(IUserStorage<long>), typeof(UserStorage));
             services.AddScoped(typeof(IRoleStorage<long>), typeof(RoleStorage));
             services.AddScoped(typeof(ILoginStorage), typeof(LoginStorage));
+            services.AddScoped(typeof(IMailgunApiClient), typeof(MailgunApiClient));
+            services.AddScoped(typeof(IMailSender), typeof(MailgunSender));
         }
 
         /// <summary>

@@ -50,6 +50,7 @@
     <ProjectReference Include="..\Cocktails.Identity.Mapper\Cocktails.Identity.Mapper.csproj" />
     <ProjectReference Include="..\Cocktails.Identity.Services\Cocktails.Identity.Services.csproj" />
     <ProjectReference Include="..\Cocktails.Identity.ViewModels\Cocktails.Identity.ViewModels.csproj" />
+    <ProjectReference Include="..\Cocktails.Mailing.Mailgun\Cocktails.Mailing.Mailgun.csproj" />
     <ProjectReference Include="..\Cocktails.Security\Cocktails.Security.csproj" />
   </ItemGroup>
 

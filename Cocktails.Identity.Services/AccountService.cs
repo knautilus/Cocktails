@@ -16,6 +16,8 @@ using Cocktails.Data.Domain;
 using Cocktails.Mapper;
 using Cocktails.Security;
 using Cocktails.Identity.ViewModels;
+using Cocktails.Mailing;
+using Cocktails.Mailing.Models;
 
 namespace Cocktails.Identity.Services
 {
@@ -23,19 +25,21 @@ namespace Cocktails.Identity.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly AuthSettings _authSettings;
+        private readonly IMailSender _mailSender;
         private readonly IModelMapper _mapper;
 
-        public AccountService(UserManager<User> userManager, IOptions<AuthSettings> authSettings, IModelMapper mapper)
+        public AccountService(UserManager<User> userManager, IOptions<AuthSettings> authSettings, IMailSender mailSender, IModelMapper mapper)
         {
             _userManager = userManager;
             _authSettings = authSettings.Value;
+            _mailSender = mailSender;
             _mapper = mapper;
         }
 
         public async Task RegisterAsync(RegisterModel registerModel, CancellationToken cancellationToken)
         {
             User newUser;
-            IdentityResult userCreationResult = IdentityResult.Success;
+            var userCreationResult = IdentityResult.Success;
 
             if (registerModel.IsSocial)
             {
@@ -63,6 +67,12 @@ namespace Cocktails.Identity.Services
 
                 newUser = _mapper.Map<User>(registerModel);
                 userCreationResult = await _userManager.CreateAsync(newUser, registerModel.Password);
+            }
+
+            if (!string.IsNullOrEmpty(newUser.Email))
+            {
+                var confirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                _mailSender.Send(new MailMessage("Mailing test", $"<div>test test test {confirmationCode}</div>", "knautilus@mail.ru", newUser.Email));
             }
 
             if (!userCreationResult.Succeeded)
