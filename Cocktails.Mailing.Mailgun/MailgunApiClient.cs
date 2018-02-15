@@ -15,7 +15,7 @@ namespace Cocktails.Mailing.Mailgun
         private readonly string _domain;
         private readonly int _timeout;
 
-        public MailgunApiClient(IOptions<MailingSettings> settings)
+        public MailgunApiClient(IOptions<MailgunSettings> settings)
         {
             _apiKey = settings.Value.ApiKey;
             _domain = settings.Value.Domain;

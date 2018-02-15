@@ -17,21 +17,24 @@ using Cocktails.Mapper;
 using Cocktails.Security;
 using Cocktails.Identity.ViewModels;
 using Cocktails.Mailing;
+using Cocktails.Mailing.Mailgun;
 using Cocktails.Mailing.Models;
 
 namespace Cocktails.Identity.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly UserManager<User> _userManager;
         private readonly AuthSettings _authSettings;
+        private readonly MailingSettings _mailingSettings;
+        private readonly UserManager<User> _userManager;
         private readonly IMailSender _mailSender;
         private readonly IModelMapper _mapper;
 
-        public AccountService(UserManager<User> userManager, IOptions<AuthSettings> authSettings, IMailSender mailSender, IModelMapper mapper)
+        public AccountService(IOptions<AuthSettings> authSettings, IOptions<MailingSettings> mailingSettings, UserManager<User> userManager, IMailSender mailSender, IModelMapper mapper)
         {
-            _userManager = userManager;
             _authSettings = authSettings.Value;
+            _mailingSettings = mailingSettings.Value;
+            _userManager = userManager;
             _mailSender = mailSender;
             _mapper = mapper;
         }
@@ -72,7 +75,7 @@ namespace Cocktails.Identity.Services
             if (!string.IsNullOrEmpty(newUser.Email))
             {
                 var confirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                _mailSender.Send(new MailMessage("Mailing test", $"<div>test test test {confirmationCode}</div>", "knautilus@mail.ru", newUser.Email));
+                _mailSender.Send(new MailMessage("Eda.ru email confirmation", $"<html lang=\"en\"><body><div>Здравствуйте. Ваш код для подтверждения почтового ящика: userId={newUser.Id}&confirmationCode={confirmationCode}</div></body></html>", new MailAddress(_mailingSettings.FromAddress, _mailingSettings.FromName), newUser.Email));
             }
 
             if (!userCreationResult.Succeeded)
@@ -126,6 +129,49 @@ namespace Cocktails.Identity.Services
             return result;
         }
 
+        public async Task ConfirmEmailAsync(EmailConfirmationModel confirmationModel, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(confirmationModel.UserId);
+            if (user == null)
+            {
+                throw new BadRequestException("User not found");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, confirmationModel.ConfirmationCode);
+        }
+
+        public async Task ForgotPasswordAsync(ForgotPasswordModel forgotPasswordModel, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByEmailAsync(forgotPasswordModel.Email);
+            if (user == null)
+            {
+                throw new BadRequestException("Invalid email");
+            }
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            _mailSender.Send(new MailMessage("Eda.ru password reset", $"<html lang=\"en\"><body><div>Здравствуйте. Ваш код для сброса пароля: userId={user.Id}&resetcode={code}</div></body></html>", new MailAddress(_mailingSettings.FromAddress, _mailingSettings.FromName), forgotPasswordModel.Email));
+        }
+
+        public async Task ResetPasswordAsync(ResetPasswordModel resetPasswordModel, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(resetPasswordModel.UserId);
+            if (user == null)
+            {
+                throw new BadRequestException("Invalid user Id");
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, resetPasswordModel.Code, resetPasswordModel.NewPassword);
+        }
+
+        public async Task ChangePasswordAsync(ChangePasswordModel changePasswordModel, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(changePasswordModel.UserId);
+            if (user == null)
+            {
+                throw new BadRequestException("Invalid user Id");
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, changePasswordModel.OldPassword, changePasswordModel.NewPassword);
+        }
+
         private async Task<SocialUserBase> GetExternalUserAsync(LoginProviderType loginProvider, string accessToken, CancellationToken cancellationToken)
         {
             SocialUserBase externalUser;
@@ -148,7 +194,7 @@ namespace Cocktails.Identity.Services
             {
                 return null;
             }
-            ClaimsIdentity identity = new ClaimsIdentity(
+            var identity = new ClaimsIdentity(
                 new GenericIdentity(user.UserName, "TokenAuth"),
                 new[] { new Claim("Id", user.Id.ToString()) });
 

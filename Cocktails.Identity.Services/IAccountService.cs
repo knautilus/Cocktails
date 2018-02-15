@@ -8,5 +8,9 @@ namespace Cocktails.Identity.Services
     {
         Task<LoginResultModel> LoginAsync(LoginModel loginModel, CancellationToken cancellationToken);
         Task RegisterAsync(RegisterModel registerModel, CancellationToken cancellationToken);
+        Task ConfirmEmailAsync(EmailConfirmationModel confirmationModel, CancellationToken cancellationToken);
+        Task ForgotPasswordAsync(ForgotPasswordModel forgotPasswordModel, CancellationToken cancellationToken);
+        Task ResetPasswordAsync(ResetPasswordModel resetPasswordModel, CancellationToken cancellationToken);
+        Task ChangePasswordAsync(ChangePasswordModel changePasswordModel, CancellationToken cancellationToken);
     }
 }

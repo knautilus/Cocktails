@@ -59,6 +59,7 @@ namespace Cocktails.Identity.Api
 
             services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
             services.Configure<MailingSettings>(Configuration.GetSection("MailingSettings"));
+            services.Configure<MailgunSettings>(Configuration.GetSection("MailgunSettings"));
             services.Configure<ApiInfo>(Configuration.GetSection("IdentityApiInfo"));
 
             services.AddIdentity<User, Role>()
