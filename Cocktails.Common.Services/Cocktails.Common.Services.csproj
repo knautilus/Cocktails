@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Common.Models\Cocktails.Common.Models.csproj" />
+    <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
+    <ProjectReference Include="..\Cocktails.Data\Cocktails.Data.csproj" />
+    <ProjectReference Include="..\Cocktails.Mapper\Cocktails.Mapper.csproj" />
+  </ItemGroup>
+
+</Project>

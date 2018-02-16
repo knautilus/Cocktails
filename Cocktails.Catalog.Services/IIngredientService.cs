@@ -1,8 +1,10 @@
-﻿using Cocktails.Catalog.ViewModels;
-using Cocktails.Data.Domain;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Cocktails.Catalog.ViewModels;
+using Cocktails.Common.Models;
+using Cocktails.Common.Services;
+using Cocktails.Data.Catalog;
 
 namespace Cocktails.Catalog.Services
 {

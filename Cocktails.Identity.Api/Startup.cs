@@ -12,14 +12,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 
-using Cocktails.Data.Domain;
-using Cocktails.Data.EFCore.Contexts;
-using Cocktails.Common.Models;
+using Cocktails.Common.Objects;
 using Cocktails.Identity.Mapper;
 using Cocktails.Identity.Services;
 using Cocktails.Mapper;
 using Cocktails.Data.Identity;
-using Cocktails.Data.EFCore.Repositories;
+using Cocktails.Data.Identity.EFCore.Contexts;
+using Cocktails.Data.Identity.EFCore.Repositories;
 using Cocktails.Mailing;
 using Cocktails.Mailing.Mailgun;
 

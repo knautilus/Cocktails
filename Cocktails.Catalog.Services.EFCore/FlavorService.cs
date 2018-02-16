@@ -1,7 +1,8 @@
 ﻿using System;
 using Cocktails.Catalog.ViewModels;
+using Cocktails.Common.Services;
 using Cocktails.Data;
-using Cocktails.Data.Domain;
+using Cocktails.Data.Catalog;
 using Cocktails.Mapper;
 
 namespace Cocktails.Catalog.Services.EFCore

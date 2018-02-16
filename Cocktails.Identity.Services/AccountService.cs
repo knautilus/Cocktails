@@ -11,8 +11,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 using Cocktails.Common.Exceptions;
-using Cocktails.Common.Models;
-using Cocktails.Data.Domain;
+using Cocktails.Common.Objects;
+using Cocktails.Data.Identity;
 using Cocktails.Mapper;
 using Cocktails.Security;
 using Cocktails.Identity.ViewModels;

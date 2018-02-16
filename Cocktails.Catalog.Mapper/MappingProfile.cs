@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
 using Cocktails.Catalog.ViewModels;
-using Cocktails.Data.Domain;
+using Cocktails.Data.Catalog;
 using Cocktails.Mapper;
 
 namespace Cocktails.Catalog.Mapper

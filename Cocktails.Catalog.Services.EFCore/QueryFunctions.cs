@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Cocktails.Data.Domain;
+using Cocktails.Data;
+using Cocktails.Data.Catalog;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cocktails.Catalog.Services.EFCore

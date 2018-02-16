@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Cocktails.Common;
-using Cocktails.Data.Domain;
+using Cocktails.Data.Identity;
 using Cocktails.Identity.ViewModels;
 
 namespace Cocktails.Identity.Mapper

@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
-    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
+    <ProjectReference Include="..\Cocktails.Data.Identity\Cocktails.Data.Identity.csproj" />
     <ProjectReference Include="..\Cocktails.Identity.ViewModels\Cocktails.Identity.ViewModels.csproj" />
     <ProjectReference Include="..\Cocktails.Mapper\Cocktails.Mapper.csproj" />
   </ItemGroup>

@@ -8,4 +8,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Common.Models\Cocktails.Common.Models.csproj" />
+    <ProjectReference Include="..\Cocktails.Common.Services\Cocktails.Common.Services.csproj" />
+  </ItemGroup>
+
 </Project>

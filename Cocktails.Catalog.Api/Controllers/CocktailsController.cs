@@ -13,6 +13,8 @@ using Cocktails.Catalog.Services;
 using Cocktails.Catalog.ViewModels;
 using Cocktails.Common.Exceptions;
 using Cocktails.Common.Models;
+using Cocktails.Common.Objects;
+using Cocktails.Common.Services;
 
 namespace Cocktails.Catalog.Api.Controllers
 {

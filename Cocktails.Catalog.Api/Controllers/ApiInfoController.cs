@@ -1,5 +1,4 @@
-﻿using Cocktails.Common.Models;
-
+﻿using Cocktails.Common.Objects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 

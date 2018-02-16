@@ -13,5 +13,6 @@ namespace Cocktails.Identity.Api.Controllers
     [ApiVersion("1")]
     public class ProfilesController : Controller
     {
+
     }
 }

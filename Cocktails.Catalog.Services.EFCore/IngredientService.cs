@@ -3,13 +3,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.EntityFrameworkCore;
-
 using Cocktails.Catalog.ViewModels;
 using Cocktails.Common.Exceptions;
 using Cocktails.Common.Extensions;
+using Cocktails.Common.Models;
+using Cocktails.Common.Services;
 using Cocktails.Data;
-using Cocktails.Data.Domain;
+using Cocktails.Data.Catalog;
 using Cocktails.Mapper;
 
 namespace Cocktails.Catalog.Services.EFCore
@@ -34,11 +34,11 @@ namespace Cocktails.Catalog.Services.EFCore
 
         protected override Exception GetDetailedException(Exception exception)
         {
-            if (exception is DbUpdateConcurrencyException)
+            if (exception is PrimaryKeyException)
             {
                 return new NotFoundException("Id not found");
             }
-            if (exception is DbUpdateException dbEx)
+            if (exception is ForeignKeyException dbEx)
             {
                 if (dbEx.Contains("FK_Ingredients_Flavors_FlavorId"))
                 {

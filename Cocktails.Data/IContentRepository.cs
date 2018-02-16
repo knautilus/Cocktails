@@ -1,6 +1,4 @@
-﻿using Cocktails.Data.Domain;
-
-namespace Cocktails.Data
+﻿namespace Cocktails.Data
 {
     public interface IContentRepository<TKey, TEntity> : IRepository<TEntity>
         where TKey: struct

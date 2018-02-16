@@ -4,7 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 
 using Cocktails.Catalog.Services.EFCore;
-using Cocktails.Data.Domain;
+using Cocktails.Data.Catalog;
 
 namespace Cocktails.Tests
 {

@@ -11,7 +11,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Cocktails.Catalog.Services\Cocktails.Catalog.Services.csproj" />
     <ProjectReference Include="..\Cocktails.Catalog.ViewModels\Cocktails.Catalog.ViewModels.csproj" />
-    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
+    <ProjectReference Include="..\Cocktails.Common.Services\Cocktails.Common.Services.csproj" />
+    <ProjectReference Include="..\Cocktails.Data.Catalog\Cocktails.Data.Catalog.csproj" />
     <ProjectReference Include="..\Cocktails.Data\Cocktails.Data.csproj" />
   </ItemGroup>
 

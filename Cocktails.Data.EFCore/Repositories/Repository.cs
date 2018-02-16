@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Cocktails.Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cocktails.Data.EFCore.Repositories
@@ -10,34 +10,34 @@ namespace Cocktails.Data.EFCore.Repositories
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
-        private readonly DbContext _context;
-        private readonly DbSet<TEntity> _entities;
+        protected readonly DbContext Context;
+        protected readonly DbSet<TEntity> Entities;
 
         public Repository(DbContext context)
         {
-            _context = context;
-            _entities = context.Set<TEntity>();
+            Context = context;
+            Entities = context.Set<TEntity>();
         }
 
-        public Task<TEntity> GetSingleAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
+        public virtual Task<TEntity> GetSingleAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
         {
-            return query(_entities.AsQueryable()).FirstOrDefaultAsync(cancellationToken);
+            return query(Entities.AsQueryable()).FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<TEntity[]> GetAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
+        public virtual async Task<TEntity[]> GetAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
         {
-            var result = await query(_entities.AsQueryable()).ToArrayAsync(cancellationToken);
+            var result = await query(Entities.AsQueryable()).ToArrayAsync(cancellationToken);
             return result;
         }
 
-        public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
+        public virtual async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            _entities.Add(entity);
+            Entities.Add(entity);
 
             if (autoCommit)
             {
@@ -47,14 +47,14 @@ namespace Cocktails.Data.EFCore.Repositories
             return entity;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            _entities.Update(entity);
+            Entities.Update(entity);
 
             if (autoCommit)
             {
@@ -64,13 +64,13 @@ namespace Cocktails.Data.EFCore.Repositories
             return entity;
         }
 
-        public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
+        public virtual async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            _entities.Remove(entity);
+            Entities.Remove(entity);
 
             if (autoCommit)
             {
@@ -78,9 +78,20 @@ namespace Cocktails.Data.EFCore.Repositories
             }
         }
 
-        public Task CommitAsync(CancellationToken cancellationToken)
+        public virtual async Task CommitAsync(CancellationToken cancellationToken)
         {
-            return _context.SaveChangesAsync(cancellationToken);
+            try
+            {
+                await Context.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new PrimaryKeyException(ex);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ForeignKeyException(ex);
+            }
         }
     }
 }

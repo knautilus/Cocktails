@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-using Cocktails.Catalog.Services;
 using Cocktails.Catalog.ViewModels;
 using Cocktails.Common.Exceptions;
 using Cocktails.Common.Models;
-using Cocktails.Data.Domain;
+using Cocktails.Common.Objects;
+using Cocktails.Common.Services;
+using Cocktails.Data.Catalog;
 
 namespace Cocktails.Catalog.Api.Controllers
 {

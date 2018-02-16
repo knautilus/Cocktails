@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-
+using Cocktails.Common.Models;
 using Newtonsoft.Json;
 
 namespace Cocktails.Catalog.ViewModels

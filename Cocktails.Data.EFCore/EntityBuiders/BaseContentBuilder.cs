@@ -1,0 +1,20 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Cocktails.Data.EFCore.EntityBuiders
+{
+    public class BaseContentBuilder<T> where T : class, IContentEntity
+    {
+        public BaseContentBuilder(EntityTypeBuilder<T> builder)
+        {
+            builder
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("SYSUTCDATETIME()")
+                .ValueGeneratedOnAddOrUpdate();
+
+            builder
+                .Property(b => b.ModifiedDate)
+                .HasDefaultValueSql("SYSUTCDATETIME()");
+        }
+    }
+}

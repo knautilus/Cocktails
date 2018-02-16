@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Cocktails.Data.Catalog;
 using NUnit.Framework;
 
-using Cocktails.Data.Domain;
 using Cocktails.Data.EFCore.Repositories;
 
 namespace Cocktails.Tests

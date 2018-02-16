@@ -10,7 +10,7 @@ using Cocktails.Catalog.Mapper;
 using Cocktails.Catalog.Services.EFCore;
 using Cocktails.Catalog.ViewModels;
 using Cocktails.Data;
-using Cocktails.Data.Domain;
+using Cocktails.Data.Catalog;
 using Cocktails.Mapper;
 
 namespace Cocktails.Tests

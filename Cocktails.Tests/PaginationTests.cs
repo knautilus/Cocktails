@@ -3,8 +3,8 @@ using System.Linq;
 
 using NUnit.Framework;
 
-using Cocktails.Catalog.Services.EFCore;
-using Cocktails.Catalog.ViewModels;
+using Cocktails.Common.Models;
+using Cocktails.Common.Services;
 
 namespace Cocktails.Tests
 {

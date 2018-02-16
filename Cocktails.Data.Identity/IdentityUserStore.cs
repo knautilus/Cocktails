@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Cocktails.Data.Domain;
 using Microsoft.AspNetCore.Identity;
 
 namespace Cocktails.Data.Identity

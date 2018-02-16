@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 using Cocktails.Common.Exceptions;
-using Cocktails.Common.Models;
+using Cocktails.Common.Objects;
 using Cocktails.Identity.Services;
 using Cocktails.Identity.ViewModels;
 

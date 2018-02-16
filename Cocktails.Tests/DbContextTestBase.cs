@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq;
-
+using Cocktails.Data.Catalog;
+using Cocktails.Data.Catalog.EFCore.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-
-using Cocktails.Data.Domain;
-using Cocktails.Data.EFCore.Contexts;
 
 namespace Cocktails.Tests
 {

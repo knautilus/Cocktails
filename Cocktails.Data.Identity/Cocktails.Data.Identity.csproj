@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
     <ProjectReference Include="..\Cocktails.Data\Cocktails.Data.csproj" />
   </ItemGroup>
 

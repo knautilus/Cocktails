@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Cocktails.Common.Models;
 
 namespace Cocktails.Catalog.ViewModels
 {

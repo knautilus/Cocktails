@@ -6,41 +6,32 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-using Cocktails.Data.Domain;
-
 namespace Cocktails.Data.EFCore.Repositories
 {
-    public class ContentRepository<TKey, TEntity> : IContentRepository<TKey, TEntity>
+    public class ContentRepository<TKey, TEntity> : Repository<TEntity>, IContentRepository<TKey, TEntity>
         where TKey : struct
         where TEntity : BaseContentEntity<TKey>
     {
-        private readonly DbContext _context;
-        private readonly DbSet<TEntity> _entities;
+        public ContentRepository(DbContext context) : base(context) { }
 
-        public ContentRepository(DbContext context)
+        public override Task<TEntity> GetSingleAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
         {
-            _context = context;
-            _entities = context.Set<TEntity>();
+            return query(Entities.AsQueryable()).FirstOrDefaultAsync(cancellationToken);
         }
 
-        public Task<TEntity> GetSingleAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
+        public override async Task<TEntity[]> GetAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
         {
-            return query(_entities.AsQueryable()).FirstOrDefaultAsync(cancellationToken);
-        }
-
-        public async Task<TEntity[]> GetAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query, CancellationToken cancellationToken)
-        {
-            var result = await query(_entities.AsQueryable()).ToArrayAsync(cancellationToken);
+            var result = await query(Entities.AsQueryable()).ToArrayAsync(cancellationToken);
             return result;
         }
 
-        public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
+        public override async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            var entry = _entities.Add(entity);
+            var entry = Entities.Add(entity);
             IgnoreReadonlyFields(entry);
 
             if (autoCommit)
@@ -51,14 +42,14 @@ namespace Cocktails.Data.EFCore.Repositories
             return entity;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
+        public override async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             entity = SetModifiedDate(entity);
-            var entry = _entities.Update(entity);
+            var entry = Entities.Update(entity);
             IgnoreReadonlyFields(entry);
 
             if (autoCommit)
@@ -69,23 +60,18 @@ namespace Cocktails.Data.EFCore.Repositories
             return entity;
         }
 
-        public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
+        public override async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken, bool autoCommit = true)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            _entities.Remove(entity);
+            Entities.Remove(entity);
 
             if (autoCommit)
             {
                 await CommitAsync(cancellationToken);
             }
-        }
-
-        public Task CommitAsync(CancellationToken cancellationToken)
-        {
-            return _context.SaveChangesAsync(cancellationToken);
         }
 
         private TEntity SetModifiedDate(TEntity model)

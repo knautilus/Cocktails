@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Cocktails.Catalog.Mapper\Cocktails.Catalog.Mapper.csproj" />
     <ProjectReference Include="..\Cocktails.Catalog.Services.EFCore\Cocktails.Catalog.Services.EFCore.csproj" />
+    <ProjectReference Include="..\Cocktails.Data.Catalog.EFCore\Cocktails.Data.Catalog.EFCore.csproj" />
     <ProjectReference Include="..\Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj" />
     <ProjectReference Include="..\Cocktails.Mapper\Cocktails.Mapper.csproj" />
   </ItemGroup>

@@ -4,8 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Cocktails.Catalog.ViewModels;
+using Cocktails.Common.Models;
+using Cocktails.Common.Services;
 using Cocktails.Data;
-using Cocktails.Data.Domain;
+using Cocktails.Data.Catalog;
 using Cocktails.Mapper;
 
 namespace Cocktails.Catalog.Services.EFCore

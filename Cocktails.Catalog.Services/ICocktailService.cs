@@ -1,11 +1,13 @@
-﻿using Cocktails.Catalog.ViewModels;
-using Cocktails.Data.Domain;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Cocktails.Catalog.ViewModels;
+using Cocktails.Common.Models;
+using Cocktails.Common.Services;
+using Cocktails.Data.Catalog;
 
 namespace Cocktails.Catalog.Services
 {
-    public interface ICocktailService : IService<Cocktail,  CocktailModel>
+    public interface ICocktailService : IService<Cocktail, CocktailModel>
     {
         Task<CollectionWrapper<CocktailModel>> GetByCocktailNameAsync(string cocktailName, QueryContext context, CancellationToken cancellationToken);
     }
