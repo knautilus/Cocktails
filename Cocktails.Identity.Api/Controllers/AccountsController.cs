@@ -41,6 +41,7 @@ namespace Cocktails.Identity.Api.Controllers
         {
             try
             {
+                // TODO check model is not null
                 await _service.RegisterAsync(registerModel, cancellationToken);
                 return Ok();
             }

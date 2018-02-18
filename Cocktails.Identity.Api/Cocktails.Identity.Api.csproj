@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Api.Common\Cocktails.Api.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj" />
     <ProjectReference Include="..\Cocktails.Data.Identity.EFCore\Cocktails.Data.Identity.EFCore.csproj" />

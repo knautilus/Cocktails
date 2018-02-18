@@ -21,6 +21,7 @@ using Cocktails.Data.Identity.EFCore.Contexts;
 using Cocktails.Data.Identity.EFCore.Repositories;
 using Cocktails.Mailing;
 using Cocktails.Mailing.Mailgun;
+using Cocktails.Api.Common.Middleware;
 
 namespace Cocktails.Identity.Api
 {
@@ -124,6 +125,8 @@ namespace Cocktails.Identity.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+
+            app.UseMiddleware<HttpLoggingMiddleware>();
 
             app.UseMvc();
 
