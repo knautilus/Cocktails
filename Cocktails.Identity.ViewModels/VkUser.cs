@@ -20,5 +20,8 @@ namespace Cocktails.Identity.ViewModels
         [JsonProperty("bdate")]
         [DataType(DataType.Date)]
         public DateTimeOffset? Birthday { get; set; }
+
+        [JsonProperty("photo")]
+        public string PictureUrl;
     }
 }
