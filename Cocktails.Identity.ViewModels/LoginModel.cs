@@ -1,11 +1,8 @@
 ﻿namespace Cocktails.Identity.ViewModels
 {
-    public class LoginModel
+    public class LoginModel : SocialLoginModel
     {
-        public LoginProviderType LoginProvider { get; set; }
-        public string AccessToken { get; set; }
-
-        public string Username { get; set; }
+        public string Login { get; set; }
         public string Password { get; set; }
 
         public bool IsSocial => LoginProvider != LoginProviderType.None; // TODO extension

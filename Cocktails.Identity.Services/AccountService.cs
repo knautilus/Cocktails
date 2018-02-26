@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -59,7 +60,7 @@ namespace Cocktails.Identity.Services
                 {
                     newUser = existingUser;
                 }
-                await _userManager.AddLoginAsync(newUser, new UserLoginInfo("Facebook", externalUser.Id, "Facebook"));
+                await _userManager.AddLoginAsync(newUser, new UserLoginInfo(registerModel.LoginProvider.ToString(), externalUser.Id, registerModel.LoginProvider.ToString()));
             }
             else
             {
@@ -89,14 +90,15 @@ namespace Cocktails.Identity.Services
             User user;
             if (loginModel.IsSocial)
             {
-                var externalUser = await GetExternalUserAsync(loginModel.LoginProvider, loginModel.AccessToken, cancellationToken);
+                var externalUser = await GetExternalUserAsync(loginModel.LoginProvider, loginModel.AccessToken, cancellationToken); // TODO externalUser check null?
 
                 user = await _userManager.FindByLoginAsync(loginModel.LoginProvider.ToString(), externalUser.Id);
             }
             else
             {
-                user = await _userManager.FindByNameAsync(loginModel.Username);
-                if (!await _userManager.CheckPasswordAsync(user, loginModel.Password))
+                user = await _userManager.FindByNameAsync(loginModel.Login)
+                    ?? await _userManager.FindByEmailAsync(loginModel.Login);
+                if (!await _userManager.CheckPasswordAsync(user, loginModel.Password)) // TODO user check null?
                 {
                     return null;
                 }
@@ -122,11 +124,68 @@ namespace Cocktails.Identity.Services
             var result = new LoginResultModel
             {
                 Token = handler.WriteToken(securityToken),
-                ValidTo = securityToken.ValidTo.ToString(),
+                ValidTo = securityToken.ValidTo.ToString(CultureInfo.InvariantCulture),
                 Username = identity.Name
             };
 
             return result;
+        }
+
+        public async Task<SocialLoginModel[]> GetSocialLoginsAsync(long userId, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString()); // TODO replace user with new User { Id = userId }; ???
+            if (user == null)
+            {
+                throw new BadRequestException("UserId not found");
+            }
+
+            var existingLogins = await _userManager.GetLoginsAsync(user);
+            return _mapper.Map<SocialLoginModel[]>(existingLogins);
+        }
+
+        public async Task AddSocialLoginAsync(long userId, SocialLoginModel loginModel, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                throw new BadRequestException("UserId not found");
+            }
+
+            var userWithSameLogin = await _userManager.FindByLoginAsync(loginModel.LoginProvider.ToString(), loginModel.AccessToken);
+            if (userWithSameLogin != null)
+            {
+                if (userWithSameLogin.Id != userId)
+                {
+                    throw new BadRequestException("The login is already in use");
+                }
+                throw new BadRequestException("The login is already connected");
+            }
+
+            var externalUser = await GetExternalUserAsync(loginModel.LoginProvider, loginModel.AccessToken, cancellationToken); // TODO externalUser check null?
+
+            await _userManager.AddLoginAsync(user, new UserLoginInfo(loginModel.LoginProvider.ToString(), externalUser.Id, loginModel.LoginProvider.ToString()));
+        }
+
+        public async Task RemoveSocialLoginAsync(long userId, LoginRemoveModel loginModel, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString()); // TODO replace user with new User { Id = userId }; ???
+            if (user == null)
+            {
+                throw new BadRequestException("UserId not found");
+            }
+
+            var existingLogins = await _userManager.GetLoginsAsync(user);
+            if (existingLogins == null)
+            {
+                throw new BadRequestException("Login is not found");
+            }
+            var existingLogin = existingLogins.FirstOrDefault(x => x.LoginProvider == loginModel.ProviderType.ToString());
+            if (existingLogin == null)
+            {
+                throw new BadRequestException("Login is not found");
+            }
+
+            await _userManager.RemoveLoginAsync(user, existingLogin.LoginProvider, existingLogin.ProviderKey);
         }
 
         public async Task ConfirmEmailAsync(EmailConfirmationModel confirmationModel, CancellationToken cancellationToken)

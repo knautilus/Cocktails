@@ -12,5 +12,8 @@ namespace Cocktails.Identity.Services
         Task ForgotPasswordAsync(ForgotPasswordModel forgotPasswordModel, CancellationToken cancellationToken);
         Task ResetPasswordAsync(ResetPasswordModel resetPasswordModel, CancellationToken cancellationToken);
         Task ChangePasswordAsync(ChangePasswordModel changePasswordModel, CancellationToken cancellationToken);
+        Task<SocialLoginModel[]> GetSocialLoginsAsync(long userId, CancellationToken cancellationToken);
+        Task AddSocialLoginAsync(long userId, SocialLoginModel loginModel, CancellationToken cancellationToken);
+        Task RemoveSocialLoginAsync(long userId, LoginRemoveModel loginModel, CancellationToken cancellationToken);
     }
 }

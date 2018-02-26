@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace Cocktails.Identity.Api.Controllers
         [HttpPost("register")]
         [SwaggerResponse(200, description: "User registered successfully")]
         [SwaggerResponse(400, description: "Invalid model state", type: typeof(ApiErrorResponse))]
-        public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel registerModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> RegisterAsync([FromBody][Required] RegisterModel registerModel, CancellationToken cancellationToken)
         {
             try
             {
@@ -71,6 +72,82 @@ namespace Cocktails.Identity.Api.Controllers
                 return Unauthorized();
             }
             return Ok(result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="loginModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> AddSocialLoginAsync([FromQuery] long userId,
+            [FromBody] SocialLoginModel loginModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _service.AddSocialLoginAsync(userId, loginModel, cancellationToken);
+                return Ok();
+            }
+            catch (BadRequestException ex)
+            {
+                foreach (var error in ex.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                return BadRequest(new ApiBadRequestResponse(ModelState));
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="loginRemoveModel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> RemoveSocialLoginAsync([FromQuery] long userId,
+            [FromBody] LoginRemoveModel loginRemoveModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _service.RemoveSocialLoginAsync(userId, loginRemoveModel, cancellationToken);
+                return Ok();
+            }
+            catch (BadRequestException ex)
+            {
+                foreach (var error in ex.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                return BadRequest(new ApiBadRequestResponse(ModelState));
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetSocialLoginsAsync([FromQuery] long userId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var result = await _service.GetSocialLoginsAsync(userId, cancellationToken);
+                return Ok(result);
+            }
+            catch (BadRequestException ex)
+            {
+                foreach (var error in ex.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                return BadRequest(new ApiBadRequestResponse(ModelState));
+            }
         }
 
         /// <summary>
