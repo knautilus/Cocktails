@@ -257,10 +257,9 @@ namespace Cocktails.Data.Identity
             await _loginStorage.InsertAsync(CreateUserLogin(user, login), cancellationToken);
         }
 
-        public Task RemoveLoginAsync(User user, string loginProvider, string providerKey, CancellationToken cancellationToken)
+        public async Task RemoveLoginAsync(User user, string loginProvider, string providerKey, CancellationToken cancellationToken)
         {
-            // TODO
-            throw new NotImplementedException();
+            await _loginStorage.DeleteAsync(await FindUserLoginAsync(loginProvider, providerKey, cancellationToken), cancellationToken); // TODO is it possible to delete entity without selecting it?
         }
 
         public async Task<IList<UserLoginInfo>> GetLoginsAsync(User user, CancellationToken cancellationToken)

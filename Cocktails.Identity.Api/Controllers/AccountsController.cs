@@ -81,8 +81,8 @@ namespace Cocktails.Identity.Api.Controllers
         /// <param name="loginModel"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> AddSocialLoginAsync([FromQuery] long userId,
+        [HttpPost("sociallogin/{userId:long}")]
+        public async Task<IActionResult> AddSocialLoginAsync([FromRoute] long userId,
             [FromBody] SocialLoginModel loginModel, CancellationToken cancellationToken)
         {
             try
@@ -107,8 +107,8 @@ namespace Cocktails.Identity.Api.Controllers
         /// <param name="loginRemoveModel"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> RemoveSocialLoginAsync([FromQuery] long userId,
+        [HttpDelete("sociallogin/{userId:long}")]
+        public async Task<IActionResult> RemoveSocialLoginAsync([FromRoute] long userId,
             [FromBody] LoginRemoveModel loginRemoveModel, CancellationToken cancellationToken)
         {
             try
@@ -132,8 +132,8 @@ namespace Cocktails.Identity.Api.Controllers
         /// <param name="userId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetSocialLoginsAsync([FromQuery] long userId, CancellationToken cancellationToken)
+        [HttpGet("sociallogin/{userId:long}")]
+        public async Task<IActionResult> GetSocialLoginsAsync([FromRoute] long userId, CancellationToken cancellationToken)
         {
             try
             {

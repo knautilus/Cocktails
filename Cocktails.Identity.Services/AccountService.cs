@@ -151,7 +151,9 @@ namespace Cocktails.Identity.Services
                 throw new BadRequestException("UserId not found");
             }
 
-            var userWithSameLogin = await _userManager.FindByLoginAsync(loginModel.LoginProvider.ToString(), loginModel.AccessToken);
+            var externalUser = await GetExternalUserAsync(loginModel.LoginProvider, loginModel.AccessToken, cancellationToken); // TODO externalUser check null?
+
+            var userWithSameLogin = await _userManager.FindByLoginAsync(loginModel.LoginProvider.ToString(), externalUser.Id);
             if (userWithSameLogin != null)
             {
                 if (userWithSameLogin.Id != userId)
@@ -161,25 +163,19 @@ namespace Cocktails.Identity.Services
                 throw new BadRequestException("The login is already connected");
             }
 
-            var externalUser = await GetExternalUserAsync(loginModel.LoginProvider, loginModel.AccessToken, cancellationToken); // TODO externalUser check null?
-
             await _userManager.AddLoginAsync(user, new UserLoginInfo(loginModel.LoginProvider.ToString(), externalUser.Id, loginModel.LoginProvider.ToString()));
         }
 
         public async Task RemoveSocialLoginAsync(long userId, LoginRemoveModel loginModel, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString()); // TODO replace user with new User { Id = userId }; ???
-            if (user == null)
-            {
-                throw new BadRequestException("UserId not found");
-            }
+            var user = new User { Id = userId };
 
             var existingLogins = await _userManager.GetLoginsAsync(user);
             if (existingLogins == null)
             {
                 throw new BadRequestException("Login is not found");
             }
-            var existingLogin = existingLogins.FirstOrDefault(x => x.LoginProvider == loginModel.ProviderType.ToString());
+            var existingLogin = existingLogins.FirstOrDefault(x => x.LoginProvider == loginModel.LoginProvider.ToString());
             if (existingLogin == null)
             {
                 throw new BadRequestException("Login is not found");

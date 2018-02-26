@@ -2,6 +2,6 @@
 {
     public class LoginRemoveModel
     {
-        public LoginProviderType ProviderType { get; set; }
+        public LoginProviderType LoginProvider { get; set; }
     }
 }
