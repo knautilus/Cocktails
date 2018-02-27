@@ -9,6 +9,7 @@ using Cocktails.Common.Exceptions;
 using Cocktails.Common.Objects;
 using Cocktails.Identity.Services;
 using Cocktails.Identity.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cocktails.Identity.Api.Controllers
 {
@@ -81,6 +82,7 @@ namespace Cocktails.Identity.Api.Controllers
         /// <param name="loginModel"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost("sociallogin/{userId:long}")]
         public async Task<IActionResult> AddSocialLoginAsync([FromRoute] long userId,
             [FromBody] SocialLoginModel loginModel, CancellationToken cancellationToken)
@@ -107,6 +109,7 @@ namespace Cocktails.Identity.Api.Controllers
         /// <param name="loginRemoveModel"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpDelete("sociallogin/{userId:long}")]
         public async Task<IActionResult> RemoveSocialLoginAsync([FromRoute] long userId,
             [FromBody] LoginRemoveModel loginRemoveModel, CancellationToken cancellationToken)
@@ -132,6 +135,7 @@ namespace Cocktails.Identity.Api.Controllers
         /// <param name="userId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet("sociallogin/{userId:long}")]
         public async Task<IActionResult> GetSocialLoginsAsync([FromRoute] long userId, CancellationToken cancellationToken)
         {
@@ -180,6 +184,7 @@ namespace Cocktails.Identity.Api.Controllers
         /// </summary>
         /// <param name="changePasswordModel"></param>
         /// <param name="cancellationToken"></param>
+        [Authorize]
         [HttpPost("password/change")]
         [SwaggerResponse(200, description: "Password changed successfully")]
         [SwaggerResponse(401, description: "Invalid password")]

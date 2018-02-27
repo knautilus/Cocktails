@@ -78,7 +78,6 @@ namespace Cocktails.Data.Identity
                 throw new ArgumentNullException(nameof(user));
             }
             user.UserName = userName;
-            // TODO update user in db?
             return TaskCache.CompletedTask;
         }
 
@@ -149,7 +148,6 @@ namespace Cocktails.Data.Identity
                 throw new ArgumentNullException(nameof(user));
             }
             user.Email = email;
-            // TODO update user in db?
             return TaskCache.CompletedTask;
         }
 
@@ -190,7 +188,6 @@ namespace Cocktails.Data.Identity
                 throw new ArgumentNullException(nameof(user));
             }
             user.EmailConfirmed = confirmed;
-            // TODO update user in db?
             return TaskCache.CompletedTask;
         }
 
@@ -259,7 +256,22 @@ namespace Cocktails.Data.Identity
 
         public async Task RemoveLoginAsync(User user, string loginProvider, string providerKey, CancellationToken cancellationToken)
         {
-            await _loginStorage.DeleteAsync(await FindUserLoginAsync(loginProvider, providerKey, cancellationToken), cancellationToken); // TODO is it possible to delete entity without selecting it?
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            var userLogin = await FindUserLoginAsync(loginProvider, providerKey, cancellationToken);
+            if (userLogin == null)
+            {
+                throw new ArgumentException("Invalid social login");
+            }
+            if (userLogin.UserId != user.Id)
+            {
+                throw new ArgumentException("Invalid User Id");
+            }
+            await _loginStorage.DeleteAsync(userLogin, cancellationToken); // TODO is it possible to delete entity without selecting it?
         }
 
         public async Task<IList<UserLoginInfo>> GetLoginsAsync(User user, CancellationToken cancellationToken)

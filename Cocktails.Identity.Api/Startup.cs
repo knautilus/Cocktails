@@ -2,14 +2,20 @@
 using System.IO;
 
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 
 using Cocktails.Common.Objects;
@@ -22,6 +28,7 @@ using Cocktails.Data.Identity.EFCore.Repositories;
 using Cocktails.Mailing;
 using Cocktails.Mailing.Mailgun;
 using Cocktails.Api.Common.Middleware;
+using Cocktails.Security;
 
 namespace Cocktails.Identity.Api
 {
@@ -51,23 +58,39 @@ namespace Cocktails.Identity.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-
-            services.AddApiVersioning();
-
-            services.AddAutoMapper(expr => expr.AddProfile(typeof(MappingProfile)));
-
-            services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
-            services.Configure<MailingSettings>(Configuration.GetSection("MailingSettings"));
-            services.Configure<MailgunSettings>(Configuration.GetSection("MailgunSettings"));
-            services.Configure<ApiInfo>(Configuration.GetSection("IdentityApiInfo"));
+            services.AddMvc().AddJsonOptions(options => {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
             services.AddIdentity<User, Role>()
                 .AddDefaultTokenProviders();
 
-            //services.AddAuthentication(x => x.AddScheme())
+            services.AddAuthentication(cfg => {
+                cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration["AuthSettings:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["AuthSettings:Audience"],
+                    ValidateLifetime = true,
+                    IssuerSigningKey = SecurityHelper.GetSymmetricSecurityKey(Configuration["AuthSettings:SecretKey"]),
+                    ValidateIssuerSigningKey = true
+                };
+            });
 
-            // Configure Identity
+            services.AddApiVersioning();
+
+            services.AddOptions();
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -83,8 +106,14 @@ namespace Cocktails.Identity.Api
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
-
             });
+
+            services.Configure<AuthSettings>(Configuration.GetSection("AuthSettings"));
+            services.Configure<MailingSettings>(Configuration.GetSection("MailingSettings"));
+            services.Configure<MailgunSettings>(Configuration.GetSection("MailgunSettings"));
+            services.Configure<ApiInfo>(Configuration.GetSection("IdentityApiInfo"));
+
+            services.AddAutoMapper(expr => expr.AddProfile(typeof(MappingProfile)));
 
             services.AddSwaggerGen(s =>
             {
@@ -127,6 +156,13 @@ namespace Cocktails.Identity.Api
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 
             app.UseMiddleware<HttpLoggingMiddleware>();
+
+            var options = new RewriteOptions()
+                .AddRedirectToHttps();
+
+            app.UseRewriter(options);
+
+            app.UseAuthentication();
 
             app.UseMvc();
 

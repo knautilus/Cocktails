@@ -70,6 +70,7 @@ namespace Cocktails.Data.EFCore.Repositories
             {
                 throw new ArgumentNullException(nameof(entity));
             }
+
             Entities.Remove(entity);
 
             if (autoCommit)

@@ -44,10 +44,12 @@ namespace Cocktails.Identity.Services
         {
             User newUser;
             var userCreationResult = IdentityResult.Success;
+            var newUserCreated = false;
 
             if (registerModel.IsSocial)
             {
-                var externalUser = await GetExternalUserAsync(registerModel.LoginProvider, registerModel.AccessToken, cancellationToken);
+                var externalUser = await GetExternalUserAsync(registerModel.LoginProvider, registerModel.AccessToken,
+                    cancellationToken);
 
                 newUser = _mapper.Map<User>(externalUser);
 
@@ -55,12 +57,14 @@ namespace Cocktails.Identity.Services
                 if (existingUser == null)
                 {
                     userCreationResult = await _userManager.CreateAsync(newUser);
+                    newUserCreated = true;
                 }
                 else
                 {
                     newUser = existingUser;
                 }
-                await _userManager.AddLoginAsync(newUser, new UserLoginInfo(registerModel.LoginProvider.ToString(), externalUser.Id, registerModel.LoginProvider.ToString()));
+                await _userManager.AddLoginAsync(newUser, new UserLoginInfo(registerModel.LoginProvider.ToString(), externalUser.Id,
+                        registerModel.LoginProvider.ToString()));
             }
             else
             {
@@ -71,17 +75,20 @@ namespace Cocktails.Identity.Services
 
                 newUser = _mapper.Map<User>(registerModel);
                 userCreationResult = await _userManager.CreateAsync(newUser, registerModel.Password);
-            }
-
-            if (!string.IsNullOrEmpty(newUser.Email))
-            {
-                var confirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                _mailSender.Send(new MailMessage("Eda.ru email confirmation", $"<html lang=\"en\"><body><div>Здравствуйте. Ваш код для подтверждения почтового ящика: userId={newUser.Id}&confirmationCode={confirmationCode}</div></body></html>", new MailAddress(_mailingSettings.FromAddress, _mailingSettings.FromName), newUser.Email));
+                newUserCreated = true;
             }
 
             if (!userCreationResult.Succeeded)
             {
                 throw new BadRequestException(userCreationResult.Errors.Select(x => x.Description).ToArray());
+            }
+
+            if (newUserCreated && !string.IsNullOrEmpty(newUser.Email))
+            {
+                var confirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                _mailSender.Send(new MailMessage("Eda.ru email confirmation",
+                    $"<html lang=\"en\"><body><div>Здравствуйте. Ваш код для подтверждения почтового ящика: userId={newUser.Id}&confirmationCode={confirmationCode}</div></body></html>",
+                    new MailAddress(_mailingSettings.FromAddress, _mailingSettings.FromName), newUser.Email));
             }
         }
 
@@ -133,12 +140,7 @@ namespace Cocktails.Identity.Services
 
         public async Task<SocialLoginModel[]> GetSocialLoginsAsync(long userId, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString()); // TODO replace user with new User { Id = userId }; ???
-            if (user == null)
-            {
-                throw new BadRequestException("UserId not found");
-            }
-
+            var user = new User { Id = userId };
             var existingLogins = await _userManager.GetLoginsAsync(user);
             return _mapper.Map<SocialLoginModel[]>(existingLogins);
         }
