@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -78,15 +80,15 @@ namespace Cocktails.Identity.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userId"></param>
         /// <param name="loginModel"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost("sociallogin/{userId:long}")]
-        public async Task<IActionResult> AddSocialLoginAsync([FromRoute] long userId,
-            [FromBody] SocialLoginModel loginModel, CancellationToken cancellationToken)
+        [HttpPost("sociallogin")]
+        public async Task<IActionResult> AddSocialLoginAsync(SocialLoginModel loginModel, CancellationToken cancellationToken)
         {
+            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+
             try
             {
                 await _service.AddSocialLoginAsync(userId, loginModel, cancellationToken);
@@ -105,15 +107,15 @@ namespace Cocktails.Identity.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userId"></param>
         /// <param name="loginRemoveModel"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpDelete("sociallogin/{userId:long}")]
-        public async Task<IActionResult> RemoveSocialLoginAsync([FromRoute] long userId,
-            [FromBody] LoginRemoveModel loginRemoveModel, CancellationToken cancellationToken)
+        [HttpDelete("sociallogin")]
+        public async Task<IActionResult> RemoveSocialLoginAsync([FromBody] LoginRemoveModel loginRemoveModel, CancellationToken cancellationToken)
         {
+            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+
             try
             {
                 await _service.RemoveSocialLoginAsync(userId, loginRemoveModel, cancellationToken);
@@ -132,13 +134,14 @@ namespace Cocktails.Identity.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpGet("sociallogin/{userId:long}")]
-        public async Task<IActionResult> GetSocialLoginsAsync([FromRoute] long userId, CancellationToken cancellationToken)
+        [HttpGet("sociallogin")]
+        public async Task<IActionResult> GetSocialLoginsAsync(CancellationToken cancellationToken)
         {
+            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+
             try
             {
                 var result = await _service.GetSocialLoginsAsync(userId, cancellationToken);
@@ -179,6 +182,36 @@ namespace Cocktails.Identity.Api.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Changes user email
+        /// </summary>
+        /// <param name="changeEmailModel"></param>
+        /// <param name="cancellationToken"></param>
+        [Authorize]
+        [HttpPost("password/change")]
+        [SwaggerResponse(200, description: "Email changed successfully")]
+        [SwaggerResponse(400, description: "Email is busy")]
+        [SwaggerResponse(401, description: "Invalid user id")] // TODO review all return codes and descriptions
+        public async Task<IActionResult> ChangeEmailAsync([FromBody] ChangeEmailModel changeEmailModel, CancellationToken cancellationToken)
+        {
+            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+
+            try
+            {
+                await _service.ChangeEmailAsync(userId, changeEmailModel, cancellationToken);
+                return Ok();
+            }
+            catch (BadRequestException ex)
+            {
+                foreach (var error in ex.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                return BadRequest(new ApiBadRequestResponse(ModelState));
+            }
+        }
+
         /// <summary>
         /// Changes user password
         /// </summary>
@@ -190,9 +223,11 @@ namespace Cocktails.Identity.Api.Controllers
         [SwaggerResponse(401, description: "Invalid password")]
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordModel changePasswordModel, CancellationToken cancellationToken)
         {
+            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+
             try
             {
-                await _service.ChangePasswordAsync(changePasswordModel, cancellationToken);
+                await _service.ChangePasswordAsync(userId, changePasswordModel, cancellationToken);
                 return Ok();
             }
             catch (BadRequestException ex)

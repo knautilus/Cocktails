@@ -218,8 +218,12 @@ namespace Cocktails.Identity.Services
             var result = await _userManager.ResetPasswordAsync(user, resetPasswordModel.Code, resetPasswordModel.NewPassword);
         }
 
-        public async Task ChangePasswordAsync(ChangePasswordModel changePasswordModel, CancellationToken cancellationToken)
+        public async Task ChangePasswordAsync(long userId, ChangePasswordModel changePasswordModel, CancellationToken cancellationToken)
         {
+            if (userId != Convert.ToInt64(changePasswordModel.UserId))
+            {
+                throw new BadRequestException("Invalid user Id");
+            }
             var user = await _userManager.FindByIdAsync(changePasswordModel.UserId);
             if (user == null)
             {
@@ -227,6 +231,34 @@ namespace Cocktails.Identity.Services
             }
 
             var result = await _userManager.ChangePasswordAsync(user, changePasswordModel.OldPassword, changePasswordModel.NewPassword);
+        }
+
+        // TODO Test
+        public async Task ChangeEmailAsync(long userId, ChangeEmailModel changeEmailModel, CancellationToken cancellationToken)
+        {
+            if (userId != Convert.ToInt64(changeEmailModel.UserId))
+            {
+                throw new BadRequestException("Invalid user Id");
+            }
+            var user = await _userManager.FindByIdAsync(changeEmailModel.UserId);
+            if (user == null)
+            {
+                throw new BadRequestException("Invalid user Id");
+            }
+            var existedUser = _userManager.FindByEmailAsync(changeEmailModel.Email);
+            if (existedUser != null)
+            {
+                throw new BadRequestException("Email is busy");
+            }
+
+            var result = await _userManager.SetEmailAsync(user, changeEmailModel.Email);
+            if (result.Succeeded)
+            {
+                var confirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                _mailSender.Send(new MailMessage("Eda.ru email confirmation",
+                    $"<html lang=\"en\"><body><div>Здравствуйте. Ваш код для подтверждения почтового ящика: userId={changeEmailModel.UserId}&confirmationCode={confirmationCode}</div></body></html>",
+                    new MailAddress(_mailingSettings.FromAddress, _mailingSettings.FromName), changeEmailModel.Email));
+            }
         }
 
         private async Task<SocialUserBase> GetExternalUserAsync(LoginProviderType loginProvider, string accessToken, CancellationToken cancellationToken)
