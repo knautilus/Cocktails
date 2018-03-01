@@ -37,7 +37,7 @@ namespace Cocktails.Data.Identity.EFCore.Contexts
                 b.HasMany(u => u.Logins).WithOne().HasForeignKey(ul => ul.UserId).IsRequired();
                 b.HasMany(u => u.Roles).WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
                 b.HasMany(u => u.Tokens).WithOne().HasForeignKey(ut => ut.UserId).IsRequired();
-                b.HasOne(u => u.UserProfile).WithOne().HasForeignKey<UserProfile>(up => up.UserId).IsRequired();
+                b.HasOne(u => u.UserProfile).WithOne().HasForeignKey<UserProfile>(up => up.Id).IsRequired();
             });
 
             modelBuilder.Entity<Role>(b =>
@@ -73,6 +73,11 @@ namespace Cocktails.Data.Identity.EFCore.Contexts
             modelBuilder.Entity<UserToken>(b =>
             {
                 b.HasKey(l => new { l.UserId, l.LoginProvider, l.Name });
+            });
+
+            modelBuilder.Entity<UserProfile>(b =>
+            {
+                b.HasKey(u => u.Id);
             });
         }
     }

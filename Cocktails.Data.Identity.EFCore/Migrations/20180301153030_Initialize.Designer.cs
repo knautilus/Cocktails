@@ -12,7 +12,7 @@ using System;
 namespace Cocktails.Data.Identity.EFCore.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20180216145257_Initialize")]
+    [Migration("20180301153030_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,8 +110,7 @@ namespace Cocktails.Data.Identity.EFCore.Migrations
 
             modelBuilder.Entity("Cocktails.Data.Identity.UserProfile", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<long>("Id");
 
                     b.Property<string>("About");
 
@@ -119,18 +118,19 @@ namespace Cocktails.Data.Identity.EFCore.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate");
 
+                    b.Property<string>("FirstName");
+
                     b.Property<byte?>("Gender");
+
+                    b.Property<string>("LastName");
 
                     b.Property<DateTimeOffset>("ModifiedDate");
 
-                    b.Property<string>("Name");
+                    b.Property<DateTimeOffset?>("PictureModifiedDate");
 
-                    b.Property<long>("UserId");
+                    b.Property<string>("PictureUrl");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("UserProfiles");
                 });
@@ -191,7 +191,7 @@ namespace Cocktails.Data.Identity.EFCore.Migrations
                 {
                     b.HasOne("Cocktails.Data.Identity.User")
                         .WithOne("UserProfile")
-                        .HasForeignKey("Cocktails.Data.Identity.UserProfile", "UserId")
+                        .HasForeignKey("Cocktails.Data.Identity.UserProfile", "Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
