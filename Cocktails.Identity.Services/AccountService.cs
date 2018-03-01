@@ -220,11 +220,7 @@ namespace Cocktails.Identity.Services
 
         public async Task ChangePasswordAsync(long userId, ChangePasswordModel changePasswordModel, CancellationToken cancellationToken)
         {
-            if (userId != Convert.ToInt64(changePasswordModel.UserId))
-            {
-                throw new BadRequestException("Invalid user Id");
-            }
-            var user = await _userManager.FindByIdAsync(changePasswordModel.UserId);
+            var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)
             {
                 throw new BadRequestException("Invalid user Id");
@@ -233,19 +229,14 @@ namespace Cocktails.Identity.Services
             var result = await _userManager.ChangePasswordAsync(user, changePasswordModel.OldPassword, changePasswordModel.NewPassword);
         }
 
-        // TODO Test
         public async Task ChangeEmailAsync(long userId, ChangeEmailModel changeEmailModel, CancellationToken cancellationToken)
         {
-            if (userId != Convert.ToInt64(changeEmailModel.UserId))
-            {
-                throw new BadRequestException("Invalid user Id");
-            }
-            var user = await _userManager.FindByIdAsync(changeEmailModel.UserId);
+            var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)
             {
                 throw new BadRequestException("Invalid user Id");
             }
-            var existedUser = _userManager.FindByEmailAsync(changeEmailModel.Email);
+            var existedUser = await _userManager.FindByEmailAsync(changeEmailModel.Email);
             if (existedUser != null)
             {
                 throw new BadRequestException("Email is busy");
@@ -256,7 +247,7 @@ namespace Cocktails.Identity.Services
             {
                 var confirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 _mailSender.Send(new MailMessage("Eda.ru email confirmation",
-                    $"<html lang=\"en\"><body><div>Здравствуйте. Ваш код для подтверждения почтового ящика: userId={changeEmailModel.UserId}&confirmationCode={confirmationCode}</div></body></html>",
+                    $"<html lang=\"en\"><body><div>Здравствуйте. Ваш код для подтверждения почтового ящика: userId={userId}&confirmationCode={confirmationCode}</div></body></html>",
                     new MailAddress(_mailingSettings.FromAddress, _mailingSettings.FromName), changeEmailModel.Email));
             }
         }
@@ -269,9 +260,14 @@ namespace Cocktails.Identity.Services
                 var service = new FacebookService();
                 externalUser = await service.GetProfileAsync(accessToken, cancellationToken);
             }
-            else //if (registerModel.LoginProvider == LoginProviderType.GooglePlus)
+            else if (loginProvider == LoginProviderType.GooglePlus)
             {
                 var service = new GooglePlusService();
+                externalUser = await service.GetProfileAsync(accessToken, cancellationToken);
+            }
+            else //if (loginProvider == LoginProviderType.Vk)
+            {
+                var service = new VkService();
                 externalUser = await service.GetProfileAsync(accessToken, cancellationToken);
             }
             return externalUser;

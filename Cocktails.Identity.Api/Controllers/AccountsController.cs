@@ -189,7 +189,7 @@ namespace Cocktails.Identity.Api.Controllers
         /// <param name="changeEmailModel"></param>
         /// <param name="cancellationToken"></param>
         [Authorize]
-        [HttpPost("password/change")]
+        [HttpPut("email")]
         [SwaggerResponse(200, description: "Email changed successfully")]
         [SwaggerResponse(400, description: "Email is busy")]
         [SwaggerResponse(401, description: "Invalid user id")] // TODO review all return codes and descriptions
@@ -218,7 +218,7 @@ namespace Cocktails.Identity.Api.Controllers
         /// <param name="changePasswordModel"></param>
         /// <param name="cancellationToken"></param>
         [Authorize]
-        [HttpPost("password/change")]
+        [HttpPut("password")]
         [SwaggerResponse(200, description: "Password changed successfully")]
         [SwaggerResponse(401, description: "Invalid password")]
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordModel changePasswordModel, CancellationToken cancellationToken)

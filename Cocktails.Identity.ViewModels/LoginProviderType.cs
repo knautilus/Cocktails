@@ -4,6 +4,7 @@
     {
         None = 0,
         Facebook,
-        GooglePlus
+        GooglePlus,
+        Vk
     }
 }
