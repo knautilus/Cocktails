@@ -107,6 +107,7 @@ namespace Cocktails.Data.Identity.EFCore.Migrations
                     Id = table.Column<long>(nullable: false),
                     About = table.Column<string>(nullable: true),
                     Birthday = table.Column<DateTimeOffset>(nullable: true),
+                    City = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTimeOffset>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     Gender = table.Column<byte>(nullable: true),

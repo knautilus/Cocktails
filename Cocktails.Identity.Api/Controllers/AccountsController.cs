@@ -1,9 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Cocktails.Api.Common;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -87,7 +85,7 @@ namespace Cocktails.Identity.Api.Controllers
         [HttpPost("sociallogin")]
         public async Task<IActionResult> AddSocialLoginAsync(SocialLoginModel loginModel, CancellationToken cancellationToken)
         {
-            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+            var userId = User.GetUserId();
 
             try
             {
@@ -114,7 +112,7 @@ namespace Cocktails.Identity.Api.Controllers
         [HttpDelete("sociallogin")]
         public async Task<IActionResult> RemoveSocialLoginAsync([FromBody] LoginRemoveModel loginRemoveModel, CancellationToken cancellationToken)
         {
-            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+            var userId = User.GetUserId();
 
             try
             {
@@ -140,7 +138,7 @@ namespace Cocktails.Identity.Api.Controllers
         [HttpGet("sociallogin")]
         public async Task<IActionResult> GetSocialLoginsAsync(CancellationToken cancellationToken)
         {
-            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+            var userId = User.GetUserId();
 
             try
             {
@@ -195,7 +193,7 @@ namespace Cocktails.Identity.Api.Controllers
         [SwaggerResponse(401, description: "Invalid user id")] // TODO review all return codes and descriptions
         public async Task<IActionResult> ChangeEmailAsync([FromBody] ChangeEmailModel changeEmailModel, CancellationToken cancellationToken)
         {
-            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+            var userId = User.GetUserId();
 
             try
             {
@@ -223,7 +221,7 @@ namespace Cocktails.Identity.Api.Controllers
         [SwaggerResponse(401, description: "Invalid password")]
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordModel changePasswordModel, CancellationToken cancellationToken)
         {
-            var userId = Convert.ToInt64(User.FindFirstValue("Id"));
+            var userId = User.GetUserId();
 
             try
             {

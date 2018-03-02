@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -112,11 +113,11 @@ namespace Cocktails.Catalog.Api
             services.AddScoped(typeof(DbContext), typeof(CocktailsContext));
             services.AddScoped(typeof(IContentRepository<,>), typeof(ContentRepository<,>));
 
-            services.AddScoped(typeof(IService<Cocktail, CocktailModel>), typeof(CocktailService));
-            services.AddScoped(typeof(IService<Flavor, FlavorModel>), typeof(FlavorService));
+            services.AddScoped(typeof(IService<Guid, Cocktail, CocktailModel>), typeof(CocktailService));
+            services.AddScoped(typeof(IService<Guid, Flavor, FlavorModel>), typeof(FlavorService));
             services.AddScoped(typeof(IIngredientService), typeof(IngredientService));
             services.AddScoped(typeof(ICocktailService), typeof(CocktailService));
-            services.AddScoped(typeof(IService<Category, CategoryModel>), typeof(CategoryService));
+            services.AddScoped(typeof(IService<Guid, Category, CategoryModel>), typeof(CategoryService));
             services.AddScoped(typeof(IModelMapper), typeof(ModelMapper));
         }
 

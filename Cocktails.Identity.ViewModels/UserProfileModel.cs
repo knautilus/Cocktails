@@ -1,8 +1,9 @@
 ﻿using System;
+using Cocktails.Common.Models;
 
-namespace Cocktails.Data.Identity
+namespace Cocktails.Identity.ViewModels
 {
-    public class UserProfile : BaseContentEntity<long>
+    public class UserProfileModel : BaseModel<long>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

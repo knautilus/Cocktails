@@ -14,7 +14,7 @@ using Cocktails.Mapper;
 
 namespace Cocktails.Catalog.Services.EFCore
 {
-    public class IngredientService : BaseService<Ingredient, IngredientModel>, IIngredientService
+    public class IngredientService : BaseService<Guid, Ingredient, IngredientModel>, IIngredientService
     {
         protected override Func<IQueryable<Ingredient>, IQueryable<Ingredient>> IncludeFunction =>
             QueryFunctions.IngredientsIncludeFunction;

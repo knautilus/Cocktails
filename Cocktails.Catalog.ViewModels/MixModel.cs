@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Cocktails.Catalog.ViewModels
 {
-    public class MixModel : BaseModel
+    public class MixModel : BaseModel<Guid>
     {
         [JsonIgnore]
         public override Guid Id { get => base.Id; set => base.Id = value; }

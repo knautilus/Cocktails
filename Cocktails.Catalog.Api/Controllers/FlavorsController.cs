@@ -22,13 +22,13 @@ namespace Cocktails.Catalog.Api.Controllers
     [ApiVersion("1")]
     public class FlavorsController : Controller
     {
-        private readonly IService<Flavor, FlavorModel> _service;
+        private readonly IService<Guid, Flavor, FlavorModel> _service;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="service"></param>
-        public FlavorsController(IService<Flavor, FlavorModel> service)
+        public FlavorsController(IService<Guid, Flavor, FlavorModel> service)
         {
             _service = service;
         }

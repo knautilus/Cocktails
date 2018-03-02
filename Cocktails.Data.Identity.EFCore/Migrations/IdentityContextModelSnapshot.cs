@@ -115,6 +115,8 @@ namespace Cocktails.Data.Identity.EFCore.Migrations
 
                     b.Property<DateTimeOffset?>("Birthday");
 
+                    b.Property<string>("City");
+
                     b.Property<DateTimeOffset>("CreatedDate");
 
                     b.Property<string>("FirstName");

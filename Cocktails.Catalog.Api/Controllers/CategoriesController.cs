@@ -23,13 +23,13 @@ namespace Cocktails.Catalog.Api.Controllers
     [ApiVersion("1")]
     public class CategoriesController : Controller
     {
-        private readonly IService<Category, CategoryModel> _service;
+        private readonly IService<Guid, Category, CategoryModel> _service;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="service"></param>
-        public CategoriesController(IService<Category, CategoryModel> service)
+        public CategoriesController(IService<Guid, Category, CategoryModel> service)
         {
             _service = service;
         }

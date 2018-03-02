@@ -12,7 +12,7 @@ using Cocktails.Mapper;
 
 namespace Cocktails.Catalog.Services.EFCore
 {
-    public class CocktailService : BaseService<Cocktail, CocktailModel>, ICocktailService
+    public class CocktailService : BaseService<Guid, Cocktail, CocktailModel>, ICocktailService
     {
         private readonly IContentRepository<Guid, Mix> _mixRepository;
         protected override Func<IQueryable<Cocktail>, IQueryable<Cocktail>> IncludeFunction =>

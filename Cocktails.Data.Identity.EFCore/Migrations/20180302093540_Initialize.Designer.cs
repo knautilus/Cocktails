@@ -12,7 +12,7 @@ using System;
 namespace Cocktails.Data.Identity.EFCore.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20180301153030_Initialize")]
+    [Migration("20180302093540_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,6 +115,8 @@ namespace Cocktails.Data.Identity.EFCore.Migrations
                     b.Property<string>("About");
 
                     b.Property<DateTimeOffset?>("Birthday");
+
+                    b.Property<string>("City");
 
                     b.Property<DateTimeOffset>("CreatedDate");
 

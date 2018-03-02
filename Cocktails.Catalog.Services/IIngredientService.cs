@@ -8,7 +8,7 @@ using Cocktails.Data.Catalog;
 
 namespace Cocktails.Catalog.Services
 {
-    public interface IIngredientService : IService<Ingredient, IngredientModel>
+    public interface IIngredientService : IService<Guid, Ingredient, IngredientModel>
     {
         Task<CollectionWrapper<IngredientModel>> GetByCategoryIdAsync(Guid categoryId, QueryContext context, CancellationToken cancellationToken);
     }

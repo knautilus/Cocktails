@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Cocktails.Common.Models;
 
 namespace Cocktails.Catalog.ViewModels
 {
-    public class CocktailModel : BaseModel
+    public class CocktailModel : BaseModel<Guid>
     {
         [Required, MaxLength(128)]
         public string Name { get; set; }

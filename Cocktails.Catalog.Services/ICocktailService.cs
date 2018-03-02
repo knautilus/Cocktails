@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Cocktails.Catalog.ViewModels;
 using Cocktails.Common.Models;
@@ -7,7 +8,7 @@ using Cocktails.Data.Catalog;
 
 namespace Cocktails.Catalog.Services
 {
-    public interface ICocktailService : IService<Cocktail, CocktailModel>
+    public interface ICocktailService : IService<Guid, Cocktail, CocktailModel>
     {
         Task<CollectionWrapper<CocktailModel>> GetByCocktailNameAsync(string cocktailName, QueryContext context, CancellationToken cancellationToken);
     }

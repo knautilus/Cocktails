@@ -9,25 +9,26 @@ using Cocktails.Mapper;
 
 namespace Cocktails.Common.Services
 {
-    public abstract class BaseService<TEntity, TModel> : IService<TEntity, TModel>
-        where TModel : BaseModel
-        where TEntity : BaseContentEntity<Guid>, new()
+    public abstract class BaseService<TKey, TEntity, TModel> : IService<TKey, TEntity, TModel>
+        where TKey : struct
+        where TModel : BaseModel<TKey>
+        where TEntity : BaseContentEntity<TKey>, new()
     {
-        protected readonly IContentRepository<Guid, TEntity> Repository;
+        protected readonly IContentRepository<TKey, TEntity> Repository;
         protected readonly IModelMapper Mapper;
 
         protected virtual Func<IQueryable<TEntity>, IQueryable<TEntity>> IncludeFunction =>
             x => x;
 
-        protected BaseService(IContentRepository<Guid, TEntity> repository, IModelMapper mapper)
+        protected BaseService(IContentRepository<TKey, TEntity> repository, IModelMapper mapper)
         {
             Repository = repository;
             Mapper = mapper;
         }
 
-        public virtual async Task<TModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public virtual async Task<TModel> GetByIdAsync(TKey id, CancellationToken cancellationToken)
         {
-            var result = await Repository.GetSingleAsync(x => IncludeFunction(BaseQueryFunctions.GetByIdFunction<TEntity>()(x, id)), cancellationToken);
+            var result = await Repository.GetSingleAsync(x => IncludeFunction(x.WhereByKey(y => y.Id, id)), cancellationToken);
             return Mapper.Map<TModel>(result);
         }
 
@@ -51,7 +52,7 @@ namespace Cocktails.Common.Services
             }
         }
 
-        public virtual async Task<TModel> UpdateAsync(Guid id, TModel model, CancellationToken cancellationToken)
+        public virtual async Task<TModel> UpdateAsync(TKey id, TModel model, CancellationToken cancellationToken)
         {
             var entity = Mapper.Map<TEntity>(model);
             entity.Id = id;
@@ -66,7 +67,7 @@ namespace Cocktails.Common.Services
             }
         }
 
-        public virtual async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public virtual async Task DeleteAsync(TKey id, CancellationToken cancellationToken)
         {
             try
             {

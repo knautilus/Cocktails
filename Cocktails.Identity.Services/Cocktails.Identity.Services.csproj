@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Common.Services\Cocktails.Common.Services.csproj" />
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Data.Identity\Cocktails.Data.Identity.csproj" />
     <ProjectReference Include="..\Cocktails.Identity.ViewModels\Cocktails.Identity.ViewModels.csproj" />

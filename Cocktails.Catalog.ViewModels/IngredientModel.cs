@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Cocktails.Catalog.ViewModels
 {
-    public class IngredientModel : BaseModel
+    public class IngredientModel : BaseModel<Guid>
     {
         [Required, MaxLength(128)]
         public string Name { get; set; }

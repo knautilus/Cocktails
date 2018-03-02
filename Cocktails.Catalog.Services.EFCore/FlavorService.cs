@@ -7,7 +7,7 @@ using Cocktails.Mapper;
 
 namespace Cocktails.Catalog.Services.EFCore
 {
-    public class FlavorService : BaseService<Flavor, FlavorModel>
+    public class FlavorService : BaseService<Guid, Flavor, FlavorModel>
     {
         public FlavorService(IContentRepository<Guid, Flavor> repository, IModelMapper mapper)
             : base(repository, mapper) {}
