@@ -33,6 +33,9 @@ namespace Cocktails.Identity.Mapper
 
             CreateMap<UserProfile, UserProfileModel>(MemberList.None)
                 .ForMember(x => x.Gender, opt => opt.MapFrom(x => x.Gender.HasValue ? (Gender)(byte)x.Gender : (Gender?)null));
+
+            CreateMap<User, UserModel>(MemberList.None)
+                .ForMember(x => x.Username, opt => opt.MapFrom(y => y.UserName));
         }
     }
 }

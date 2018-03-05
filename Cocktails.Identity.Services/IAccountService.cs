@@ -6,8 +6,9 @@ namespace Cocktails.Identity.Services
 {
     public interface IAccountService
     {
-        Task<LoginResultModel> LoginAsync(LoginModel loginModel, CancellationToken cancellationToken);
         Task RegisterAsync(RegisterModel registerModel, CancellationToken cancellationToken);
+        Task<LoginResultModel> LoginAsync(LoginModel loginModel, CancellationToken cancellationToken);
+        Task<UserModel> GetByIdAsync(long id, CancellationToken cancellationToken);
         Task ConfirmEmailAsync(EmailConfirmationModel confirmationModel, CancellationToken cancellationToken);
         Task ForgotPasswordAsync(ForgotPasswordModel forgotPasswordModel, CancellationToken cancellationToken);
         Task ResetPasswordAsync(ResetPasswordModel resetPasswordModel, CancellationToken cancellationToken);

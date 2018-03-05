@@ -138,6 +138,12 @@ namespace Cocktails.Identity.Services
             return result;
         }
 
+        public virtual async Task<UserModel> GetByIdAsync(long id, CancellationToken cancellationToken)
+        {
+            var result = await _userManager.FindByIdAsync(id.ToString());
+            return _mapper.Map<UserModel>(result);
+        }
+
         public async Task<SocialLoginModel[]> GetSocialLoginsAsync(long userId, CancellationToken cancellationToken)
         {
             var user = new User { Id = userId };

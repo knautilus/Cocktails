@@ -76,6 +76,23 @@ namespace Cocktails.Identity.Api.Controllers
         }
 
         /// <summary>
+        /// Returns current user account data
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        [Authorize]
+        [HttpGet("account", Name = "GetAccount")]
+        [SwaggerResponse(200, description: "Item found", type: typeof(UserModel))]
+        [SwaggerResponse(401, description: "Unauthorized")]
+        public async Task<IActionResult> GetByIdAsync(CancellationToken cancellationToken)
+        {
+            var userId = User.GetUserId();
+
+            var result = await _service.GetByIdAsync(userId, cancellationToken);
+
+            return Ok(result);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="loginModel"></param>
@@ -179,7 +196,6 @@ namespace Cocktails.Identity.Api.Controllers
                 return BadRequest(new ApiBadRequestResponse(ModelState));
             }
         }
-
 
         /// <summary>
         /// Changes user email

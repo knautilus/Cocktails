@@ -36,7 +36,7 @@ namespace Cocktails.Identity.Api.Controllers
         /// </summary>
         /// <param name="id">Item Id (long)</param>
         /// <param name="cancellationToken"></param>
-        [HttpGet("{id:guid}", Name = "GetProfile")]
+        [HttpGet("profiles/{id:guid}", Name = "GetProfile")]
         [SwaggerResponse(200, description: "Item found", type: typeof(UserProfileModel))]
         [SwaggerResponse(404, description: "Item not found", type: typeof(ApiErrorResponse))]
         public async Task<IActionResult> GetByIdAsync([FromRoute] long id, CancellationToken cancellationToken)
@@ -56,7 +56,7 @@ namespace Cocktails.Identity.Api.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut]
+        [HttpPut("profiles")]
         [SwaggerResponse(200, description: "Item updated successfully", type: typeof(UserProfileModel))]
         [SwaggerResponse(400, description: "Invalid model state", type: typeof(ApiErrorResponse))]
         [SwaggerResponse(401, description: "Unauthorized")]

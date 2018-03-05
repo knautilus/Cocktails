@@ -24,7 +24,7 @@ namespace Cocktails.Identity.Services
 
             //var response = await client.ExecuteTaskAsync<VkUser>(request, cancellationToken);
             var response = await client.ExecuteTaskAsync<List<VkUser>>(request, cancellationToken);
-            if (!response.IsSuccessful || response?.Data == null || !response.Data.Any())
+            if (!response.IsSuccessful || response.Data == null || !response.Data.Any())
             {
                 throw new BadRequestException("Invalid oauth token");
             }
