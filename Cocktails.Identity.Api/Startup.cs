@@ -28,6 +28,8 @@ using Cocktails.Data.Identity.EFCore.Repositories;
 using Cocktails.Mailing;
 using Cocktails.Mailing.Mailgun;
 using Cocktails.Api.Common.Middleware;
+using Cocktails.Common.Services;
+using Cocktails.Identity.ViewModels;
 using Cocktails.Security;
 
 namespace Cocktails.Identity.Api
@@ -135,6 +137,7 @@ namespace Cocktails.Identity.Api
             services.AddScoped(typeof(DbContext), typeof(IdentityContext));
 
             services.AddScoped(typeof(IAccountService), typeof(AccountService));
+            services.AddScoped(typeof(IService<long, UserProfile, UserProfileModel>), typeof(UserProfileService));
             services.AddScoped(typeof(IModelMapper), typeof(ModelMapper));
             services.AddScoped(typeof(IUserStore<User>), typeof(IdentityUserStore));
             services.AddScoped(typeof(IRoleStore<Role>), typeof(IdentityRoleStore));
