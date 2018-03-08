@@ -5,6 +5,7 @@
         None = 0,
         Facebook,
         GooglePlus,
+        Twitter,
         Vk
     }
 }

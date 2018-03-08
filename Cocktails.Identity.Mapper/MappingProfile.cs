@@ -19,6 +19,10 @@ namespace Cocktails.Identity.Mapper
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.UserName, opt => opt.MapFrom(y => UniqueNameGenerator.Generate("user")));
 
+            CreateMap<TwitterUser, User>(MemberList.None)
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.UserName, opt => opt.MapFrom(y => UniqueNameGenerator.Generate("user")));
+
             CreateMap<GooglePlusUser, User>(MemberList.None)
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.UserName, opt => opt.MapFrom(y => UniqueNameGenerator.Generate("user")));

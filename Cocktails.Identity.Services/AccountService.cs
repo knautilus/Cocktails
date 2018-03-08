@@ -27,14 +27,21 @@ namespace Cocktails.Identity.Services
     {
         private readonly AuthSettings _authSettings;
         private readonly MailingSettings _mailingSettings;
+        private readonly TwitterKeys _twitterKeys;
         private readonly UserManager<User> _userManager;
         private readonly IMailSender _mailSender;
         private readonly IModelMapper _mapper;
 
-        public AccountService(IOptions<AuthSettings> authSettings, IOptions<MailingSettings> mailingSettings, UserManager<User> userManager, IMailSender mailSender, IModelMapper mapper)
+        public AccountService(IOptions<AuthSettings> authSettings,
+            IOptions<MailingSettings> mailingSettings,
+            IOptions<TwitterKeys> twitterKeys,
+            UserManager<User> userManager,
+            IMailSender mailSender,
+            IModelMapper mapper)
         {
             _authSettings = authSettings.Value;
             _mailingSettings = mailingSettings.Value;
+            _twitterKeys = twitterKeys.Value;
             _userManager = userManager;
             _mailSender = mailSender;
             _mapper = mapper;
@@ -269,6 +276,11 @@ namespace Cocktails.Identity.Services
             else if (loginProvider == LoginProviderType.GooglePlus)
             {
                 var service = new GooglePlusService();
+                externalUser = await service.GetProfileAsync(accessToken, cancellationToken);
+            }
+            else if (loginProvider == LoginProviderType.Twitter)
+            {
+                var service = new TwitterService(_twitterKeys);
                 externalUser = await service.GetProfileAsync(accessToken, cancellationToken);
             }
             else //if (loginProvider == LoginProviderType.Vk)
