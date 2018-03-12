@@ -31,6 +31,7 @@ using Cocktails.Api.Common.Middleware;
 using Cocktails.Common.Services;
 using Cocktails.Identity.ViewModels;
 using Cocktails.Security;
+using Cocktails.Api.Common;
 
 namespace Cocktails.Identity.Api
 {
@@ -60,10 +61,11 @@ namespace Cocktails.Identity.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddJsonOptions(options => {
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            });
+            services.AddMvc(options => options.Filters.Add(typeof(ValidateModelStateAttribute)))
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
             services.AddIdentity<User, Role>()
                 .AddDefaultTokenProviders();

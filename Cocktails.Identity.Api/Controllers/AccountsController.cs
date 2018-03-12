@@ -43,7 +43,6 @@ namespace Cocktails.Identity.Api.Controllers
         {
             try
             {
-                // TODO check model is not null
                 await _service.RegisterAsync(registerModel, cancellationToken);
                 return Ok();
             }
@@ -93,7 +92,7 @@ namespace Cocktails.Identity.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Links social login to the current account
         /// </summary>
         /// <param name="loginModel"></param>
         /// <param name="cancellationToken"></param>
@@ -120,7 +119,7 @@ namespace Cocktails.Identity.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Unlinks social login from the current account
         /// </summary>
         /// <param name="loginRemoveModel"></param>
         /// <param name="cancellationToken"></param>
