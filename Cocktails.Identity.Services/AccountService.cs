@@ -20,6 +20,7 @@ using Cocktails.Identity.ViewModels;
 using Cocktails.Mailing;
 using Cocktails.Mailing.Mailgun;
 using Cocktails.Mailing.Models;
+using UserManager = Cocktails.Data.Identity.UserManager<Cocktails.Data.Identity.User>;
 
 namespace Cocktails.Identity.Services
 {
@@ -28,14 +29,14 @@ namespace Cocktails.Identity.Services
         private readonly AuthSettings _authSettings;
         private readonly MailingSettings _mailingSettings;
         private readonly TwitterKeys _twitterKeys;
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager _userManager;
         private readonly IMailSender _mailSender;
         private readonly IModelMapper _mapper;
 
         public AccountService(IOptions<AuthSettings> authSettings,
             IOptions<MailingSettings> mailingSettings,
             IOptions<TwitterKeys> twitterKeys,
-            UserManager<User> userManager,
+            UserManager userManager,
             IMailSender mailSender,
             IModelMapper mapper)
         {

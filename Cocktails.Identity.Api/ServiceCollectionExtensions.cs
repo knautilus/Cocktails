@@ -41,7 +41,7 @@ namespace Cocktails.Identity.Api
             services.TryAddScoped<IdentityErrorDescriber>();
             services.TryAddScoped<ISecurityStampValidator, SecurityStampValidator<TUser>>();
             services.TryAddScoped<IUserClaimsPrincipalFactory<TUser>, UserClaimsPrincipalFactory<TUser, TRole>>();
-            services.TryAddScoped<UserManager<TUser>, UserManager<TUser>>();
+            services.TryAddScoped<UserManager<TUser>, Data.Identity.UserManager<TUser>>();
             services.TryAddScoped<SignInManager<TUser>, SignInManager<TUser>>();
             services.TryAddScoped<RoleManager<TRole>, RoleManager<TRole>>();
             services.AddSingleton<IConfigureOptions<IdentityOptions>, IdentityConfigureOptions>();

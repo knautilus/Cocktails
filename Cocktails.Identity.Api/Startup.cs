@@ -95,6 +95,11 @@ namespace Cocktails.Identity.Api
                 options.Filters.Add(new RequireHttpsAttribute());
             });
 
+            services.Configure<PasswordHasherOptions>(options =>
+            {
+                options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2;
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
