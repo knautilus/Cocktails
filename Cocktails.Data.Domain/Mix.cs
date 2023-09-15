@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Cocktails.Data.Domain
+namespace Cocktails.Data.Entities
 {
-    public class Mix : BaseEntity
+    public class Mix : BaseEntity<long>
     {
         public Cocktail Cocktail { get; set; }
 
-        public Guid IngredientId { get; set; }
+        public long IngredientId { get; set; }
         public Ingredient Ingredient { get; set; }
 
         public decimal Amount { get; set; }

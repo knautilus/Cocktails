@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-
-using Cocktails.Catalog.ViewModels;
-using Cocktails.Data.Domain;
-using Cocktails.Mapper;
+using Cocktails.Data.Entities;
+using Cocktails.Responses;
 
 namespace Cocktails.Catalog.Mapper
 {
@@ -12,26 +10,27 @@ namespace Cocktails.Catalog.Mapper
         {
             CreateMap<Category, CategoryModel>();
             CreateMap<CategoryModel, Category>()
-                .IgnoreReadOnly()
+                //.IgnoreReadOnly()
                 .ForMember(x => x.Ingredients, opt => opt.Ignore());
 
             CreateMap<Flavor, FlavorModel>();
             CreateMap<FlavorModel, Flavor>()
-                .IgnoreReadOnly()
+                //.IgnoreReadOnly()
                 .ForMember(x => x.Ingredients, opt => opt.Ignore());
 
             CreateMap<Ingredient, IngredientModel>();
             CreateMap<IngredientModel, Ingredient>()
-                .IgnoreReadOnly()
+                //.IgnoreReadOnly()
                 .ForMember(x => x.Mixes, opt => opt.Ignore());
 
             CreateMap<Mix, MixModel>();
             CreateMap<MixModel, Mix>()
-                .IgnoreReadOnly()
+                //.IgnoreReadOnly()
                 .ForMember(x => x.Cocktail, opt => opt.Ignore());
 
             CreateMap<Cocktail, CocktailModel>();
-            CreateMap<CocktailModel, Cocktail>().IgnoreReadOnly();
+            CreateMap<CocktailModel, Cocktail>();
+                //.IgnoreReadOnly();
         }
     }
 }

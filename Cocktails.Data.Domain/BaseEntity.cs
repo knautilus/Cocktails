@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Cocktails.Data.Domain
+namespace Cocktails.Data.Entities
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity<TKey>
     {
-        public Guid Id { get; set; }
-        public DateTimeOffset CreatedDate { get; set; }
-        public DateTimeOffset ModifiedDate { get; set; }
+        public TKey Id { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset ModifyDate { get; set; }
     }
 }

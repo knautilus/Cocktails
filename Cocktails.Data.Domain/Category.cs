@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Cocktails.Data.Domain
+namespace Cocktails.Data.Entities
 {
-    public class Category : BaseEntity
+    public class Category : BaseEntity<long>
     {
         public string Name { get; set; }
 

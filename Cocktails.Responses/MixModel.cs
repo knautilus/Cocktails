@@ -1,12 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using Cocktails.Models.Common;
 using System.ComponentModel.DataAnnotations;
 
-using Newtonsoft.Json;
-
-namespace Cocktails.Catalog.ViewModels
+namespace Cocktails.Responses
 {
-    public class MixModel : BaseModel
+    public class MixModel : BaseModel<long>
     {
         [Required]
         public Guid IngredientId { get; set; }

@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cocktails.Catalog.ViewModels\Cocktails.Catalog.ViewModels.csproj" />
-    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Domain.csproj" />
-    <ProjectReference Include="..\Cocktails.Mapper\Cocktails.Mapper.csproj" />
+    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Entities.csproj" />
+    <ProjectReference Include="..\Cocktails.Mapper.Common\Cocktails.Mapper.Common.csproj" />
+    <ProjectReference Include="..\Cocktails.Responses\Cocktails.Responses.csproj" />
   </ItemGroup>
 
 </Project>
