@@ -1,52 +1,74 @@
-﻿using System.IO;
-using System.Net;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Cocktails.Common.Models;
+using Cocktails.Data.Contexts;
+using Cocktails.GraphQL.Catalog.Types;
+using HotChocolate.AspNetCore;
+using HotChocolate.Types.Pagination;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System.IO;
+using System.Reflection;
 
-namespace Cocktails.Catalog.Api
+var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions { ContentRootPath = contentRootPath });
+
+// Add services to the container.
+
+var msSqlConnectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
+
+builder.Services.AddControllers();
+//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<CocktailsContext>(
+    options => options.UseSqlServer(msSqlConnectionString));
+
+//builder.Services.AddTransient(typeof(CocktailsContext), typeof(CocktailsContext));
+
+builder.Services
+    .AddGraphQLServer()
+    .AddSorting()
+    .SetPagingOptions(new PagingOptions { IncludeTotalCount = true })
+    .RegisterDbContext<CocktailsContext>()
+    .AddQueryType(d => d.Name("rootQuery"))
+        .AddTypeExtension<CategoryQueryType>()
+        .AddTypeExtension<FlavorQueryType>()
+        .AddTypeExtension<IngredientQueryType>()
+        .AddTypeExtension<CocktailQueryType>()
+    .AllowIntrospection(builder.Environment.EnvironmentName == "Development");
+
+var apiInfo = new ApiInfo { Name = "Cocktails catalog api", Author = "Alex Utiansky" };
+builder.Services.AddSingleton(typeof(ApiInfo), x => apiInfo);
+
+var app = builder.Build();
+
+//// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+app.UseHttpsRedirection();
+
+app.MapControllers();
+
+app.UseRouting();
+app.UseAuthorization();
+app.UseEndpoints(endpoints =>
 {
-    /// <summary>
-    /// Program class
-    /// </summary>
-    public class Program
+    endpoints.MapControllers();
+    endpoints.MapGraphQL().WithOptions(new GraphQLServerOptions
     {
-        /// <summary>
-        /// Entry point method
-        /// </summary>
-        /// <param name="args"></param>
-        public static void Main(string[] args)
-        {
-            BuildWebHost(args).Run();
+        Tool = {
+            UseBrowserUrlAsGraphQLEndpoint = false,
+            Enable = app.Environment.IsDevelopment()
         }
+    });
+});
 
-        /// <summary>
-        /// Configure web host
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public static IWebHost BuildWebHost(string[] args)
-        {
-            var config = new ConfigurationBuilder()
-                .AddJsonFile("certificate.json", optional: true, reloadOnChange: true)
-                .Build();
-
-            var certificateSettings = config.GetSection("certificateSettings");
-            var certificateFileName = certificateSettings.GetValue<string>("filename");
-            var certificatePassword = certificateSettings.GetValue<string>("password");
-
-            var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-            return WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseKestrel(options =>
-                {
-                    options.Listen(IPAddress.Loopback, 5001, listenOptions =>
-                    {
-                        listenOptions.UseHttps(basePath + certificateFileName, certificatePassword);
-                    });
-                })
-                .Build();
-        }
-    }
-}
+app.Run();

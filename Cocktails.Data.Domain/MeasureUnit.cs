@@ -2,10 +2,10 @@
 
 namespace Cocktails.Data.Entities
 {
-    public class Flavor : BaseEntity<long>
+    public class MeasureUnit : BaseEntity<long>
     {
         public string Name { get; set; }
 
-        public List<Cocktail> Cocktails { get; set; }
+        public List<Mix> Mixes { get; set; }
     }
 }

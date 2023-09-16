@@ -10,5 +10,8 @@ namespace Cocktails.Data.Entities
         public Ingredient Ingredient { get; set; }
 
         public decimal Amount { get; set; }
+
+        public long MeasureUnitId { get; set; }
+        public MeasureUnit MeasureUnit { get; set; }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Cocktails.Data.Entities
 {
-    public class Category : BaseEntity<long>
+    public class CocktailCategory : BaseEntity<long>
     {
         public string Name { get; set; }
 
-        public List<Ingredient> Ingredients { get; set; }
+        public List<Cocktail> Cocktails { get; set; }
     }
 }

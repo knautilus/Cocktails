@@ -1,14 +1,14 @@
 ﻿using Cocktails.Common.Models;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace Cocktails.Catalog.Api.Controllers
 {
     /// <summary>
     /// API Controller for ApiInfo
     /// </summary>
-    [ApiVersionNeutral]
+    [ApiController]
+    [Produces("application/json")]
     public class ApiInfoController : Controller
     {
         private readonly ApiInfo _info;
@@ -17,9 +17,9 @@ namespace Cocktails.Catalog.Api.Controllers
         /// Constructor
         /// </summary>
         /// <param name="info"></param>
-        public ApiInfoController(IOptions<ApiInfo> info)
+        public ApiInfoController(ApiInfo info)
         {
-            _info = info.Value;
+            _info = info;
         }
 
         /// <summary>

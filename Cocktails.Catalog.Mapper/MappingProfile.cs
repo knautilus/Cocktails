@@ -8,15 +8,15 @@ namespace Cocktails.Catalog.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Category, CategoryModel>();
-            CreateMap<CategoryModel, Category>()
+            CreateMap<CocktailCategory, CategoryModel>();
+            CreateMap<CategoryModel, CocktailCategory>()
                 //.IgnoreReadOnly()
-                .ForMember(x => x.Ingredients, opt => opt.Ignore());
+                .ForMember(x => x.Cocktails, opt => opt.Ignore());
 
             CreateMap<Flavor, FlavorModel>();
             CreateMap<FlavorModel, Flavor>()
                 //.IgnoreReadOnly()
-                .ForMember(x => x.Ingredients, opt => opt.Ignore());
+                .ForMember(x => x.Cocktails, opt => opt.Ignore());
 
             CreateMap<Ingredient, IngredientModel>();
             CreateMap<IngredientModel, Ingredient>()

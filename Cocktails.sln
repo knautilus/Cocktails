@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Catalog.Api", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.Entities", "Cocktails.Data.Domain\Cocktails.Data.Entities.csproj", "{0A77F33F-41A2-49C7-92CF-9033189D47AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.EFCore", "Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj", "{AF518219-33E3-44FE-AA97-2F5AB1B32A81}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Common", "Cocktails.Common\Cocktails.Common.csproj", "{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Tests", "Cocktails.Tests\Cocktails.Tests.csproj", "{3C86FA54-A325-4359-9A75-DD99770F8460}"
@@ -40,21 +38,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapping", "Mapping", "{F056
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphQL", "GraphQL", "{762F2BA9-1BC3-4325-8F1C-2EB3F0552FA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.GraphQL.Core", "Cocktails.GraphQL.Core\Cocktails.GraphQL.Core.csproj", "{9261D450-8083-4543-A10C-B6D568B9C7D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.GraphQL.Core", "Cocktails.GraphQL.Core\Cocktails.GraphQL.Core.csproj", "{9261D450-8083-4543-A10C-B6D568B9C7D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{A423ED63-46EA-40B4-BF28-22F47653F44A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Models.Common", "Cocktails.Models.Common\Cocktails.Models.Common.csproj", "{E6D9E71E-06B9-4CDC-9125-869D0FD99DF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Models.Common", "Cocktails.Models.Common\Cocktails.Models.Common.csproj", "{E6D9E71E-06B9-4CDC-9125-869D0FD99DF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Responses", "Cocktails.Responses\Cocktails.Responses.csproj", "{8C4132CE-47A8-459A-A3B5-1E44C5DE714D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Responses", "Cocktails.Responses\Cocktails.Responses.csproj", "{8C4132CE-47A8-459A-A3B5-1E44C5DE714D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Mapper.Common", "Cocktails.Mapper.Common\Cocktails.Mapper.Common.csproj", "{D0213156-3343-4ED2-87AC-52A8FD4F10FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Mapper.Common", "Cocktails.Mapper.Common\Cocktails.Mapper.Common.csproj", "{D0213156-3343-4ED2-87AC-52A8FD4F10FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.GraphQL.Catalog", "Cocktails.GraphQL.Catalog\Cocktails.GraphQL.Catalog.csproj", "{59988986-DBD1-472C-B82C-C1C98FCA863C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.GraphQL.Catalog", "Cocktails.GraphQL.Catalog\Cocktails.GraphQL.Catalog.csproj", "{59988986-DBD1-472C-B82C-C1C98FCA863C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Data.Contexts", "Cocktails.Data.Contexts\Cocktails.Data.Contexts.csproj", "{D0A6ADC8-B6BB-4527-BAB2-BB690E5C220C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.Contexts", "Cocktails.Data.Contexts\Cocktails.Data.Contexts.csproj", "{D0A6ADC8-B6BB-4527-BAB2-BB690E5C220C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.DbMigrations", "Cocktails.DbMigrations\Cocktails.DbMigrations.csproj", "{DA948F02-4593-4D37-906E-8BF5505AA294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.DbMigrations", "Cocktails.DbMigrations\Cocktails.DbMigrations.csproj", "{DA948F02-4593-4D37-906E-8BF5505AA294}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Data.EFCore", "Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj", "{E4489F4D-509E-448F-A070-E68868120AC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,10 +70,6 @@ Global
 		{0A77F33F-41A2-49C7-92CF-9033189D47AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A77F33F-41A2-49C7-92CF-9033189D47AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A77F33F-41A2-49C7-92CF-9033189D47AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF518219-33E3-44FE-AA97-2F5AB1B32A81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF518219-33E3-44FE-AA97-2F5AB1B32A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF518219-33E3-44FE-AA97-2F5AB1B32A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF518219-33E3-44FE-AA97-2F5AB1B32A81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -126,6 +122,10 @@ Global
 		{DA948F02-4593-4D37-906E-8BF5505AA294}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA948F02-4593-4D37-906E-8BF5505AA294}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA948F02-4593-4D37-906E-8BF5505AA294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4489F4D-509E-448F-A070-E68868120AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4489F4D-509E-448F-A070-E68868120AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4489F4D-509E-448F-A070-E68868120AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4489F4D-509E-448F-A070-E68868120AC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,7 +133,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A657ACA1-3AD4-456E-9494-23A4902B0CE5} = {42B27BBA-AFAD-47BE-97C2-D31F05317965}
 		{0A77F33F-41A2-49C7-92CF-9033189D47AD} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
-		{AF518219-33E3-44FE-AA97-2F5AB1B32A81} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
 		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C} = {4AB2097B-E21C-4E93-B813-EE80FD637E15}
 		{3C86FA54-A325-4359-9A75-DD99770F8460} = {6FE71C83-2F6E-4186-A1E6-089B78916EEB}
 		{E074CA62-D57D-4712-8EA1-876C0C6B3D70} = {4AB2097B-E21C-4E93-B813-EE80FD637E15}
@@ -147,6 +146,7 @@ Global
 		{59988986-DBD1-472C-B82C-C1C98FCA863C} = {762F2BA9-1BC3-4325-8F1C-2EB3F0552FA9}
 		{D0A6ADC8-B6BB-4527-BAB2-BB690E5C220C} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
 		{DA948F02-4593-4D37-906E-8BF5505AA294} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
+		{E4489F4D-509E-448F-A070-E68868120AC6} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB01C30C-6A7C-4F5C-BF8A-FCCCAC297C59}
