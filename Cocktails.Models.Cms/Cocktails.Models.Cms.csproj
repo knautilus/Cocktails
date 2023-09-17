@@ -7,13 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Entities.csproj" />
     <ProjectReference Include="..\Cocktails.Models.Common\Cocktails.Models.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="HotChocolate" Version="13.5.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
   </ItemGroup>
 
 </Project>

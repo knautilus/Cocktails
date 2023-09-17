@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyName>Cocktails.Catalog.Api</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.0\Cocktails.Catalog.Api.xml</DocumentationFile>
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp2.0\Cocktails.Catalog.Api.xml</DocumentationFile>
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\CategoriesController.cs" />
+    <Compile Remove="Controllers\CocktailsController.cs" />
+    <Compile Remove="Controllers\FlavorsController.cs" />
+    <Compile Remove="Controllers\IngredientsController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\appsettings.Development.json" Link="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\appsettings.json" Link="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\certificate.json" Link="certificate.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\localhost.pfx" Link="localhost.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.5.1" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.5.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
+    <ProjectReference Include="..\Cocktails.GraphQL.Cms\Cocktails.GraphQL.Cms.csproj" />
+    <ProjectReference Include="..\Cocktails.Mapper.Cms\Cocktails.Mapper.Cms.csproj" />
+  </ItemGroup>
+
+</Project>

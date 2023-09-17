@@ -78,10 +78,7 @@ namespace Cocktails.Data.Contexts
 
             modelBuilder.Entity<Mix>(b =>
             {
-                b.HasKey(x => (new { x.Id, x.IngredientId }));
-
-                b.Property(x => x.Id)
-                    .HasColumnName("CocktailId");
+                b.HasKey(x => (new { x.CocktailId, x.IngredientId }));
 
                 b.HasOne(x => x.Ingredient)
                     .WithMany(i => i.Mixes)
@@ -89,7 +86,7 @@ namespace Cocktails.Data.Contexts
 
                 b.HasOne(x => x.Cocktail)
                     .WithMany(c => c.Mixes)
-                    .HasForeignKey(x => x.Id);
+                    .HasForeignKey(x => x.CocktailId);
 
                 b.HasOne(x => x.MeasureUnit)
                     .WithMany(mu => mu.Mixes)
@@ -125,7 +122,8 @@ namespace Cocktails.Data.Contexts
                 new Ingredient { Id = 3, Name = "Rum", CreateDate = date, ModifyDate = date },
                 new Ingredient { Id = 4, Name = "Tequila", CreateDate = date, ModifyDate = date },
                 new Ingredient { Id = 5, Name = "Tomato juice", CreateDate = date, ModifyDate = date },
-                new Ingredient { Id = 6, Name = "Lemon juice", CreateDate = date, ModifyDate = date }
+                new Ingredient { Id = 6, Name = "Lemon juice", CreateDate = date, ModifyDate = date },
+                new Ingredient { Id = 7, Name = "Coffee liqueur", CreateDate = date, ModifyDate = date }
             );
 
             modelBuilder.Entity<MeasureUnit>().HasData(

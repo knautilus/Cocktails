@@ -1,9 +1,8 @@
-﻿using System;
-
-namespace Cocktails.Data.Entities
+﻿namespace Cocktails.Data.Entities
 {
-    public class Mix : BaseEntity<long>
+    public class Mix
     {
+        public long CocktailId { get; set; }
         public Cocktail Cocktail { get; set; }
 
         public long IngredientId { get; set; }
