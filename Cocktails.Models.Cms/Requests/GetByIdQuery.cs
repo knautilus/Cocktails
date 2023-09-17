@@ -1,6 +1,8 @@
-﻿namespace Cocktails.Models.Cms.Requests
+﻿using MediatR;
+
+namespace Cocktails.Models.Cms.Requests
 {
-    public class GetByIdQuery<TKey>
+    public class GetByIdQuery<TKey, TResponse> : IRequest<TResponse>
     {
         public TKey Id { get; set; }
     }

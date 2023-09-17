@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Cocktails.Data.Entities;
-using Cocktails.Models.Cms.Requests.Cocktail;
+using Cocktails.Models.Cms.Requests.Cocktails;
 
 namespace Cocktails.Mapper.Cms
 {

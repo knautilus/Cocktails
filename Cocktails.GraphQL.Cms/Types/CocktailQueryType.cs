@@ -7,13 +7,13 @@ namespace Cocktails.GraphQL.Cms.Types
     {
         protected override void Configure(IObjectTypeDescriptor<CocktailQuery> descriptor)
         {
-            descriptor.Field(t => t.GetCocktails(default, default))
+            descriptor.Field(t => t.GetCocktails(default, default, default))
                 .Type<ListType<CocktailType>>()
                 .UsePaging()
                 .UseSorting();
 
-            descriptor.Field(t => t.GetCocktail(default, default))
-                .Argument("id", x => x.Type<NonNullType<IdType>>())
+            descriptor.Field(t => t.GetCocktail(default, default, default))
+                //.Argument("id", x => x.Type<NonNullType<IdType>>())
                 .Type<CocktailType>();
         }
     }

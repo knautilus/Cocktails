@@ -1,6 +1,9 @@
-﻿namespace Cocktails.Models.Cms.Requests.Cocktail
+﻿using Cocktails.Data.Entities;
+using MediatR;
+
+namespace Cocktails.Models.Cms.Requests.Cocktails
 {
-    public class CocktailGetManyQuery
+    public class CocktailGetManyQuery : IRequest<IQueryable<Cocktail>>
     {
         public string Name { get; set; }
         public long? IngredientId { get; set; }

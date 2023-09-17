@@ -1,4 +1,4 @@
-﻿namespace Cocktails.Models.Cms.Requests.Cocktail
+﻿namespace Cocktails.Models.Cms.Requests.Cocktails
 {
     public class MixInput
     {

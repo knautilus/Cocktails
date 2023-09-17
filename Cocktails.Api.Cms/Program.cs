@@ -1,12 +1,18 @@
 ﻿using Cocktails.Catalog.Mapper;
 using Cocktails.Common.Models;
+using Cocktails.Cqrs.Sql;
+using Cocktails.Cqrs.Sql.Cms.QueryHandlers;
 using Cocktails.Data.Contexts;
+using Cocktails.Data.Entities;
 using Cocktails.GraphQL.Cms.Types;
 using Cocktails.Mapper.Common;
+using Cocktails.Models.Cms.Requests;
 using HotChocolate.AspNetCore;
 using HotChocolate.Data;
 using HotChocolate.Types.Pagination;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,6 +54,13 @@ builder.Services
     .AllowIntrospection(builder.Environment.EnvironmentName == "Development");
 
 builder.Services.AddAutoMapper<CmsMapperConfiguration>();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CocktailGetManyQueryHandler>());
+builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Cocktail>, Cocktail>, GetByIdQueryHandler<long, Cocktail>>();
+builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, CocktailCategory>, CocktailCategory>, GetByIdQueryHandler<long, CocktailCategory>>();
+builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Flavor>, Flavor>, GetByIdQueryHandler<long, Flavor>>();
+builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Ingredient>, Ingredient>, GetByIdQueryHandler<long, Ingredient>>();
+builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, MeasureUnit>, MeasureUnit>, GetByIdQueryHandler<long, MeasureUnit>>();
 
 var apiInfo = new ApiInfo { Name = "Cocktails CMS Api", Author = "Alex Utiansky" };
 builder.Services.AddSingleton(typeof(ApiInfo), x => apiInfo);

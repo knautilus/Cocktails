@@ -1,22 +1,23 @@
-﻿using Cocktails.Data.Contexts;
-using Cocktails.Data.EFCore.Extensions;
-using Cocktails.Data.Entities;
+﻿using Cocktails.Data.Entities;
+using Cocktails.Models.Cms.Requests;
+using Cocktails.Models.Cms.Requests.Categories;
+using HotChocolate;
 using HotChocolate.Types;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
 
 namespace Cocktails.GraphQL.Cms.Queries
 {
     [ExtendObjectType("rootQuery")]
     public class CategoryQuery
     {
-        public IQueryable<CocktailCategory> GetCategories(string name, CocktailsContext dbContext)
+        public async Task<IQueryable<CocktailCategory>> GetCategories(CategoryGetManyQuery request, [Service] IMediator mediator, CancellationToken cancellationToken)
         {
-            return dbContext.Set<CocktailCategory>().ConditionalWhere(!string.IsNullOrWhiteSpace(name), x => EF.Functions.Like(x.Name, name.ToLikePattern()));
+            return await mediator.Send(request, cancellationToken);
         }
 
-        public CocktailCategory GetCategory(long id, CocktailsContext dbContext)
+        public async Task<CocktailCategory> GetCategory(GetByIdQuery<long, CocktailCategory> request, [Service] IMediator mediator, CancellationToken cancellationToken)
         {
-            return dbContext.Set<CocktailCategory>().Where(x => x.Id == id).FirstOrDefault();
+            return await mediator.Send(request, cancellationToken);
         }
     }
 }

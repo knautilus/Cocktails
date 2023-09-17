@@ -1,22 +1,23 @@
-﻿using Cocktails.Data.Contexts;
-using Cocktails.Data.EFCore.Extensions;
-using Cocktails.Data.Entities;
+﻿using Cocktails.Data.Entities;
+using Cocktails.Models.Cms.Requests;
+using Cocktails.Models.Cms.Requests.MeasureUnits;
+using HotChocolate;
 using HotChocolate.Types;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
 
 namespace Cocktails.GraphQL.Cms.Queries
 {
     [ExtendObjectType("rootQuery")]
     public class MeasureUnitQuery
     {
-        public IQueryable<MeasureUnit> GetMeasureUnits(string name, CocktailsContext dbContext)
+        public async Task<IQueryable<MeasureUnit>> GetMeasureUnits(MeasureUnitGetManyQuery request, [Service] IMediator mediator, CancellationToken cancellationToken)
         {
-            return dbContext.Set<MeasureUnit>().ConditionalWhere(!string.IsNullOrWhiteSpace(name), x => EF.Functions.Like(x.Name, name.ToLikePattern()));
+            return await mediator.Send(request, cancellationToken);
         }
 
-        public MeasureUnit GetMeasureUnit(long id, CocktailsContext dbContext)
+        public async Task<MeasureUnit> GetMeasureUnit(GetByIdQuery<long, MeasureUnit> request, [Service] IMediator mediator, CancellationToken cancellationToken)
         {
-            return dbContext.Set<MeasureUnit>().Where(x => x.Id == id).FirstOrDefault();
+            return await mediator.Send(request, cancellationToken);
         }
     }
 }

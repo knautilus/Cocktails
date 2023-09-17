@@ -1,27 +1,23 @@
-﻿using Cocktails.Data.Contexts;
-using Cocktails.Data.EFCore.Extensions;
-using Cocktails.Data.Entities;
-using Cocktails.Models.Cms.Requests.Cocktail;
+﻿using Cocktails.Data.Entities;
+using Cocktails.Models.Cms.Requests;
+using Cocktails.Models.Cms.Requests.Cocktails;
+using HotChocolate;
 using HotChocolate.Types;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
 
 namespace Cocktails.GraphQL.Cms.Queries
 {
     [ExtendObjectType("rootQuery")]
     public class CocktailQuery
     {
-        public IQueryable<Cocktail> GetCocktails(CocktailGetManyQuery request, CocktailsContext dbContext)
+        public async Task<IQueryable<Cocktail>> GetCocktails(CocktailGetManyQuery request, [Service] IMediator mediator, CancellationToken cancellationToken)
         {
-            return dbContext.Set<Cocktail>()
-                .ConditionalWhere(!string.IsNullOrWhiteSpace(request.Name), x => EF.Functions.Like(x.Name, request.Name.ToLikePattern()))
-                .ConditionalWhere(request.IngredientId.HasValue, x => x.Mixes.Any(m => m.IngredientId == request.IngredientId.Value))
-                .ConditionalWhere(request.CocktailCategoryId.HasValue, x => x.CocktailCategoryId == request.CocktailCategoryId.Value)
-                .ConditionalWhere(request.FlavorId.HasValue, x => x.CocktailCategoryId == request.FlavorId.Value);
+            return await mediator.Send(request, cancellationToken);
         }
 
-        public Cocktail GetCocktail(long id, CocktailsContext dbContext)
+        public async Task<Cocktail> GetCocktail(GetByIdQuery<long, Cocktail> request, [Service] IMediator mediator, CancellationToken cancellationToken)
         {
-            return dbContext.Set<Cocktail>().Where(x => x.Id == id).FirstOrDefault();
+            return await mediator.Send(request, cancellationToken);
         }
     }
 }

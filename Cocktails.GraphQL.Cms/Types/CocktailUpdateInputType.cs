@@ -1,4 +1,4 @@
-﻿using Cocktails.Models.Cms.Requests.Cocktail;
+﻿using Cocktails.Models.Cms.Requests.Cocktails;
 using HotChocolate.Types;
 
 namespace Cocktails.GraphQL.Cms.Types

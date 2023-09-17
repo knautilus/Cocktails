@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
+    <ProjectReference Include="..\Cocktails.Cqrs.Sql\Cocktails.Cqrs.Sql.csproj" />
     <ProjectReference Include="..\Cocktails.GraphQL.Cms\Cocktails.GraphQL.Cms.csproj" />
     <ProjectReference Include="..\Cocktails.Mapper.Cms\Cocktails.Mapper.Cms.csproj" />
   </ItemGroup>

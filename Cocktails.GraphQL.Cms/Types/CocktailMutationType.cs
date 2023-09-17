@@ -7,10 +7,10 @@ namespace Cocktails.GraphQL.Cms.Types
     {
         protected override void Configure(IObjectTypeDescriptor<CocktailMutation> descriptor)
         {
-            descriptor.Field(t => t.CreateCocktail(default, default, default, default))
+            descriptor.Field(t => t.CreateCocktail(default, default, default))
                 .Argument("request", x => x.Type<NonNullType<CocktailCreateInputType>>());
 
-            descriptor.Field(t => t.UpdateCocktail(default, default, default, default))
+            descriptor.Field(t => t.UpdateCocktail(default, default, default))
                 .Argument("request", x => x.Type<NonNullType<CocktailUpdateInputType>>());
         }
     }

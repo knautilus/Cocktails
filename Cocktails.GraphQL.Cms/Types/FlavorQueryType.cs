@@ -1,4 +1,5 @@
 ﻿using Cocktails.GraphQL.Cms.Queries;
+using Flavors.GraphQL.Cms.Queries;
 using HotChocolate.Types;
 
 namespace Cocktails.GraphQL.Cms.Types
@@ -7,12 +8,12 @@ namespace Cocktails.GraphQL.Cms.Types
     {
         protected override void Configure(IObjectTypeDescriptor<FlavorQuery> descriptor)
         {
-            descriptor.Field(t => t.GetFlavors(default, default))
+            descriptor.Field(t => t.GetFlavors(default, default, default))
                 .Argument("name", x => x.Type<StringType>())
                 .UsePaging()
                 .UseSorting();
 
-            descriptor.Field(t => t.GetFlavor(default, default))
+            descriptor.Field(t => t.GetFlavor(default, default, default))
                 .Argument("id", x => x.Type<NonNullType<IdType>>());
         }
     }
