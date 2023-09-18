@@ -4,7 +4,7 @@ using Cocktails.Models.Cms.Requests.Cocktails;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cocktails.Cqrs.Sql.Cms.CommandHandlers
+namespace Cocktails.Cqrs.Sql.Cms.CommandHandlers.Cocktails
 {
     public class CocktailCreateCommandHandler : IRequestHandler<CocktailCreateCommand, long>
     {

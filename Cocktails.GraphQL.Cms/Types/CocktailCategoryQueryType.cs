@@ -3,9 +3,9 @@ using HotChocolate.Types;
 
 namespace Cocktails.GraphQL.Cms.Types
 {
-    public class CategoryQueryType : ObjectTypeExtension<CategoryQuery>
+    public class CocktailCategoryQueryType : ObjectTypeExtension<CocktailCategoryQuery>
     {
-        protected override void Configure(IObjectTypeDescriptor<CategoryQuery> descriptor)
+        protected override void Configure(IObjectTypeDescriptor<CocktailCategoryQuery> descriptor)
         {
             descriptor.Field(t => t.GetCategories(default, default, default))
                 .Argument("name", x => x.Type<StringType>())

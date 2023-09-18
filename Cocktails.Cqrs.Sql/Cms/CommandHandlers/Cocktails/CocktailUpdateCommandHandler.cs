@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace Cocktails.Cqrs.Sql.Cms.CommandHandlers
+namespace Cocktails.Cqrs.Sql.Cms.CommandHandlers.Cocktails
 {
     public class CocktailUpdateCommandHandler : IRequestHandler<CocktailUpdateCommand, long>
     {

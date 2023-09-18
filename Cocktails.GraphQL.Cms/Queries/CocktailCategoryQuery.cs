@@ -1,6 +1,6 @@
 ﻿using Cocktails.Data.Entities;
 using Cocktails.Models.Cms.Requests;
-using Cocktails.Models.Cms.Requests.Categories;
+using Cocktails.Models.Cms.Requests.CocktailCategories;
 using HotChocolate;
 using HotChocolate.Types;
 using MediatR;
@@ -8,9 +8,9 @@ using MediatR;
 namespace Cocktails.GraphQL.Cms.Queries
 {
     [ExtendObjectType("rootQuery")]
-    public class CategoryQuery
+    public class CocktailCategoryQuery
     {
-        public async Task<IQueryable<CocktailCategory>> GetCategories(CategoryGetManyQuery request, [Service] IMediator mediator, CancellationToken cancellationToken)
+        public async Task<IQueryable<CocktailCategory>> GetCategories(CocktailCategoryGetManyQuery request, [Service] IMediator mediator, CancellationToken cancellationToken)
         {
             return await mediator.Send(request, cancellationToken);
         }

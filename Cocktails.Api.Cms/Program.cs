@@ -1,7 +1,7 @@
 ﻿using Cocktails.Catalog.Mapper;
 using Cocktails.Common.Models;
 using Cocktails.Cqrs.Sql;
-using Cocktails.Cqrs.Sql.Cms.QueryHandlers;
+using Cocktails.Cqrs.Sql.Cms.QueryHandlers.Cocktails;
 using Cocktails.Data.Contexts;
 using Cocktails.Data.Entities;
 using Cocktails.GraphQL.Cms.Types;
@@ -44,11 +44,11 @@ builder.Services
     .SetPagingOptions(new PagingOptions { IncludeTotalCount = true })
     .RegisterDbContext<CocktailsContext>(DbContextKind.Synchronized)
     .AddQueryType(d => d.Name("rootQuery"))
-        .AddTypeExtension<CategoryQueryType>()
+        .AddTypeExtension<CocktailQueryType>()
+        .AddTypeExtension<CocktailCategoryQueryType>()
         .AddTypeExtension<FlavorQueryType>()
         .AddTypeExtension<IngredientQueryType>()
         .AddTypeExtension<MeasureUnitQueryType>()
-        .AddTypeExtension<CocktailQueryType>()
     .AddMutationType(d => d.Name("rootMutation"))
         .AddTypeExtension<CocktailMutationType>()
     .AllowIntrospection(builder.Environment.EnvironmentName == "Development");

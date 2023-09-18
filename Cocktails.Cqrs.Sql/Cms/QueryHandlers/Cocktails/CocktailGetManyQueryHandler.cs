@@ -4,7 +4,7 @@ using Cocktails.Models.Cms.Requests.Cocktails;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cocktails.Cqrs.Sql.Cms.QueryHandlers
+namespace Cocktails.Cqrs.Sql.Cms.QueryHandlers.Cocktails
 {
     public class CocktailGetManyQueryHandler : IRequestHandler<CocktailGetManyQuery, IQueryable<Cocktail>>
     {
