@@ -29,9 +29,6 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions { ContentRo
 var msSqlConnectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
 
 builder.Services.AddControllers();
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<CocktailsContext>(
     options => options.UseSqlServer(msSqlConnectionString));
@@ -66,13 +63,6 @@ var apiInfo = new ApiInfo { Name = "Cocktails CMS Api", Author = "Alex Utiansky"
 builder.Services.AddSingleton(typeof(ApiInfo), x => apiInfo);
 
 var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
 
 app.UseHttpsRedirection();
 
