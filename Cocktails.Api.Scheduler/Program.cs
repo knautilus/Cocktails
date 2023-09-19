@@ -1,7 +1,8 @@
 using Cocktails.Api.Scheduler.Configuration;
-using Cocktails.Jobs.Scheduler.Recurring;
+using Cocktails.Jobs.Scheduler.Extensions;
 using Hangfire;
 using Hangfire.SqlServer;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -31,6 +32,8 @@ builder.Services.AddHangfireServer(options =>
     options.CancellationCheckInterval = TimeSpan.FromSeconds(5);
 });
 
+builder.Services.AddSchedulerJobs(builder.Configuration.GetSection("Jobs"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,8 +43,5 @@ app.UseHttpsRedirection();
 app.UseHangfireDashboard();
 
 var cancellationTokenSource = new CancellationTokenSource();
-
-RecurringJob.AddOrUpdate<TestRecurringJob>(typeof(TestRecurringJob).Name, job => job.RunAsync(cancellationTokenSource.Token), "*/1 * * * *");
-RecurringJob.AddOrUpdate<TestRecurringJob2>(typeof(TestRecurringJob2).Name, job => job.RunAsync(cancellationTokenSource.Token), "*/2 * * * *");
 
 app.Run();

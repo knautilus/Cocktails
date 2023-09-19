@@ -4,7 +4,7 @@
     {
         public bool Enabled => true;
 
-        public string CronUtcExpression => "*/5 * * * *";
+        public string CronUtcExpression => "*/2 * * * *";
 
         private readonly string _guid;
 
