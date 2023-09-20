@@ -1,5 +1,5 @@
 ﻿using Cocktails.Data.EFCore.Extensions;
-using Cocktails.Data.Entities;
+using Cocktails.Entities.Sql;
 using Cocktails.Models.Cms.Requests.Cocktails;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

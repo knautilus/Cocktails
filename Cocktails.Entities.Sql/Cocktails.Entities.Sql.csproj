@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Entities.Common\Cocktails.Entities.Common.csproj" />
+  </ItemGroup>
+
 </Project>

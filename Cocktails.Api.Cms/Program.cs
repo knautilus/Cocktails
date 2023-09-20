@@ -3,7 +3,7 @@ using Cocktails.Common.Models;
 using Cocktails.Cqrs.Sql;
 using Cocktails.Cqrs.Sql.Cms.QueryHandlers.Cocktails;
 using Cocktails.Data.Contexts;
-using Cocktails.Data.Entities;
+using Cocktails.Entities.Sql;
 using Cocktails.GraphQL.Cms.Types;
 using Cocktails.Mapper.Common;
 using Cocktails.Models.Cms.Requests;

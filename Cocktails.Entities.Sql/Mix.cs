@@ -1,4 +1,4 @@
-﻿namespace Cocktails.Data.Entities
+﻿namespace Cocktails.Entities.Sql
 {
     public class Mix
     {

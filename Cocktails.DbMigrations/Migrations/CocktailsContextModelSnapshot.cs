@@ -22,7 +22,7 @@ namespace Cocktails.DbMigrations.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Cocktails.Data.Entities.Cocktail", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.Cocktail", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,6 +36,9 @@ namespace Cocktails.DbMigrations.Migrations
                     b.Property<DateTimeOffset>("CreateDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Description")
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
@@ -45,6 +48,9 @@ namespace Cocktails.DbMigrations.Migrations
 
                     b.Property<DateTimeOffset>("ModifyDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("ModifyUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -60,7 +66,7 @@ namespace Cocktails.DbMigrations.Migrations
                     b.ToTable("Cocktail");
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.CocktailCategory", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.CocktailCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,8 +77,14 @@ namespace Cocktails.DbMigrations.Migrations
                     b.Property<DateTimeOffset>("CreateDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTimeOffset>("ModifyDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("ModifyUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -87,48 +99,60 @@ namespace Cocktails.DbMigrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Classic"
                         },
                         new
                         {
                             Id = 2L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Modern classic"
                         },
                         new
                         {
                             Id = 3L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Coffee & Dessert"
                         },
                         new
                         {
                             Id = 4L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Shots"
                         },
                         new
                         {
                             Id = 5L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Tropical"
                         },
                         new
                         {
                             Id = 6L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Nonalcoholic"
                         });
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.Flavor", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.Flavor", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,8 +163,14 @@ namespace Cocktails.DbMigrations.Migrations
                     b.Property<DateTimeOffset>("CreateDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTimeOffset>("ModifyDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("ModifyUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -155,34 +185,42 @@ namespace Cocktails.DbMigrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Bitter"
                         },
                         new
                         {
                             Id = 2L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Sweet"
                         },
                         new
                         {
                             Id = 3L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Sour"
                         },
                         new
                         {
                             Id = 4L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Fruity"
                         });
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.Ingredient", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.Ingredient", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,8 +231,14 @@ namespace Cocktails.DbMigrations.Migrations
                     b.Property<DateTimeOffset>("CreateDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTimeOffset>("ModifyDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("ModifyUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -209,55 +253,69 @@ namespace Cocktails.DbMigrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Vodka"
                         },
                         new
                         {
                             Id = 2L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Gin"
                         },
                         new
                         {
                             Id = 3L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Rum"
                         },
                         new
                         {
                             Id = 4L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Tequila"
                         },
                         new
                         {
                             Id = 5L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Tomato juice"
                         },
                         new
                         {
                             Id = 6L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Lemon juice"
                         },
                         new
                         {
                             Id = 7L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Coffee liqueur"
                         });
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.MeasureUnit", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.MeasureUnit", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -268,8 +326,14 @@ namespace Cocktails.DbMigrations.Migrations
                     b.Property<DateTimeOffset>("CreateDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTimeOffset>("ModifyDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("ModifyUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -282,41 +346,51 @@ namespace Cocktails.DbMigrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Oz"
                         },
                         new
                         {
                             Id = 2L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Piece"
                         },
                         new
                         {
                             Id = 3L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Dash"
                         },
                         new
                         {
                             Id = 4L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Cup"
                         },
                         new
                         {
                             Id = 5L,
-                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
-                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 17, 11, 6, 5, 250, DateTimeKind.Unspecified).AddTicks(7731), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreateUserId = 0L,
+                            ModifyDate = new DateTimeOffset(new DateTime(2023, 9, 20, 14, 30, 16, 167, DateTimeKind.Unspecified).AddTicks(7318), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModifyUserId = 0L,
                             Name = "Shot"
                         });
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.Mix", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.Mix", b =>
                 {
                     b.Property<long>("CocktailId")
                         .HasColumnType("bigint");
@@ -339,15 +413,15 @@ namespace Cocktails.DbMigrations.Migrations
                     b.ToTable("Mix");
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.Cocktail", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.Cocktail", b =>
                 {
-                    b.HasOne("Cocktails.Data.Entities.CocktailCategory", "CocktailCategory")
+                    b.HasOne("Cocktails.Entities.Sql.CocktailCategory", "CocktailCategory")
                         .WithMany("Cocktails")
                         .HasForeignKey("CocktailCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cocktails.Data.Entities.Flavor", "Flavor")
+                    b.HasOne("Cocktails.Entities.Sql.Flavor", "Flavor")
                         .WithMany("Cocktails")
                         .HasForeignKey("FlavorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -358,21 +432,21 @@ namespace Cocktails.DbMigrations.Migrations
                     b.Navigation("Flavor");
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.Mix", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.Mix", b =>
                 {
-                    b.HasOne("Cocktails.Data.Entities.Cocktail", "Cocktail")
+                    b.HasOne("Cocktails.Entities.Sql.Cocktail", "Cocktail")
                         .WithMany("Mixes")
                         .HasForeignKey("CocktailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cocktails.Data.Entities.Ingredient", "Ingredient")
+                    b.HasOne("Cocktails.Entities.Sql.Ingredient", "Ingredient")
                         .WithMany("Mixes")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cocktails.Data.Entities.MeasureUnit", "MeasureUnit")
+                    b.HasOne("Cocktails.Entities.Sql.MeasureUnit", "MeasureUnit")
                         .WithMany("Mixes")
                         .HasForeignKey("MeasureUnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -385,27 +459,27 @@ namespace Cocktails.DbMigrations.Migrations
                     b.Navigation("MeasureUnit");
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.Cocktail", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.Cocktail", b =>
                 {
                     b.Navigation("Mixes");
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.CocktailCategory", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.CocktailCategory", b =>
                 {
                     b.Navigation("Cocktails");
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.Flavor", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.Flavor", b =>
                 {
                     b.Navigation("Cocktails");
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.Ingredient", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.Ingredient", b =>
                 {
                     b.Navigation("Mixes");
                 });
 
-            modelBuilder.Entity("Cocktails.Data.Entities.MeasureUnit", b =>
+            modelBuilder.Entity("Cocktails.Entities.Sql.MeasureUnit", b =>
                 {
                     b.Navigation("Mixes");
                 });

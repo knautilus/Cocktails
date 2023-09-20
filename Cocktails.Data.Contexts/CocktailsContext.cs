@@ -1,4 +1,4 @@
-﻿using Cocktails.Data.Entities;
+﻿using Cocktails.Entities.Sql;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cocktails.Data.Contexts

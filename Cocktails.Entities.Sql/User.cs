@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Cocktails.Data.Entities
+namespace Cocktails.Entities.Sql
 {
     public class User : IdentityUser<long>
     {

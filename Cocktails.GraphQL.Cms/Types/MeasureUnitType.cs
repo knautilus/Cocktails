@@ -1,4 +1,4 @@
-﻿using Cocktails.Data.Entities;
+﻿using Cocktails.Entities.Sql;
 using HotChocolate.Types;
 
 namespace Cocktails.GraphQL.Cms.Types

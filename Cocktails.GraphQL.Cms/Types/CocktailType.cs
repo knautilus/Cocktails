@@ -1,4 +1,4 @@
-﻿using Cocktails.Data.Entities;
+﻿using Cocktails.Entities.Sql;
 using Cocktails.GraphQL.Cms.DataLoaders;
 using Cocktails.GraphQL.Core.DataLoaders;
 using HotChocolate.Types;

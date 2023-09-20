@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Api.Cms", "Cocktails.Api.Cms\Cocktails.Api.Cms.csproj", "{A657ACA1-3AD4-456E-9494-23A4902B0CE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.Entities", "Cocktails.Data.Domain\Cocktails.Data.Entities.csproj", "{0A77F33F-41A2-49C7-92CF-9033189D47AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Entities.Sql", "Cocktails.Entities.Sql\Cocktails.Entities.Sql.csproj", "{0A77F33F-41A2-49C7-92CF-9033189D47AD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Common", "Cocktails.Common\Cocktails.Common.csproj", "{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C}"
 EndProject
@@ -60,13 +60,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Mapper.Cms", "Coc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cqrs", "Cqrs", "{025BF830-DB0F-4AD7-A167-F310E6776048}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Cqrs.Sql", "Cocktails.Cqrs.Sql\Cocktails.Cqrs.Sql.csproj", "{C35B65F2-939F-4071-8566-A27081B27E0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Cqrs.Sql", "Cocktails.Cqrs.Sql\Cocktails.Cqrs.Sql.csproj", "{C35B65F2-939F-4071-8566-A27081B27E0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Api.Scheduler", "Cocktails.Api.Scheduler\Cocktails.Api.Scheduler.csproj", "{BE6E4650-F1F4-4514-8CF3-CA8F2EE6F64E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Api.Scheduler", "Cocktails.Api.Scheduler\Cocktails.Api.Scheduler.csproj", "{BE6E4650-F1F4-4514-8CF3-CA8F2EE6F64E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jobs", "Jobs", "{B8A95B9A-3F87-48F1-8958-14E475AFFA6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Jobs.Scheduler", "Cocktails.Jobs.Scheduler\Cocktails.Jobs.Scheduler.csproj", "{0A3A01DD-1AC7-4782-8E76-90805FED22BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Jobs.Scheduler", "Cocktails.Jobs.Scheduler\Cocktails.Jobs.Scheduler.csproj", "{0A3A01DD-1AC7-4782-8E76-90805FED22BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.Elasticsearch", "Cocktails.Data.Elasticsearch\Cocktails.Data.Elasticsearch.csproj", "{63C33989-1E84-4328-84DA-93759CDE4B4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Entities.Common", "Cocktails.Entities.Common\Cocktails.Entities.Common.csproj", "{86BDD50F-1074-47BF-8705-B836FA2B131C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Entities.Elasticsearch", "Cocktails.Entities.Elasticsearch\Cocktails.Entities.Elasticsearch.csproj", "{E9E90E8E-0A83-46CD-A64C-9C149ED4A82F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Data.Core", "Cocktails.Data.Core\Cocktails.Data.Core.csproj", "{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entities", "Entities", "{BDA92D79-E9B7-46F0-862C-3CEEC943B703}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -154,13 +164,29 @@ Global
 		{0A3A01DD-1AC7-4782-8E76-90805FED22BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A3A01DD-1AC7-4782-8E76-90805FED22BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A3A01DD-1AC7-4782-8E76-90805FED22BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C33989-1E84-4328-84DA-93759CDE4B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C33989-1E84-4328-84DA-93759CDE4B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C33989-1E84-4328-84DA-93759CDE4B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C33989-1E84-4328-84DA-93759CDE4B4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86BDD50F-1074-47BF-8705-B836FA2B131C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86BDD50F-1074-47BF-8705-B836FA2B131C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86BDD50F-1074-47BF-8705-B836FA2B131C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86BDD50F-1074-47BF-8705-B836FA2B131C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9E90E8E-0A83-46CD-A64C-9C149ED4A82F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9E90E8E-0A83-46CD-A64C-9C149ED4A82F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9E90E8E-0A83-46CD-A64C-9C149ED4A82F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9E90E8E-0A83-46CD-A64C-9C149ED4A82F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A657ACA1-3AD4-456E-9494-23A4902B0CE5} = {42B27BBA-AFAD-47BE-97C2-D31F05317965}
-		{0A77F33F-41A2-49C7-92CF-9033189D47AD} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
+		{0A77F33F-41A2-49C7-92CF-9033189D47AD} = {BDA92D79-E9B7-46F0-862C-3CEEC943B703}
 		{077E7415-F0A5-43EE-B8C5-5CA1BDE61C3C} = {4AB2097B-E21C-4E93-B813-EE80FD637E15}
 		{3C86FA54-A325-4359-9A75-DD99770F8460} = {6FE71C83-2F6E-4186-A1E6-089B78916EEB}
 		{E074CA62-D57D-4712-8EA1-876C0C6B3D70} = {4AB2097B-E21C-4E93-B813-EE80FD637E15}
@@ -179,6 +205,10 @@ Global
 		{C35B65F2-939F-4071-8566-A27081B27E0F} = {025BF830-DB0F-4AD7-A167-F310E6776048}
 		{BE6E4650-F1F4-4514-8CF3-CA8F2EE6F64E} = {42B27BBA-AFAD-47BE-97C2-D31F05317965}
 		{0A3A01DD-1AC7-4782-8E76-90805FED22BA} = {B8A95B9A-3F87-48F1-8958-14E475AFFA6F}
+		{63C33989-1E84-4328-84DA-93759CDE4B4A} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
+		{86BDD50F-1074-47BF-8705-B836FA2B131C} = {BDA92D79-E9B7-46F0-862C-3CEEC943B703}
+		{E9E90E8E-0A83-46CD-A64C-9C149ED4A82F} = {BDA92D79-E9B7-46F0-862C-3CEEC943B703}
+		{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB01C30C-6A7C-4F5C-BF8A-FCCCAC297C59}

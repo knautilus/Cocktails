@@ -1,4 +1,4 @@
-﻿using Cocktails.Data.Entities;
+﻿using Cocktails.Entities.Common;
 using GreenDonut;
 using Microsoft.EntityFrameworkCore;
 

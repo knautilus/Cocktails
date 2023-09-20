@@ -1,4 +1,4 @@
-﻿using Cocktails.Data.Entities;
+﻿using Cocktails.Entities.Common;
 using System.Linq.Expressions;
 
 namespace Cocktails.Data.EFCore.Extensions

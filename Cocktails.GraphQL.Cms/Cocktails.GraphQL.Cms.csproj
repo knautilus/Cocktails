@@ -13,7 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Data.Contexts\Cocktails.Data.Contexts.csproj" />
-    <ProjectReference Include="..\Cocktails.Data.Domain\Cocktails.Data.Entities.csproj" />
+    <ProjectReference Include="..\Cocktails.Entities.Sql\Cocktails.Entities.Sql.csproj" />
     <ProjectReference Include="..\Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj" />
     <ProjectReference Include="..\Cocktails.GraphQL.Core\Cocktails.GraphQL.Core.csproj" />
     <ProjectReference Include="..\Cocktails.Mapper.Common\Cocktails.Mapper.Common.csproj" />

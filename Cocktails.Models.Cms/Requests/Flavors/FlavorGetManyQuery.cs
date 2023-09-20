@@ -1,4 +1,4 @@
-﻿using Cocktails.Data.Entities;
+﻿using Cocktails.Entities.Sql;
 using MediatR;
 
 namespace Cocktails.Models.Cms.Requests.Flavors

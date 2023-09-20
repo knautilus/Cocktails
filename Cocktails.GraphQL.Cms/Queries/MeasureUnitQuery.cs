@@ -1,4 +1,4 @@
-﻿using Cocktails.Data.Entities;
+﻿using Cocktails.Entities.Sql;
 using Cocktails.Models.Cms.Requests;
 using Cocktails.Models.Cms.Requests.MeasureUnits;
 using HotChocolate;
@@ -10,9 +10,9 @@ namespace Cocktails.GraphQL.Cms.Queries
     [ExtendObjectType("rootQuery")]
     public class MeasureUnitQuery
     {
-        public async Task<IQueryable<MeasureUnit>> GetMeasureUnits(MeasureUnitGetManyQuery request, [Service] IMediator mediator, CancellationToken cancellationToken)
+        public async Task<IQueryable<MeasureUnit>> GetMeasureUnits(MeasureUnitGetManyQuery? request, [Service] IMediator mediator, CancellationToken cancellationToken)
         {
-            return await mediator.Send(request, cancellationToken);
+            return await mediator.Send(request ?? new MeasureUnitGetManyQuery(), cancellationToken);
         }
 
         public async Task<MeasureUnit> GetMeasureUnit(GetByIdQuery<long, MeasureUnit> request, [Service] IMediator mediator, CancellationToken cancellationToken)

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Cocktails.Entities.Common;
 using System.Collections.Generic;
 
-namespace Cocktails.Data.Entities
+namespace Cocktails.Entities.Sql
 {
-    public class Ingredient : BaseEntity<long>
+    public class MeasureUnit : BaseContentEntity<long>
     {
         public string Name { get; set; }
 

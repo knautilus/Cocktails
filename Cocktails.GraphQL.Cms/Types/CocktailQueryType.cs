@@ -13,7 +13,6 @@ namespace Cocktails.GraphQL.Cms.Types
                 .UseSorting();
 
             descriptor.Field(t => t.GetCocktail(default, default, default))
-                //.Argument("id", x => x.Type<NonNullType<IdType>>())
                 .Type<CocktailType>();
         }
     }

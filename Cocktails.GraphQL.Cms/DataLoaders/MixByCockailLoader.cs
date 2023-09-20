@@ -1,5 +1,5 @@
 ﻿using Cocktails.Data.Contexts;
-using Cocktails.Data.Entities;
+using Cocktails.Entities.Sql;
 using GreenDonut;
 using HotChocolate;
 using Microsoft.EntityFrameworkCore;
