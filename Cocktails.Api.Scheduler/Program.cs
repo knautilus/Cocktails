@@ -13,7 +13,6 @@ using Hangfire;
 using Hangfire.SqlServer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

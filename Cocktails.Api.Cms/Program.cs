@@ -4,22 +4,20 @@ using Cocktails.Cqrs.Sql.Cms.QueryHandlers.Cocktails;
 using Cocktails.Data.Contexts;
 using Cocktails.Entities.Sql;
 using Cocktails.GraphQL.Cms.Types;
+using Cocktails.Mapper.Cms;
 using Cocktails.Mapper.Common;
-using Cocktails.Models.Cms.Requests;
+using Cocktails.Models.Common;
 using HotChocolate.AspNetCore;
 using HotChocolate.Data;
 using HotChocolate.Types.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Reflection;
-using Cocktails.Mapper.Cms;
-using Cocktails.Models.Common;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 

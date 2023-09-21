@@ -1,24 +1,21 @@
 ﻿using Cocktails.Common.Models;
-using Cocktails.Cqrs.Sql;
-using Cocktails.Cqrs.Sql.Cms.QueryHandlers.Cocktails;
-using Cocktails.Data.Contexts;
-using Cocktails.Entities.Sql;
-using Cocktails.GraphQL.Cms.Types;
-using Cocktails.Mapper.Cms;
-using Cocktails.Mapper.Common;
+using Cocktails.Cqrs.Nosql;
+using Cocktails.Cqrs.Nosql.Constants;
+using Cocktails.Data.Elasticsearch;
+using Cocktails.Entities.Elasticsearch;
+using Cocktails.Entities.Elasticsearch.Helpers;
+using Cocktails.GraphQL.Site.Types;
 using Cocktails.Models.Common;
+using Cocktails.Models.Site.Requests.Cocktails;
 using HotChocolate.AspNetCore;
-using HotChocolate.Data;
-using HotChocolate.Types.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Reflection;
+using Cocktails.Cqrs.Nosql.QueryHandlers.Cocktails;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -26,38 +23,29 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions { ContentRo
 
 // Add services to the container.
 
-var msSqlConnectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
+//var msSqlConnectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<CocktailsContext>(
-    options => options.UseSqlServer(msSqlConnectionString));
+//builder.Services.AddDbContext<CocktailsContext>(
+//    options => options.UseSqlServer(msSqlConnectionString));
 
-builder.Services.AddTransient(typeof(DbContext), typeof(CocktailsContext));
+//builder.Services.AddTransient(typeof(DbContext), typeof(CocktailsContext));
 
 builder.Services
     .AddGraphQLServer()
-    .AddSorting()
-    .SetPagingOptions(new PagingOptions { IncludeTotalCount = true })
-    .RegisterDbContext<CocktailsContext>(DbContextKind.Synchronized)
+    //.AddSorting()
+    //.SetPagingOptions(new PagingOptions { IncludeTotalCount = true })
+    //.RegisterDbContext<CocktailsContext>(DbContextKind.Synchronized)
     .AddQueryType(d => d.Name("rootQuery"))
         .AddTypeExtension<CocktailQueryType>()
-        .AddTypeExtension<CocktailCategoryQueryType>()
-        .AddTypeExtension<FlavorQueryType>()
-        .AddTypeExtension<IngredientQueryType>()
-        .AddTypeExtension<MeasureUnitQueryType>()
-    .AddMutationType(d => d.Name("rootMutation"))
-        .AddTypeExtension<CocktailMutationType>()
     .AllowIntrospection(builder.Environment.EnvironmentName == "Development");
 
-builder.Services.AddAutoMapper<CmsMapperConfiguration>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetCallingAssembly()));
+builder.Services.AddTransient<IRequestHandler<GetManyQuery<CocktailDocument, CocktailSort>, CocktailDocument[]>, CocktailGetManyQueryHandler>();
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CocktailGetQueryableQueryHandler>());
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Cocktail>, Cocktail>, GetByIdQueryHandler<long, Cocktail>>();
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, CocktailCategory>, CocktailCategory>, GetByIdQueryHandler<long, CocktailCategory>>();
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Flavor>, Flavor>, GetByIdQueryHandler<long, Flavor>>();
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Ingredient>, Ingredient>, GetByIdQueryHandler<long, Ingredient>>();
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, MeasureUnit>, MeasureUnit>, GetByIdQueryHandler<long, MeasureUnit>>();
+var elasticSettings = builder.Configuration.GetSection("ElasticSettings").Get<ElasticSettings>();
+builder.Services.AddElasticClient<ElasticIndexConfiguration>(elasticSettings);
 
 var apiInfo = new ApiInfo { Name = "Cocktails Site Api", Author = "Alex Utiansky" };
 builder.Services.AddSingleton(typeof(ApiInfo), x => apiInfo);

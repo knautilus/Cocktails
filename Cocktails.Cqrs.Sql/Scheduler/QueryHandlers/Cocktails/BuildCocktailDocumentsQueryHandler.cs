@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cocktails.Cqrs.Sql.DocumentBuilders;
 using Cocktails.Entities.Elasticsearch;
+using Cocktails.Entities.Sql;
 using Cocktails.Models.Common;
 using Cocktails.Models.Scheduler.Requests.Cocktails;
 using MediatR;
@@ -20,7 +21,7 @@ namespace Cocktails.Cqrs.Sql.Scheduler.QueryHandlers.Cocktails
 
         public async Task<CocktailDocument[]> Handle(BuildDocumentsQuery<long, CocktailDocument> query, CancellationToken cancellationToken)
         {
-            var cocktails = await _queryProcessor.Send(new CocktailGetManyQuery
+            var cocktails = await _queryProcessor.Send<Cocktail[]>(new CocktailGetManyQuery
             {
                 CocktailIds = query.Ids,
                 First = query.First,

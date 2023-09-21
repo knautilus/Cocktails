@@ -54,7 +54,7 @@ namespace Cocktails.Jobs.Scheduler.Recurring
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                var documents = await queryProcessor.Send(
+                var documents = await queryProcessor.Send<TDocument[]>(
                     new BuildDocumentsQuery<TKey, TDocument> { First = DocumentsPortionSize, Offset = index, Ids = ItemIds },
                     cancellationToken);
 

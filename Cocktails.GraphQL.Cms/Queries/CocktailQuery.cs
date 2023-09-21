@@ -1,5 +1,4 @@
 ﻿using Cocktails.Entities.Sql;
-using Cocktails.Models.Cms.Requests;
 using Cocktails.Models.Cms.Requests.Cocktails;
 using Cocktails.Models.Common;
 using HotChocolate;

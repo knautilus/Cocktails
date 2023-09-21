@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Cocktails.Entities.Elasticsearch;
 using Cocktails.Entities.Sql;
-using Cocktails.Models.Cms.Requests;
 using Cocktails.Models.Cms.Requests.Mixes;
 using Cocktails.Models.Common;
 using MediatR;

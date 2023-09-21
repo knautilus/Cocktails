@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Entities.Elasticsearch\Cocktails.Entities.Elasticsearch.csproj" />
+    <ProjectReference Include="..\Cocktails.GraphQL.Core\Cocktails.GraphQL.Core.csproj" />
+    <ProjectReference Include="..\Cocktails.Models.Site\Cocktails.Models.Site.csproj" />
+  </ItemGroup>
+
+</Project>

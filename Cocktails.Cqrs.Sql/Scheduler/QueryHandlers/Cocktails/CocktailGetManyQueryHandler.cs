@@ -1,7 +1,6 @@
 ﻿using Cocktails.Data.EFCore.Extensions;
 using Cocktails.Entities.Sql;
 using Cocktails.Models.Scheduler.Requests.Cocktails;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cocktails.Cqrs.Sql.Scheduler.QueryHandlers.Cocktails
