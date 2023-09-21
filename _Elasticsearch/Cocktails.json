@@ -39,12 +39,12 @@
       },
       "Name": {
         "type": "text",
-        "normalizer": "lowercase",
         "analyzer": "index_analyzer",
         "search_analyzer": "search_analyzer",
         "fields": {
           "keyword": {
-            "type": "keyword"
+            "type": "keyword",
+            "normalizer": "lowercase"
           }
         }
       },
@@ -60,12 +60,12 @@
               },
               "Name": {
                 "type": "text",
-                "normalizer": "lowercase",
                 "analyzer": "index_analyzer",
                 "search_analyzer": "search_analyzer",
                 "fields": {
                   "keyword": {
-                    "type": "keyword"
+                    "type": "keyword",
+                    "normalizer": "lowercase"
                   }
                 }
               }

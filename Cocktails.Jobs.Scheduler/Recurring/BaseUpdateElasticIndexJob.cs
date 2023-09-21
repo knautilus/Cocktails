@@ -1,5 +1,5 @@
-﻿using Cocktails.Entities.Common;
-using Cocktails.Entities.Elasticsearch.Helpers;
+﻿using Cocktails.Data.Elasticsearch;
+using Cocktails.Entities.Common;
 using Cocktails.Models.Common;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,33 +44,32 @@ namespace Cocktails.Jobs.Scheduler.Recurring
         {
             var index = 0;
 
-            using (var scope = _services.CreateScope())
+            using var scope = _services.CreateScope();
+
+            var elasticClient = scope.ServiceProvider.GetRequiredService<IElasticClient>();
+            var indexConfiguration = scope.ServiceProvider.GetRequiredService<IIndexConfiguration>();
+            var queryProcessor = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+            while (true)
             {
-                var elasticClient = scope.ServiceProvider.GetRequiredService<IElasticClient>();
-                var indexConfiguration = scope.ServiceProvider.GetRequiredService<IIndexConfiguration>();
-                var queryProcessor = scope.ServiceProvider.GetRequiredService<IMediator>();
+                cancellationToken.ThrowIfCancellationRequested();
 
-                while (true)
+                var documents = await queryProcessor.Send(
+                    new BuildDocumentsQuery<TKey, TDocument> { First = DocumentsPortionSize, Offset = index, Ids = ItemIds },
+                    cancellationToken);
+
+                if (documents.Length == 0)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    var documents = await queryProcessor.Send(
-                        new BuildDocumentsQuery<TKey, TDocument[]> { First = DocumentsPortionSize, Offset = index, Ids = ItemIds },
-                        cancellationToken);
-
-                    if (documents.Length == 0)
-                    {
-                        break;
-                    }
-
-                    await elasticClient.IndexManyAsync(documents,
-                        indexConfiguration.GetIndexName<TDocument>(), cancellationToken);
-
-                    index += DocumentsPortionSize;
-
-                    documents = null;
-                    GC.Collect();
+                    break;
                 }
+
+                await elasticClient.IndexManyAsync(documents,
+                    indexConfiguration.GetIndexName<TDocument>(), cancellationToken);
+
+                index += DocumentsPortionSize;
+
+                documents = null;
+                GC.Collect();
             }
         }
 

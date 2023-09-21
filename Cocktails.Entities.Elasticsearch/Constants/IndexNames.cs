@@ -2,6 +2,6 @@
 {
     public class IndexNames
     {
-        //public const string ArticleIndex = "articles";
+        public const string CocktailsIndex = "cocktails";
     }
 }

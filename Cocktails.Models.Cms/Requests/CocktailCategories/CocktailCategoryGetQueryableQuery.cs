@@ -1,9 +1,9 @@
 ﻿using Cocktails.Entities.Sql;
-using MediatR;
+using Cocktails.Models.Common;
 
 namespace Cocktails.Models.Cms.Requests.CocktailCategories
 {
-    public class CocktailCategoryGetManyQuery : IRequest<IQueryable<CocktailCategory>>
+    public class CocktailCategoryGetQueryableQuery : GetQueryableQuery<CocktailCategory>
     {
         public string Name { get; set; }
     }

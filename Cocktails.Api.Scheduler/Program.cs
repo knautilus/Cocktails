@@ -1,12 +1,19 @@
 using Cocktails.Api.Scheduler.Configuration;
+using Cocktails.Cqrs.Sql;
 using Cocktails.Cqrs.Sql.Scheduler.QueryHandlers.Cocktails;
 using Cocktails.Data.Contexts;
+using Cocktails.Data.Elasticsearch;
+using Cocktails.Entities.Elasticsearch.Helpers;
+using Cocktails.Entities.Sql;
 using Cocktails.Jobs.Scheduler.Extensions;
 using Cocktails.Mapper.Common;
 using Cocktails.Mapper.Scheduler;
+using Cocktails.Models.Common;
 using Hangfire;
 using Hangfire.SqlServer;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -41,10 +48,16 @@ builder.Services.AddHangfireServer(options =>
     options.CancellationCheckInterval = TimeSpan.FromSeconds(5);
 });
 
-
 builder.Services.AddAutoMapper<SchedulerMapperConfiguration>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<BuildCocktailDocumentsQueryHandler>());
+builder.Services.AddTransient<IRequestHandler<GetByIdsQuery<long, CocktailCategory>, CocktailCategory[]>, GetByIdsQueryHandler<long, CocktailCategory>>();
+builder.Services.AddTransient<IRequestHandler<GetByIdsQuery<long, Flavor>, Flavor[]>, GetByIdsQueryHandler<long, Flavor>>();
+builder.Services.AddTransient<IRequestHandler<GetByIdsQuery<long, Ingredient>, Ingredient[]>, GetByIdsQueryHandler<long, Ingredient>>();
+builder.Services.AddTransient<IRequestHandler<GetByIdsQuery<long, MeasureUnit>, MeasureUnit[]>, GetByIdsQueryHandler<long, MeasureUnit>>();
+
+var elasticSettings = builder.Configuration.GetSection("ElasticSettings").Get<ElasticSettings>();
+builder.Services.AddElasticClient<ElasticIndexConfiguration>(elasticSettings);
 
 builder.Services.AddSchedulerJobs(builder.Configuration.GetSection("Jobs"));
 

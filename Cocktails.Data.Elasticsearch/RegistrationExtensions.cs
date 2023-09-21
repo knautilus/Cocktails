@@ -7,19 +7,14 @@ namespace Cocktails.Data.Elasticsearch
 {
     public static class RegistrationExtensions
     {
-        public static IServiceCollection AddElasticClient(
-            this IServiceCollection container, ElasticSettings settings, bool singleton = false)
+        public static IServiceCollection AddElasticClient<TIndexConfiguration>(
+            this IServiceCollection container, ElasticSettings settings)
         {
             var connectionSettings = GetConnectionSettings(settings);
 
-            if (singleton)
-            {
-                container.AddSingleton<IElasticClient>(new ElasticClient(connectionSettings));
-            }
-            else
-            {
-                container.AddScoped<IElasticClient>(x => new ElasticClient(connectionSettings));
-            }
+            container.AddScoped<IElasticClient>(x => new ElasticClient(connectionSettings));
+            container.AddSingleton(typeof(IIndexConfiguration), typeof(TIndexConfiguration));
+
             return container;
         }
 

@@ -1,9 +1,9 @@
 ﻿using Cocktails.Entities.Sql;
-using MediatR;
+using Cocktails.Models.Common;
 
 namespace Cocktails.Models.Cms.Requests.MeasureUnits
 {
-    public class MeasureUnitGetManyQuery : IRequest<IQueryable<MeasureUnit>>
+    public class MeasureUnitGetQueryableQuery : GetQueryableQuery<MeasureUnit>
     {
         public string Name { get; set; }
     }

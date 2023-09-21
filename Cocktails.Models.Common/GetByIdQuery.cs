@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Cocktails.Models.Cms.Requests
+namespace Cocktails.Models.Common
 {
     public class GetByIdQuery<TKey, TResponse> : IRequest<TResponse>
     {

@@ -3,7 +3,7 @@ using Cocktails.Models.Common;
 
 namespace Cocktails.Models.Scheduler.Requests.Cocktails
 {
-    public class CocktailGetManyQuery : GetManyQuery<long, Cocktail[]>
+    public class CocktailGetManyQuery : GetManyQuery<Cocktail, int>
     {
         public long[] CocktailIds { get; set; }
     }

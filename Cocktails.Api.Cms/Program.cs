@@ -19,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Reflection;
 using Cocktails.Mapper.Cms;
+using Cocktails.Models.Common;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -52,7 +53,7 @@ builder.Services
 
 builder.Services.AddAutoMapper<CmsMapperConfiguration>();
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CocktailGetManyQueryHandler>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CocktailGetQueryableQueryHandler>());
 builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Cocktail>, Cocktail>, GetByIdQueryHandler<long, Cocktail>>();
 builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, CocktailCategory>, CocktailCategory>, GetByIdQueryHandler<long, CocktailCategory>>();
 builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Flavor>, Flavor>, GetByIdQueryHandler<long, Flavor>>();

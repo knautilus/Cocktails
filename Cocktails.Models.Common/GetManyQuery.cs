@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Cocktails.Models.Common
 {
-    public class GetManyQuery<TSortFieldEnum, TResponse> : ISortingQuery<TSortFieldEnum>, IRequest<TResponse>
+    public class GetManyQuery<TEntity, TSortFieldEnum> : ISortingQuery<TSortFieldEnum>, IPagingQuery, IRequest<TEntity[]>
         where TSortFieldEnum : struct
     {
         public int First { get; set; } = 10;

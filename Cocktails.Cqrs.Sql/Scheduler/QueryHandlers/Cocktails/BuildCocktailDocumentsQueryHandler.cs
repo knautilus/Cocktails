@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Cocktails.Cqrs.Sql.Scheduler.QueryHandlers.Cocktails
 {
-    public class BuildCocktailDocumentsQueryHandler : IRequestHandler<BuildDocumentsQuery<long, CocktailDocument[]>, CocktailDocument[]>
+    public class BuildCocktailDocumentsQueryHandler : IRequestHandler<BuildDocumentsQuery<long, CocktailDocument>, CocktailDocument[]>
     {
         private readonly IMediator _queryProcessor;
         private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ namespace Cocktails.Cqrs.Sql.Scheduler.QueryHandlers.Cocktails
             _mapper = mapper;
         }
 
-        public async Task<CocktailDocument[]> Handle(BuildDocumentsQuery<long, CocktailDocument[]> query, CancellationToken cancellationToken)
+        public async Task<CocktailDocument[]> Handle(BuildDocumentsQuery<long, CocktailDocument> query, CancellationToken cancellationToken)
         {
             var cocktails = await _queryProcessor.Send(new CocktailGetManyQuery
             {

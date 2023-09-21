@@ -3,6 +3,7 @@ using Cocktails.Entities.Elasticsearch;
 using Cocktails.Entities.Sql;
 using Cocktails.Models.Cms.Requests;
 using Cocktails.Models.Cms.Requests.Mixes;
+using Cocktails.Models.Common;
 using MediatR;
 
 namespace Cocktails.Cqrs.Sql.DocumentBuilders
@@ -17,13 +18,13 @@ namespace Cocktails.Cqrs.Sql.DocumentBuilders
             var flavorIds = cocktails
                 .Select(x => x.FlavorId)
                 .Distinct().ToArray();
-            var flavors = await queryProcessor.Send(new GetByIdsQuery<long, Flavor[]> { Ids = flavorIds }, cancellationToken);
+            var flavors = await queryProcessor.Send(new GetByIdsQuery<long, Flavor> { Ids = flavorIds }, cancellationToken);
             var flavorDictionary = flavors.ToDictionary(x => x.Id);
 
             var cocktailCategoryIds = cocktails
                 .Select(x => x.CocktailCategoryId)
                 .Distinct().ToArray();
-            var cocktailCategories = await queryProcessor.Send(new GetByIdsQuery<long, CocktailCategory[]> { Ids = cocktailCategoryIds }, cancellationToken);
+            var cocktailCategories = await queryProcessor.Send(new GetByIdsQuery<long, CocktailCategory> { Ids = cocktailCategoryIds }, cancellationToken);
             var cocktailCategoryDictionary = cocktailCategories.ToDictionary(x => x.Id);
 
             var cocktailsIds = cocktails
@@ -35,13 +36,13 @@ namespace Cocktails.Cqrs.Sql.DocumentBuilders
             var ingredientIds = mixes
                 .Select(x => x.IngredientId)
                 .Distinct().ToArray();
-            var ingredients = await queryProcessor.Send(new GetByIdsQuery<long, Ingredient[]> { Ids = ingredientIds }, cancellationToken);
+            var ingredients = await queryProcessor.Send(new GetByIdsQuery<long, Ingredient> { Ids = ingredientIds }, cancellationToken);
             var ingredientDictionary = ingredients.ToDictionary(x => x.Id);
 
             var measureUnitIds = mixes
                 .Select(x => x.MeasureUnitId)
                 .Distinct().ToArray();
-            var measureUnits = await queryProcessor.Send(new GetByIdsQuery<long, MeasureUnit[]> { Ids = measureUnitIds }, cancellationToken);
+            var measureUnits = await queryProcessor.Send(new GetByIdsQuery<long, MeasureUnit> { Ids = measureUnitIds }, cancellationToken);
             var measureUnitDictionary = measureUnits.ToDictionary(x => x.Id);
 
             foreach (var cocktail in cocktails)

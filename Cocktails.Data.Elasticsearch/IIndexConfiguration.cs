@@ -1,4 +1,4 @@
-﻿namespace Cocktails.Entities.Elasticsearch.Helpers
+﻿namespace Cocktails.Data.Elasticsearch
 {
     public interface IIndexConfiguration
     {
