@@ -1,8 +1,6 @@
 ﻿using Cocktails.Common.Models;
-using Cocktails.Cqrs.Nosql;
-using Cocktails.Cqrs.Nosql.Constants;
+using Cocktails.Cqrs.Nosql.QueryHandlers.Cocktails;
 using Cocktails.Data.Elasticsearch;
-using Cocktails.Entities.Elasticsearch;
 using Cocktails.Entities.Elasticsearch.Helpers;
 using Cocktails.GraphQL.Site.Types;
 using Cocktails.Models.Common;
@@ -15,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Reflection;
-using Cocktails.Cqrs.Nosql.QueryHandlers.Cocktails;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -41,8 +38,8 @@ builder.Services
         .AddTypeExtension<CocktailQueryType>()
     .AllowIntrospection(builder.Environment.EnvironmentName == "Development");
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetCallingAssembly()));
-builder.Services.AddTransient<IRequestHandler<GetManyQuery<CocktailDocument, CocktailSort>, CocktailDocument[]>, CocktailGetManyQueryHandler>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CocktailGetManyQueryHandler>());
+builder.Services.AddTransient<IRequestHandler<CocktailGetManyQuery, int>, CocktailGetCountQueryHandler>();
 
 var elasticSettings = builder.Configuration.GetSection("ElasticSettings").Get<ElasticSettings>();
 builder.Services.AddElasticClient<ElasticIndexConfiguration>(elasticSettings);

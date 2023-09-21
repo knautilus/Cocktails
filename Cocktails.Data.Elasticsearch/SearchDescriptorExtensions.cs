@@ -27,7 +27,7 @@ namespace Cocktails.Data.Elasticsearch
             IPagingQuery context)
             where T : class
         {
-            return source.Skip(context.Offset).Size(context.First);
+            return source.Skip(context.Skip).Size(context.Take);
         }
 
         public static QueryContainer GetByIds<T>(this QueryContainerDescriptor<T> source,

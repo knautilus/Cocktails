@@ -1,18 +1,12 @@
-﻿using Cocktails.Entities.Elasticsearch;
-using Cocktails.Models.Common;
+﻿using Cocktails.Data.Elasticsearch;
+using Cocktails.Entities.Elasticsearch;
 using Cocktails.Models.Site.Requests.Cocktails;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Cocktails.Data.Elasticsearch;
 using Nest;
+using System.Linq.Expressions;
 
 namespace Cocktails.Cqrs.Nosql.QueryHandlers.Cocktails
 {
-    public class CocktailGetManyQueryHandler : GetManyQueryHandler<CocktailDocument, GetManyQuery<CocktailDocument, CocktailSort>, CocktailSort>
+    public class CocktailGetManyQueryHandler : GetManyQueryHandler<CocktailDocument, CocktailGetManyQuery, CocktailSort>
     {
         public CocktailGetManyQueryHandler(IElasticClient elasticClient, IIndexConfiguration indexConfiguration) : base(elasticClient, indexConfiguration)
         {

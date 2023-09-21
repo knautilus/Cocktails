@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Entities.Elasticsearch\Cocktails.Entities.Elasticsearch.csproj" />
+    <ProjectReference Include="..\Cocktails.Models.Common\Cocktails.Models.Common.csproj" />
+  </ItemGroup>
+
 </Project>

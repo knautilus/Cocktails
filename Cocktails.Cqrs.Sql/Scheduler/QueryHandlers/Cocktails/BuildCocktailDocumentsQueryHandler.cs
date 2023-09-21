@@ -24,8 +24,8 @@ namespace Cocktails.Cqrs.Sql.Scheduler.QueryHandlers.Cocktails
             var cocktails = await _queryProcessor.Send<Cocktail[]>(new CocktailGetManyQuery
             {
                 CocktailIds = query.Ids,
-                First = query.First,
-                Offset = query.Offset
+                Take = query.Take,
+                Skip = query.Skip
             }, cancellationToken);
 
             var recipeDocuments = await CocktailDocumentBuilder.PrepareCocktailDocuments(cocktails, _queryProcessor, _mapper, cancellationToken);
