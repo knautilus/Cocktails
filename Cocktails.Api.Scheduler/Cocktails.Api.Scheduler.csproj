@@ -22,7 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Data.Contexts\Cocktails.Data.Contexts.csproj" />
     <ProjectReference Include="..\Cocktails.Jobs.Scheduler\Cocktails.Jobs.Scheduler.csproj" />
+    <ProjectReference Include="..\Cocktails.Mapper.Scheduler\Cocktails.Mapper.Scheduler.csproj" />
   </ItemGroup>
 
 </Project>

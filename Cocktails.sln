@@ -70,13 +70,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Jobs.Scheduler", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.Elasticsearch", "Cocktails.Data.Elasticsearch\Cocktails.Data.Elasticsearch.csproj", "{63C33989-1E84-4328-84DA-93759CDE4B4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Entities.Common", "Cocktails.Entities.Common\Cocktails.Entities.Common.csproj", "{86BDD50F-1074-47BF-8705-B836FA2B131C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Entities.Common", "Cocktails.Entities.Common\Cocktails.Entities.Common.csproj", "{86BDD50F-1074-47BF-8705-B836FA2B131C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Entities.Elasticsearch", "Cocktails.Entities.Elasticsearch\Cocktails.Entities.Elasticsearch.csproj", "{E9E90E8E-0A83-46CD-A64C-9C149ED4A82F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Entities.Elasticsearch", "Cocktails.Entities.Elasticsearch\Cocktails.Entities.Elasticsearch.csproj", "{E9E90E8E-0A83-46CD-A64C-9C149ED4A82F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Data.Core", "Cocktails.Data.Core\Cocktails.Data.Core.csproj", "{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Data.Core", "Cocktails.Data.Core\Cocktails.Data.Core.csproj", "{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entities", "Entities", "{BDA92D79-E9B7-46F0-862C-3CEEC943B703}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cocktails.Api.Site", "Cocktails.Api.Site\Cocktails.Api.Site.csproj", "{5C99EF70-AA30-4399-9710-2D65017FBE12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Mapper.Scheduler", "Cocktails.Mapper.Scheduler\Cocktails.Mapper.Scheduler.csproj", "{CD66598B-AF67-4AD5-99C0-5112E41ECF6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocktails.Models.Scheduler", "Cocktail.Models.Scheduler\Cocktails.Models.Scheduler.csproj", "{7C247850-9966-49E0-95E3-79543F81C8C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -180,6 +186,18 @@ Global
 		{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C99EF70-AA30-4399-9710-2D65017FBE12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C99EF70-AA30-4399-9710-2D65017FBE12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C99EF70-AA30-4399-9710-2D65017FBE12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C99EF70-AA30-4399-9710-2D65017FBE12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD66598B-AF67-4AD5-99C0-5112E41ECF6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD66598B-AF67-4AD5-99C0-5112E41ECF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD66598B-AF67-4AD5-99C0-5112E41ECF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD66598B-AF67-4AD5-99C0-5112E41ECF6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C247850-9966-49E0-95E3-79543F81C8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C247850-9966-49E0-95E3-79543F81C8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C247850-9966-49E0-95E3-79543F81C8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C247850-9966-49E0-95E3-79543F81C8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -209,6 +227,9 @@ Global
 		{86BDD50F-1074-47BF-8705-B836FA2B131C} = {BDA92D79-E9B7-46F0-862C-3CEEC943B703}
 		{E9E90E8E-0A83-46CD-A64C-9C149ED4A82F} = {BDA92D79-E9B7-46F0-862C-3CEEC943B703}
 		{FDAA2FAD-ACAD-4D91-9A21-0617EA1DF1F4} = {43B09BD1-2BC4-4CB6-A7B0-93354E186630}
+		{5C99EF70-AA30-4399-9710-2D65017FBE12} = {42B27BBA-AFAD-47BE-97C2-D31F05317965}
+		{CD66598B-AF67-4AD5-99C0-5112E41ECF6E} = {F0567B4E-4C68-4DE7-8669-0A7523B52591}
+		{7C247850-9966-49E0-95E3-79543F81C8C8} = {A423ED63-46EA-40B4-BF28-22F47653F44A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB01C30C-6A7C-4F5C-BF8A-FCCCAC297C59}

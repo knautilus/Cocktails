@@ -19,7 +19,6 @@ namespace Cocktails.GraphQL.Core.DataLoaders
         {
             var objects = await _dbContext.Set<TEntity>().AsNoTracking()
                 .Where(x => keys.Contains(x.Id))
-                .Where(x => x != null)
                 .ToDictionaryAsync(x => x.Id, cancellationToken);
 
             for (var i = 0; i < keys.Count; i++)

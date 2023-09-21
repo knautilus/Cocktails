@@ -1,0 +1,146 @@
+{
+  "mappings": {
+    "properties": {
+      "CocktailCategory": {
+        "properties": {
+          "Id": {
+            "type": "long"
+          },
+          "Name": {
+            "type": "keyword"
+          }
+        }
+      },
+      "CreateDate": {
+        "type": "date"
+      },
+      "Description": {
+        "type": "text",
+        "analyzer": "index_analyzer",
+        "search_analyzer": "search_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "Flavor": {
+        "properties": {
+          "Id": {
+            "type": "long"
+          },
+          "Name": {
+            "type": "keyword"
+          }
+        }
+      },
+      "Id": {
+        "type": "long"
+      },
+      "Name": {
+        "type": "text",
+        "normalizer": "lowercase",
+        "analyzer": "index_analyzer",
+        "search_analyzer": "search_analyzer",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "Mixes": {
+        "properties": {
+          "Amount": {
+            "type": "double"
+          },
+          "Ingredient": {
+            "properties" : {
+              "Id": {
+                "type": "long"
+              },
+              "Name": {
+                "type": "text",
+                "normalizer": "lowercase",
+                "analyzer": "index_analyzer",
+                "search_analyzer": "search_analyzer",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          },
+          "MeasureUnit": {
+            "properties" : {
+              "Id": {
+                "type": "long"
+              },
+              "Name": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "settings": {
+    "index": {
+      "number_of_shards": "3",
+      "blocks": {
+        "read_only_allow_delete": "false"
+      },
+      "analysis": {
+        "filter": {
+          "russian_morphology": {
+            "locale": "ru_RU",
+            "type": "hunspell"
+          },
+          "engram_filter": {
+            "type": "edge_ngram",
+            "min_gram": "2",
+            "max_gram": "20"
+          },
+          "percentage_replace": {
+            "type": "pattern_replace",
+            "pattern": "_процентов",
+            "replacement": "%"
+          }
+        },
+        "char_filter": {
+          "russian_char_mapper": {
+            "type": "mapping",
+            "mappings": [
+              "ё => е",
+              "Ё => Е",
+              "% => _процентов"
+            ]
+          }
+        },
+        "analyzer": {
+          "index_analyzer": {
+            "filter": ["lowercase", "asciifolding", "russian_morphology", "percentage_replace", "engram_filter"],
+            "char_filter": ["html_strip", "russian_char_mapper"],
+            "type": "custom",
+            "tokenizer": "standard"
+          },
+          "search_analyzer": {
+            "filter": ["lowercase", "asciifolding", "russian_morphology", "percentage_replace"],
+            "char_filter": ["html_strip", "russian_char_mapper"],
+            "type": "custom",
+            "tokenizer": "standard"
+          }
+        },
+        "normalizer": {
+          "lowercase": {
+            "type": "custom",
+            "filter": ["lowercase"],
+            "char_filter": ["russian_char_mapper"]
+          }
+        }
+      },
+      "number_of_replicas": "0"
+    }
+  }
+}

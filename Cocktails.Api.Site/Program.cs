@@ -59,7 +59,7 @@ builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Flavor>, Flavor
 builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Ingredient>, Ingredient>, GetByIdQueryHandler<long, Ingredient>>();
 builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, MeasureUnit>, MeasureUnit>, GetByIdQueryHandler<long, MeasureUnit>>();
 
-var apiInfo = new ApiInfo { Name = "Cocktails CMS Api", Author = "Alex Utiansky" };
+var apiInfo = new ApiInfo { Name = "Cocktails Site Api", Author = "Alex Utiansky" };
 builder.Services.AddSingleton(typeof(ApiInfo), x => apiInfo);
 
 var app = builder.Build();

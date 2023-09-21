@@ -1,26 +1,23 @@
-﻿using Cocktails.Data.Contexts;
-using Cocktails.Entities.Sql;
+﻿using Cocktails.Entities.Sql;
+using Cocktails.Models.Cms.Requests.Mixes;
 using GreenDonut;
 using HotChocolate;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
 
 namespace Cocktails.GraphQL.Cms.DataLoaders
 {
     public class MixByCockailLoader : DataLoaderBase<long, Mix[]>
     {
-        private readonly CocktailsContext _cocktailsContext;
+        private readonly IMediator _queryProcessor;
 
-        public MixByCockailLoader(IBatchScheduler batchScheduler, CocktailsContext cocktailsContext) : base(batchScheduler)
+        public MixByCockailLoader(IBatchScheduler batchScheduler, [Service] IMediator queryProcessor) : base(batchScheduler)
         {
-            _cocktailsContext = cocktailsContext;
+            _queryProcessor = queryProcessor;
         }
 
         protected override async ValueTask FetchAsync(IReadOnlyList<long> keys, Memory<Result<Mix[]>> results, CancellationToken cancellationToken)
         {
-            var objects = (await _cocktailsContext.Set<Mix>().AsNoTracking()
-                .Where(x => keys.Contains(x.CocktailId))
-                .Where(x => x != null)
-                .ToArrayAsync(cancellationToken))
+            var objects = (await _queryProcessor.Send(new MixesGetByCocktailIdsQuery { CocktailIds = keys.ToArray() }, cancellationToken))
                 .ToLookup(x => x.CocktailId);
 
             for (int i = 0; i < keys.Count; i++)

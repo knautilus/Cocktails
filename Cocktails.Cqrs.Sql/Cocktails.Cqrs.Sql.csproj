@@ -14,8 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cocktail.Models.Scheduler\Cocktails.Models.Scheduler.csproj" />
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj" />
+    <ProjectReference Include="..\Cocktails.Entities.Elasticsearch\Cocktails.Entities.Elasticsearch.csproj" />
     <ProjectReference Include="..\Cocktails.Entities.Sql\Cocktails.Entities.Sql.csproj" />
     <ProjectReference Include="..\Cocktails.Models.Cms\Cocktails.Models.Cms.csproj" />
   </ItemGroup>

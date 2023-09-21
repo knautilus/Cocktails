@@ -12,7 +12,7 @@ namespace Cocktails.Jobs.Scheduler.Extensions
         {
             services.AddHangfireJobs()
                 .AddRecurringJob<TestRecurringJob>()
-                .AddRecurringJob<TestRecurringJob2>();
+                .AddRecurringJob<UpdateElasticCocktailsIndexJob>();
         }
 
         private static HangfireJobsBuilder AddHangfireJobs(this IServiceCollection services)

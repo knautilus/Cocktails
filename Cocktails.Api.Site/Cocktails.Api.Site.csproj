@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <AssemblyName>Cocktails.Api.Cms</AssemblyName>
+    <AssemblyName>Cocktails.Api.Site</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netcoreapp2.0\Cocktails.Api.Cms.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netcoreapp2.0\Cocktails.Api.Site.xml</DocumentationFile>
     <OutputPath></OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netcoreapp2.0\Cocktails.Api.Cms.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netcoreapp2.0\Cocktails.Api.Site.xml</DocumentationFile>
     <OutputPath></OutputPath>
   </PropertyGroup>
 

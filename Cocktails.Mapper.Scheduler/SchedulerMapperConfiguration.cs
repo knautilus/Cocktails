@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Cocktails.Mapper.Common;
 
-namespace Cocktails.Mapper.Cms
+namespace Cocktails.Mapper.Scheduler
 {
-    public class CmsMapperConfiguration : IMapperProfileConfiguration
+    public class SchedulerMapperConfiguration : IMapperProfileConfiguration
     {
         private readonly Profile[] _profiles = {
             new CocktailMappingProfile()

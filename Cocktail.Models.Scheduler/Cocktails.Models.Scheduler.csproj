@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Entities.Sql\Cocktails.Entities.Sql.csproj" />
+    <ProjectReference Include="..\Cocktails.Models.Common\Cocktails.Models.Common.csproj" />
+  </ItemGroup>
+
+</Project>
