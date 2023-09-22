@@ -1,9 +1,8 @@
 ﻿using Cocktails.Models.Common;
-using MediatR;
 
 namespace Cocktails.Models.Cms.Requests.Cocktails
 {
-    public class CocktailUpdateCommand : UpdateCommand<long>, IRequest<long>
+    public class CocktailUpdateCommand : UpdateCommand<long>, ICommand
     {
         public string Name { get; set; }
         public string Description { get; set; }

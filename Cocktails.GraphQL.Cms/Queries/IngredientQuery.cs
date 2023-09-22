@@ -1,24 +1,23 @@
-﻿using Cocktails.Entities.Sql;
-using Cocktails.Models.Cms.Requests;
+﻿using Cocktails.Cqrs.Mediator.Queries;
+using Cocktails.Entities.Sql;
 using Cocktails.Models.Cms.Requests.Ingredients;
 using Cocktails.Models.Common;
 using HotChocolate;
 using HotChocolate.Types;
-using MediatR;
 
 namespace Cocktails.GraphQL.Cms.Queries
 {
     [ExtendObjectType("rootQuery")]
     public class IngredientQuery
     {
-        public async Task<IQueryable<Ingredient>> GetIngredients(IngredientGetQueryableQuery? request, [Service] IMediator mediator, CancellationToken cancellationToken)
+        public async Task<IQueryable<Ingredient>> GetIngredients(IngredientGetQueryableQuery? request, [Service] IQueryProcessor queryProcessor, CancellationToken cancellationToken)
         {
-            return await mediator.Send(request ?? new IngredientGetQueryableQuery(), cancellationToken);
+            return await queryProcessor.Process<IQueryable<Ingredient>>(request ?? new IngredientGetQueryableQuery(), cancellationToken);
         }
 
-        public async Task<Ingredient> GetIngredient(GetByIdQuery<long, Ingredient> request, [Service] IMediator mediator, CancellationToken cancellationToken)
+        public async Task<Ingredient> GetIngredient(GetByIdQuery<long> request, [Service] IQueryProcessor queryProcessor, CancellationToken cancellationToken)
         {
-            return await mediator.Send(request, cancellationToken);
+            return await queryProcessor.Process<Ingredient>(request, cancellationToken);
         }
     }
 }

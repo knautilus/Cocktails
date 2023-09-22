@@ -1,14 +1,14 @@
-﻿using Cocktails.Models.Common;
-using MediatR;
+﻿using Cocktails.Cqrs.Mediator.Queries;
+using Cocktails.Data.EFCore.Extensions;
+using Cocktails.Models.Common;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Cocktails.Data.EFCore.Extensions;
 
 namespace Cocktails.Cqrs.Sql
 {
-    public class GetManyQueryHandler<TEntity, TGetManyQuery, TSortFieldEnum> : IRequestHandler<TGetManyQuery, TEntity[]>
+    public class GetManyQueryHandler<TEntity, TGetManyQuery, TSortFieldEnum> : IQueryHandler<TGetManyQuery, TEntity[]>
         where TEntity : class
-        where TGetManyQuery : GetManyQuery<TEntity, TSortFieldEnum>
+        where TGetManyQuery : GetManyQuery<TSortFieldEnum>
         where TSortFieldEnum : struct
     {
         protected readonly DbContext ReadDbContext;

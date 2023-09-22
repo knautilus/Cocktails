@@ -1,7 +1,7 @@
-﻿using Cocktails.Data.Elasticsearch;
+﻿using Cocktails.Cqrs.Mediator.Queries;
+using Cocktails.Data.Elasticsearch;
 using Cocktails.Entities.Common;
 using Cocktails.Models.Common;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Nest;
@@ -48,14 +48,14 @@ namespace Cocktails.Jobs.Scheduler.Recurring
 
             var elasticClient = scope.ServiceProvider.GetRequiredService<IElasticClient>();
             var indexConfiguration = scope.ServiceProvider.GetRequiredService<IIndexConfiguration>();
-            var queryProcessor = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var queryProcessor = scope.ServiceProvider.GetRequiredService<IQueryProcessor>();
 
             while (true)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                var documents = await queryProcessor.Send<TDocument[]>(
-                    new BuildDocumentsQuery<TKey, TDocument> { Take = DocumentsPortionSize, Skip = index, Ids = ItemIds },
+                var documents = await queryProcessor.Process<TDocument[]>(
+                    new BuildDocumentsQuery<TKey> { Take = DocumentsPortionSize, Skip = index, Ids = ItemIds },
                     cancellationToken);
 
                 if (documents.Length == 0)

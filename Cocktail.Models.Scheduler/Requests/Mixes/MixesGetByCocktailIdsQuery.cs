@@ -1,9 +1,8 @@
-﻿using Cocktails.Entities.Sql;
-using MediatR;
+﻿using Cocktails.Models.Common;
 
 namespace Cocktails.Models.Scheduler.Requests.Mixes
 {
-    public class MixesGetByCocktailIdsQuery : IRequest<Mix[]>
+    public class MixesGetByCocktailIdsQuery : IQuery
     {
         public long[] CocktailIds { get; set; }
     }

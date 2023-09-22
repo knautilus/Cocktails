@@ -1,9 +1,8 @@
-﻿using Cocktails.Entities.Sql;
-using Cocktails.Models.Common;
+﻿using Cocktails.Models.Common;
 
 namespace Cocktails.Models.Scheduler.Requests.Cocktails
 {
-    public class CocktailGetManyQuery : GetManyQuery<Cocktail, int>
+    public class CocktailGetManyQuery : GetManyQuery<int>
     {
         public long[] CocktailIds { get; set; }
     }

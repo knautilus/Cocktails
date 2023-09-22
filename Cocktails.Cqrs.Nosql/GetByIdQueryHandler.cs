@@ -1,12 +1,12 @@
-﻿using Cocktails.Data.Elasticsearch;
+﻿using Cocktails.Cqrs.Mediator.Queries;
+using Cocktails.Data.Elasticsearch;
 using Cocktails.Entities.Common;
 using Cocktails.Models.Common;
-using MediatR;
 using Nest;
 
 namespace Cocktails.Cqrs.Nosql
 {
-    public class GetByIdQueryHandler<TKey, TEntity> : IRequestHandler<GetByIdQuery<TKey, TEntity>, TEntity>
+    public class GetByIdQueryHandler<TKey, TEntity> : IQueryHandler<GetByIdQuery<TKey>, TEntity>
         where TEntity : BaseEntity<TKey>
     {
         protected readonly IElasticClient ElasticClient;
@@ -18,7 +18,7 @@ namespace Cocktails.Cqrs.Nosql
             IndexConfiguration = indexConfiguration;
         }
 
-        public async Task<TEntity> Handle(GetByIdQuery<TKey, TEntity> request, CancellationToken cancellationToken)
+        public async Task<TEntity> Handle(GetByIdQuery<TKey> request, CancellationToken cancellationToken)
         {
             var resp = await ElasticClient.GetAsync<TEntity>(
                 new GetRequest(IndexConfiguration.GetIndexName<TEntity>(), Convert.ToInt64(request.Id)),

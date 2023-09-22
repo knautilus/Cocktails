@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using Cocktails.Cqrs.Mediator.Commands;
 using Cocktails.Entities.Sql;
 using Cocktails.Models.Cms.Requests.Cocktails;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cocktails.Cqrs.Sql.Cms.CommandHandlers.Cocktails
 {
-    public class CocktailCreateCommandHandler : IRequestHandler<CocktailCreateCommand, long>
+    public class CocktailCreateCommandHandler : ICommandHandler<CocktailCreateCommand, long>
     {
         private readonly DbContext _dbContext;
         private readonly IMapper _mapper;

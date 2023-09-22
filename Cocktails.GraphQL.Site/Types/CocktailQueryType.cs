@@ -1,11 +1,9 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using Cocktails.Cqrs.Mediator.Queries;
 using Cocktails.Entities.Elasticsearch;
 using Cocktails.GraphQL.Site.Queries;
 using Cocktails.Models.Site.Requests.Cocktails;
 using HotChocolate.Types;
 using HotChocolate.Types.Pagination;
-using MediatR;
-using Nest;
 
 namespace Cocktails.GraphQL.Site.Types
 {
@@ -29,9 +27,9 @@ namespace Cocktails.GraphQL.Site.Types
 
                     var pageInfo = new ConnectionPageInfo(false, false, null, null);
 
-                    var queryProcessor = context.Service<IMediator>();
+                    var queryProcessor = context.Service<IQueryProcessor>();
 
-                    context.Result = new Connection<CocktailDocument>(edges, pageInfo, async ct => await queryProcessor.Send<int>(request, ct));
+                    context.Result = new Connection<CocktailDocument>(edges, pageInfo, async ct => await queryProcessor.Process<int>(request, ct));
                 });
 
             descriptor.Field(x => x.GetCocktailsCount(default, default, default));

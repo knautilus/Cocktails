@@ -1,4 +1,6 @@
 ﻿using Cocktails.Common.Models;
+using Cocktails.Cqrs.Mediator;
+using Cocktails.Cqrs.Mediator.Queries;
 using Cocktails.Cqrs.Sql;
 using Cocktails.Cqrs.Sql.Cms.QueryHandlers.Cocktails;
 using Cocktails.Data.Contexts;
@@ -10,7 +12,6 @@ using Cocktails.Models.Common;
 using HotChocolate.AspNetCore;
 using HotChocolate.Data;
 using HotChocolate.Types.Pagination;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -51,12 +52,12 @@ builder.Services
 
 builder.Services.AddAutoMapper<CmsMapperConfiguration>();
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CocktailGetQueryableQueryHandler>());
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Cocktail>, Cocktail>, GetByIdQueryHandler<long, Cocktail>>();
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, CocktailCategory>, CocktailCategory>, GetByIdQueryHandler<long, CocktailCategory>>();
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Flavor>, Flavor>, GetByIdQueryHandler<long, Flavor>>();
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, Ingredient>, Ingredient>, GetByIdQueryHandler<long, Ingredient>>();
-builder.Services.AddTransient<IRequestHandler<GetByIdQuery<long, MeasureUnit>, MeasureUnit>, GetByIdQueryHandler<long, MeasureUnit>>();
+builder.Services.AddMediator(typeof(CocktailGetQueryableQueryHandler));
+builder.Services.AddTransient<IQueryHandler<GetByIdQuery<long>, Cocktail>, GetByIdQueryHandler<long, Cocktail>>();
+builder.Services.AddTransient<IQueryHandler<GetByIdQuery<long>, CocktailCategory>, GetByIdQueryHandler<long, CocktailCategory>>();
+builder.Services.AddTransient<IQueryHandler<GetByIdQuery<long>, Flavor>, GetByIdQueryHandler<long, Flavor>>();
+builder.Services.AddTransient<IQueryHandler<GetByIdQuery<long>, Ingredient>, GetByIdQueryHandler<long, Ingredient>>();
+builder.Services.AddTransient<IQueryHandler<GetByIdQuery<long>, MeasureUnit>, GetByIdQueryHandler<long, MeasureUnit>>();
 
 var apiInfo = new ApiInfo { Name = "Cocktails CMS Api", Author = "Alex Utiansky" };
 builder.Services.AddSingleton(typeof(ApiInfo), x => apiInfo);

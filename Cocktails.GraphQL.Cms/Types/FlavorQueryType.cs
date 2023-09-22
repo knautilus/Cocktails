@@ -1,5 +1,4 @@
 ﻿using Cocktails.GraphQL.Cms.Queries;
-using Flavors.GraphQL.Cms.Queries;
 using HotChocolate.Types;
 
 namespace Cocktails.GraphQL.Cms.Types

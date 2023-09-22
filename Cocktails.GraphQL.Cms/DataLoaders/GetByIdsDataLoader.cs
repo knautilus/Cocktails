@@ -2,7 +2,7 @@
 using GreenDonut;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cocktails.GraphQL.Core.DataLoaders
+namespace Cocktails.GraphQL.Cms.DataLoaders
 {
     public class GetByIdsDataLoader<TKey, TEntity> : DataLoaderBase<TKey, TEntity>
         where TKey : struct

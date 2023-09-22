@@ -1,13 +1,13 @@
-﻿using Cocktails.Data.Elasticsearch;
+﻿using Cocktails.Cqrs.Mediator.Queries;
+using Cocktails.Data.Elasticsearch;
 using Cocktails.Models.Common;
-using MediatR;
 using Nest;
 
 namespace Cocktails.Cqrs.Nosql
 {
-    public class GetCountQueryHandler<TEntity, TGetManyQuery, TSortFieldEnum> : IRequestHandler<TGetManyQuery, int>
+    public class GetCountQueryHandler<TEntity, TGetManyQuery, TSortFieldEnum> : IQueryHandler<TGetManyQuery, int>
         where TEntity : class
-        where TGetManyQuery : GetManyQuery<TEntity, TSortFieldEnum>
+        where TGetManyQuery : GetManyQuery<TSortFieldEnum>
         where TSortFieldEnum : struct
     {
         protected readonly IElasticClient _elasticClient;

@@ -1,8 +1,6 @@
-﻿using MediatR;
-
-namespace Cocktails.Models.Common
+﻿namespace Cocktails.Models.Common
 {
-    public class GetByIdsQuery<TKey, TResponse> : IRequest<TResponse[]>
+    public class GetByIdsQuery<TKey> : IQuery
     {
         public TKey[] Ids { get; set; }
     }

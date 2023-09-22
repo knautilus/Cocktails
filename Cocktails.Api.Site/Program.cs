@@ -1,12 +1,12 @@
 ﻿using Cocktails.Common.Models;
+using Cocktails.Cqrs.Mediator;
+using Cocktails.Cqrs.Mediator.Queries;
 using Cocktails.Cqrs.Nosql.QueryHandlers.Cocktails;
 using Cocktails.Data.Elasticsearch;
 using Cocktails.Entities.Elasticsearch.Helpers;
 using Cocktails.GraphQL.Site.Types;
-using Cocktails.Models.Common;
 using Cocktails.Models.Site.Requests.Cocktails;
 using HotChocolate.AspNetCore;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,8 +38,8 @@ builder.Services
         .AddTypeExtension<CocktailQueryType>()
     .AllowIntrospection(builder.Environment.EnvironmentName == "Development");
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CocktailGetManyQueryHandler>());
-builder.Services.AddTransient<IRequestHandler<CocktailGetManyQuery, int>, CocktailGetCountQueryHandler>();
+builder.Services.AddMediator(typeof(CocktailGetManyQueryHandler));
+builder.Services.AddTransient<IQueryHandler<CocktailGetManyQuery, int>, CocktailGetCountQueryHandler>();
 
 var elasticSettings = builder.Configuration.GetSection("ElasticSettings").Get<ElasticSettings>();
 builder.Services.AddElasticClient<ElasticIndexConfiguration>(elasticSettings);

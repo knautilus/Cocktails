@@ -1,27 +1,27 @@
 ﻿using AutoMapper;
+using Cocktails.Cqrs.Mediator.Queries;
 using Cocktails.Cqrs.Sql.DocumentBuilders;
 using Cocktails.Entities.Elasticsearch;
 using Cocktails.Entities.Sql;
 using Cocktails.Models.Common;
 using Cocktails.Models.Scheduler.Requests.Cocktails;
-using MediatR;
 
 namespace Cocktails.Cqrs.Sql.Scheduler.QueryHandlers.Cocktails
 {
-    public class BuildCocktailDocumentsQueryHandler : IRequestHandler<BuildDocumentsQuery<long, CocktailDocument>, CocktailDocument[]>
+    public class BuildCocktailDocumentsQueryHandler : IQueryHandler<BuildDocumentsQuery<long>, CocktailDocument[]>
     {
-        private readonly IMediator _queryProcessor;
+        private readonly IQueryProcessor _queryProcessor;
         private readonly IMapper _mapper;
 
-        public BuildCocktailDocumentsQueryHandler(IMediator queryProcessor, IMapper mapper)
+        public BuildCocktailDocumentsQueryHandler(IQueryProcessor queryProcessor, IMapper mapper)
         {
             _queryProcessor = queryProcessor;
             _mapper = mapper;
         }
 
-        public async Task<CocktailDocument[]> Handle(BuildDocumentsQuery<long, CocktailDocument> query, CancellationToken cancellationToken)
+        public async Task<CocktailDocument[]> Handle(BuildDocumentsQuery<long> query, CancellationToken cancellationToken)
         {
-            var cocktails = await _queryProcessor.Send<Cocktail[]>(new CocktailGetManyQuery
+            var cocktails = await _queryProcessor.Process<Cocktail[]>(new CocktailGetManyQuery
             {
                 CocktailIds = query.Ids,
                 Take = query.Take,

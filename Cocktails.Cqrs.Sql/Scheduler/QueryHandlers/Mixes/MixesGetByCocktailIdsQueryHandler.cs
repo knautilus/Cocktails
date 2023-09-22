@@ -1,11 +1,11 @@
-﻿using Cocktails.Entities.Sql;
+﻿using Cocktails.Cqrs.Mediator.Queries;
+using Cocktails.Entities.Sql;
 using Cocktails.Models.Scheduler.Requests.Mixes;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cocktails.Cqrs.Sql.Scheduler.QueryHandlers.Mixes
 {
-    public class MixesGetByCocktailIdsQueryHandler : IRequestHandler<MixesGetByCocktailIdsQuery, Mix[]>
+    public class MixesGetByCocktailIdsQueryHandler : IQueryHandler<MixesGetByCocktailIdsQuery, Mix[]>
     {
         private readonly DbContext _dbContext;
 

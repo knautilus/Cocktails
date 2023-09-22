@@ -1,9 +1,8 @@
-﻿using Cocktails.Entities.Sql;
-using Cocktails.Models.Common;
+﻿using Cocktails.Models.Common;
 
 namespace Cocktails.Models.Cms.Requests.Cocktails
 {
-    public class CocktailGetQueryableQuery : GetQueryableQuery<Cocktail>
+    public class CocktailGetQueryableQuery : GetQueryableQuery
     {
         public string Name { get; set; }
         public long? IngredientId { get; set; }

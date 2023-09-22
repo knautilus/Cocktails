@@ -2,13 +2,13 @@
 using Cocktails.Common.Extensions;
 using Cocktails.Entities.Sql;
 using Cocktails.Models.Cms.Requests.Cocktails;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using Cocktails.Cqrs.Mediator.Commands;
 
 namespace Cocktails.Cqrs.Sql.Cms.CommandHandlers.Cocktails
 {
-    public class CocktailUpdateCommandHandler : IRequestHandler<CocktailUpdateCommand, long>
+    public class CocktailUpdateCommandHandler : ICommandHandler<CocktailUpdateCommand, long>
     {
         private readonly DbContext _dbContext;
         private readonly IMapper _mapper;

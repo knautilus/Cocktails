@@ -1,5 +1,5 @@
 ﻿using Cocktails.Entities.Sql;
-using Cocktails.GraphQL.Core.DataLoaders;
+using Cocktails.GraphQL.Cms.DataLoaders;
 using HotChocolate.Types;
 
 namespace Cocktails.GraphQL.Cms.Types

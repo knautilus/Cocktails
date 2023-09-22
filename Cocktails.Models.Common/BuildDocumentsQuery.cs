@@ -1,6 +1,6 @@
 ﻿namespace Cocktails.Models.Common
 {
-    public class BuildDocumentsQuery<TKey, TDocument> : GetManyQuery<TDocument, int>
+    public class BuildDocumentsQuery<TKey> : GetManyQuery<int>
     {
         public TKey[] Ids { get; set; }
     }

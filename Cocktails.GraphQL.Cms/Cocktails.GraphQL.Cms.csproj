@@ -12,9 +12,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
+    <ProjectReference Include="..\Cocktails.Cqrs.Mediator\Cocktails.Cqrs.Mediator.csproj" />
     <ProjectReference Include="..\Cocktails.Data.Contexts\Cocktails.Data.Contexts.csproj" />
     <ProjectReference Include="..\Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj" />
-    <ProjectReference Include="..\Cocktails.GraphQL.Core\Cocktails.GraphQL.Core.csproj" />
     <ProjectReference Include="..\Cocktails.Mapper.Common\Cocktails.Mapper.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Models.Cms\Cocktails.Models.Cms.csproj" />
   </ItemGroup>

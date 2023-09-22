@@ -1,14 +1,14 @@
-﻿using Cocktails.Data.Elasticsearch;
+﻿using Cocktails.Cqrs.Mediator.Queries;
+using Cocktails.Data.Elasticsearch;
 using Cocktails.Models.Common;
-using MediatR;
 using Nest;
 using System.Linq.Expressions;
 
 namespace Cocktails.Cqrs.Nosql
 {
-    public class GetManyQueryHandler<TEntity, TGetManyQuery, TSortFieldEnum> : IRequestHandler<TGetManyQuery, TEntity[]>
+    public class GetManyQueryHandler<TEntity, TGetManyQuery, TSortFieldEnum> : IQueryHandler<TGetManyQuery, TEntity[]>
         where TEntity : class
-        where TGetManyQuery : GetManyQuery<TEntity, TSortFieldEnum>
+        where TGetManyQuery : GetManyQuery<TSortFieldEnum>
         where TSortFieldEnum : struct
     {
         protected readonly IElasticClient _elasticClient;
@@ -47,7 +47,6 @@ namespace Cocktails.Cqrs.Nosql
         {
             return x => x.Bool(b => b.Must(m => m.MatchAll()));
         }
-
 
         protected virtual Expression<Func<TEntity, object>> GetSortSelector(TSortFieldEnum sort)
         {

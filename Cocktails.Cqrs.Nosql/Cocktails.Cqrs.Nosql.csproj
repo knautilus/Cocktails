@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cocktails.Cqrs.Mediator\Cocktails.Cqrs.Mediator.csproj" />
     <ProjectReference Include="..\Cocktails.Data.Elasticsearch\Cocktails.Data.Elasticsearch.csproj" />
     <ProjectReference Include="..\Cocktails.Entities.Common\Cocktails.Entities.Common.csproj" />
     <ProjectReference Include="..\Cocktails.Entities.Elasticsearch\Cocktails.Entities.Elasticsearch.csproj" />

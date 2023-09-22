@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.11" />
   </ItemGroup>
@@ -16,8 +15,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Cocktail.Models.Scheduler\Cocktails.Models.Scheduler.csproj" />
     <ProjectReference Include="..\Cocktails.Common\Cocktails.Common.csproj" />
+    <ProjectReference Include="..\Cocktails.Cqrs.Mediator\Cocktails.Cqrs.Mediator.csproj" />
     <ProjectReference Include="..\Cocktails.Data.EFCore\Cocktails.Data.EFCore.csproj" />
     <ProjectReference Include="..\Cocktails.Entities.Elasticsearch\Cocktails.Entities.Elasticsearch.csproj" />
+    <ProjectReference Include="..\Cocktails.Entities.Sql\Cocktails.Entities.Sql.csproj" />
     <ProjectReference Include="..\Cocktails.Models.Cms\Cocktails.Models.Cms.csproj" />
   </ItemGroup>
 

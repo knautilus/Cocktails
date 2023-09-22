@@ -1,11 +1,11 @@
-﻿using Cocktails.Models.Common;
-using MediatR;
+﻿using Cocktails.Cqrs.Mediator.Queries;
+using Cocktails.Models.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cocktails.Cqrs.Sql
 {
-    public class GetQueryableQueryHandler<TRequest, TEntity> : IRequestHandler<TRequest, IQueryable<TEntity>>
-        where TRequest : GetQueryableQuery<TEntity>
+    public class GetQueryableQueryHandler<TRequest, TEntity> : IQueryHandler<TRequest, IQueryable<TEntity>>
+        where TRequest : GetQueryableQuery
         where TEntity : class
     {
         private readonly DbContext _dbContext;

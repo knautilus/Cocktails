@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Cocktails.Entities.Sql\Cocktails.Entities.Sql.csproj" />
     <ProjectReference Include="..\Cocktails.Models.Common\Cocktails.Models.Common.csproj" />
   </ItemGroup>
 

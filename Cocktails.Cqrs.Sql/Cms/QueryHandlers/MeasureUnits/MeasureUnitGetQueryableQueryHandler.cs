@@ -1,8 +1,6 @@
 ﻿using Cocktails.Data.EFCore.Extensions;
 using Cocktails.Entities.Sql;
 using Cocktails.Models.Cms.Requests.MeasureUnits;
-using Cocktails.Models.Cms.Requests.MeasureUnits;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cocktails.Cqrs.Sql.Cms.QueryHandlers.MeasureUnits
