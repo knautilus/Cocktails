@@ -2,7 +2,7 @@
 using Nest;
 using System.Linq.Expressions;
 
-namespace Cocktails.Data.Elasticsearch
+namespace Cocktails.Data.Elasticsearch.Extensions
 {
     public static class SearchDescriptorExtensions
     {
@@ -27,7 +27,7 @@ namespace Cocktails.Data.Elasticsearch
             IPagingQuery context)
             where T : class
         {
-            return source.Skip(context.Skip).Size(context.Take);
+            return source.Skip(context.Offset).Size(context.First);
         }
 
         public static QueryContainer GetByIds<T>(this QueryContainerDescriptor<T> source,

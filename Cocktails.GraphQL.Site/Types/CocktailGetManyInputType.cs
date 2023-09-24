@@ -1,15 +1,9 @@
-﻿using Cocktails.Models.Site.Requests.Cocktails;
-using HotChocolate.Types;
+﻿using Cocktails.GraphQL.Core;
+using Cocktails.Models.Site.Requests.Cocktails;
 
 namespace Cocktails.GraphQL.Site.Types
 {
-    public class CocktailGetManyInputType : InputObjectType<CocktailGetManyQuery>
+    public class CocktailGetManyInputType : GetManyInputType<CocktailGetManyQuery>
     {
-        protected override void Configure(IInputObjectTypeDescriptor<CocktailGetManyQuery> descriptor)
-        {
-            base.Configure(descriptor);
-            descriptor.Field(x => x.Skip).Ignore();
-            descriptor.Field(x => x.Take).Ignore();
-        }
     }
 }

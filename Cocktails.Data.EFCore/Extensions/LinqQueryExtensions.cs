@@ -31,7 +31,7 @@ namespace Cocktails.Data.EFCore.Extensions
         public static IQueryable<T> Paginate<T>(this IQueryable<T> source,
             IPagingQuery context)
         {
-            Func<IQueryable<T>, IQueryable<T>> query = x => x.Skip(context.Skip).Take(context.Take);
+            Func<IQueryable<T>, IQueryable<T>> query = x => x.Skip(context.Offset).Take(context.First);
 
             return query(source);
         }

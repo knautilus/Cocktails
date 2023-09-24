@@ -1,7 +1,6 @@
-﻿using Cocktails.Data.Elasticsearch;
-using Cocktails.Entities.Elasticsearch.Constants;
+﻿using Cocktails.Entities.Elasticsearch;
 
-namespace Cocktails.Entities.Elasticsearch.Helpers
+namespace Cocktails.Data.Elasticsearch.Configuration
 {
     public class ElasticIndexConfiguration : IIndexConfiguration
     {

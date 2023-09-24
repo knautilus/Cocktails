@@ -3,9 +3,7 @@ using Cocktails.Cqrs.Mediator;
 using Cocktails.Cqrs.Mediator.Queries;
 using Cocktails.Cqrs.Sql;
 using Cocktails.Cqrs.Sql.Scheduler.QueryHandlers.Cocktails;
-using Cocktails.Data.Contexts;
 using Cocktails.Data.Elasticsearch;
-using Cocktails.Entities.Elasticsearch.Helpers;
 using Cocktails.Entities.Sql;
 using Cocktails.Jobs.Scheduler.Extensions;
 using Cocktails.Mapper.Common;
@@ -15,6 +13,9 @@ using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Cocktails.Data.EFCore.DbContexts;
+using Cocktails.Data.Elasticsearch.Configuration;
+using Cocktails.Data.Elasticsearch.Extensions;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 

@@ -1,4 +1,4 @@
-﻿using Cocktails.Data.Contexts;
+﻿using Cocktails.Data.EFCore.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 

@@ -1,5 +1,7 @@
 ﻿using Cocktails.Cqrs.Mediator.Queries;
+using Cocktails.Entities.Common;
 using Cocktails.Entities.Elasticsearch;
+using Cocktails.GraphQL.Core;
 using Cocktails.GraphQL.Site.Queries;
 using Cocktails.Models.Site.Requests.Cocktails;
 using HotChocolate.Types;
@@ -12,27 +14,8 @@ namespace Cocktails.GraphQL.Site.Types
         protected override void Configure(IObjectTypeDescriptor<CocktailQuery> descriptor)
         {
             descriptor.Field(x => x.GetCocktails(default, default, default))
-                .UsePaging(options: new PagingOptions { IncludeTotalCount = true })
                 .Argument("request", x => x.Type<CocktailGetManyInputType>())
-                .Use(next => async context =>
-                {
-                    await next(context);
-
-                    var request = context.ArgumentValue<CocktailGetManyQuery>("request");
-
-                    var data = context.Result as CocktailDocument[];
-
-                    var edges = data.Select(x => new Edge<CocktailDocument>(x, x.Id.ToString()))
-                        .ToList();
-
-                    var pageInfo = new ConnectionPageInfo(false, false, null, null);
-
-                    var queryProcessor = context.Service<IQueryProcessor>();
-
-                    context.Result = new Connection<CocktailDocument>(edges, pageInfo, async ct => await queryProcessor.Process<int>(request, ct));
-                });
-
-            descriptor.Field(x => x.GetCocktailsCount(default, default, default));
+                .UseCustomPaging<long, CocktailDocument, CocktailGetManyQuery>();
 
             //descriptor.Field(x => x.GetCocktails(default, default, default))
             //    .UsePaging(options: new PagingOptions { IncludeTotalCount = true })
@@ -43,8 +26,8 @@ namespace Cocktails.GraphQL.Site.Types
             //        var take = context.ArgumentValue<int>("first");
 
             //        var request = context.ArgumentValue<CocktailGetManyQuery>("request");
-            //        request.Skip = 0;
-            //        request.Take = take;
+            //        request.Offset = 0;
+            //        request.First = take;
 
             //        var data = await context.Parent<CocktailQuery>().GetCocktails(request, context.Service<IMediator>(), new CancellationToken());
             //        var edges = data.Select(x => new Edge<CocktailDocument>(x, x.Id.ToString()))
@@ -73,8 +56,35 @@ namespace Cocktails.GraphQL.Site.Types
             //        return connection;
             //    });
 
-            //descriptor.Field(t => t.GetCocktail(default, default, default))
-            //    .Type<CocktailType>();
+            descriptor.Field(t => t.GetCocktail(default, default, default))
+                .Type<CocktailType>();
         }
+
+        //private IReadOnlyList<CollectionEdge<CocktailDocument>> GetSelectedEdges(CocktailDocument[] source)
+        //{
+        //    var list = new List<CollectionEdge<CocktailDocument>>();
+
+        //    var edges = source.Select(x => new Edge<CocktailDocument>(x, x.Id.ToString())).ToArray();
+
+        //    for (int i = 0; i < edges.Length; i++)
+        //    {
+        //        string cursor = "JsonConvert.SerializeObject(_properties).GetHashCode().ToString()"; // TODO base64 encode?
+        //        list.Add(new CollectionEdge<CocktailDocument>(cursor, edges[i], source.Offset + i));
+        //    }
+
+        //    return list;
+        //}
+    }
+
+    public class CollectionEdge<T>
+        : Edge<T>
+    {
+        public CollectionEdge(string cursor, T node, int index)
+            : base(node, cursor)
+        {
+            Index = index;
+        }
+
+        public int Index { get; set; }
     }
 }

@@ -3,7 +3,6 @@ using Cocktails.Cqrs.Mediator;
 using Cocktails.Cqrs.Mediator.Queries;
 using Cocktails.Cqrs.Sql;
 using Cocktails.Cqrs.Sql.Cms.QueryHandlers.Cocktails;
-using Cocktails.Data.Contexts;
 using Cocktails.Entities.Sql;
 using Cocktails.GraphQL.Cms.Types;
 using Cocktails.Mapper.Cms;
@@ -19,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Reflection;
+using Cocktails.Data.EFCore.DbContexts;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 

@@ -3,7 +3,7 @@ using Cocktails.Cqrs.Mediator;
 using Cocktails.Cqrs.Mediator.Queries;
 using Cocktails.Cqrs.Nosql.QueryHandlers.Cocktails;
 using Cocktails.Data.Elasticsearch;
-using Cocktails.Entities.Elasticsearch.Helpers;
+using Cocktails.Data.Elasticsearch.Extensions;
 using Cocktails.GraphQL.Site.Types;
 using Cocktails.Models.Site.Requests.Cocktails;
 using HotChocolate.AspNetCore;
@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Reflection;
+using Cocktails.Data.Elasticsearch.Configuration;
 
 var contentRootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 

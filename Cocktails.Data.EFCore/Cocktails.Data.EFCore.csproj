@@ -8,11 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Cocktails.Data.Core\Cocktails.Data.Core.csproj" />
     <ProjectReference Include="..\Cocktails.Entities.Common\Cocktails.Entities.Common.csproj" />
+    <ProjectReference Include="..\Cocktails.Entities.Sql\Cocktails.Entities.Sql.csproj" />
   </ItemGroup>
 
 </Project>

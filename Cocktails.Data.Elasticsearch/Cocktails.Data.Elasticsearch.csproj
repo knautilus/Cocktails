@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cocktails.Data.Core\Cocktails.Data.Core.csproj" />
+    <ProjectReference Include="..\Cocktails.Entities.Elasticsearch\Cocktails.Entities.Elasticsearch.csproj" />
   </ItemGroup>
 
 </Project>

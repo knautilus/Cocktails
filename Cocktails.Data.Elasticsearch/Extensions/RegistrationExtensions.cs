@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Nest;
 using System.Collections.Specialized;
 
-namespace Cocktails.Data.Elasticsearch
+namespace Cocktails.Data.Elasticsearch.Extensions
 {
     public static class RegistrationExtensions
     {

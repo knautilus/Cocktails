@@ -1,4 +1,4 @@
-﻿namespace Cocktails.Entities.Elasticsearch.Constants
+﻿namespace Cocktails.Data.Elasticsearch.Configuration
 {
     public class IndexNames
     {

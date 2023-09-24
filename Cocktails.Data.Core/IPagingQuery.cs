@@ -2,7 +2,7 @@
 {
     public interface IPagingQuery
     {
-        int Take { get; set; }
-        int Skip { get; set; }
+        int First { get; set; }
+        int Offset { get; set; }
     }
 }

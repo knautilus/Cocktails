@@ -1,6 +1,7 @@
 ﻿using Cocktails.Cqrs.Mediator.Queries;
 using Cocktails.Cqrs.Nosql.Constants;
 using Cocktails.Data.Elasticsearch;
+using Cocktails.Data.Elasticsearch.Extensions;
 using Cocktails.Entities.Common;
 using Cocktails.Models.Common;
 using Nest;

@@ -1,7 +1,7 @@
 ﻿using Cocktails.Entities.Sql;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cocktails.Data.SqlContexts
+namespace Cocktails.Data.EFCore.DbContexts
 {
     public class CocktailsContext : DbContext
     {

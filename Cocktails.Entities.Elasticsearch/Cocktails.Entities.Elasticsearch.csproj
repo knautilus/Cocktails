@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cocktails.Data.Elasticsearch\Cocktails.Data.Elasticsearch.csproj" />
     <ProjectReference Include="..\Cocktails.Entities.Common\Cocktails.Entities.Common.csproj" />
   </ItemGroup>
 

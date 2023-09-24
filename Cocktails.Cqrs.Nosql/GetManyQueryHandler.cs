@@ -1,5 +1,6 @@
 ﻿using Cocktails.Cqrs.Mediator.Queries;
 using Cocktails.Data.Elasticsearch;
+using Cocktails.Data.Elasticsearch.Extensions;
 using Cocktails.Models.Common;
 using Nest;
 using System.Linq.Expressions;
